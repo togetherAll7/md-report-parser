@@ -1,18 +1,19 @@
 import MarkdownIt from 'markdown-it'
-import yaml from 'yaml'
+
 import markdown_it_highlightjs from 'markdown-it-highlightjs'
 import markdown_it_anchor from 'markdown-it-anchor'
 import markdown_it_table_of_contents from 'markdown-it-table-of-contents'
 import { solidity } from 'highlightjs-solidity'
-import data_blocks from 'markdown-it-data-blocks'
+import { default as data_blocks, parseOptions } from 'markdown-it-data-blocks'
+import { metadataParser } from './metadata'
+import { renderBlock } from './renderReports'
 
-const metadataParser = yaml.parse
-
-const dataBlocksOptions = { metadataParser, debug: true }
+const debug = true
+const { metadataBlockTypeName } = parseOptions()
 
 export function MdParser (options = {}) {
   const markdown = new MarkdownIt(options)
-    .use(data_blocks, dataBlocksOptions)
+    .use(data_blocks, { metadataParser, debug, render: renderBlock({ metadataBlockTypeName }) })
     .use(markdown_it_highlightjs, { register: { solidity } })
     .use(markdown_it_anchor)
     .use(markdown_it_table_of_contents, { includeLevel: [2, 3, 4, 5, 6] })
