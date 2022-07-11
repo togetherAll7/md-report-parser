@@ -1,0 +1,33 @@
+{
+  "name": "md-report-parser",
+  "version": "1.0.0",
+  "description": "Markdown parser for security reports",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coinspect/md-report-parser.git"
+  },
+  "author": "emi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coinspect/md-report-parser/issues"
+  },
+  "homepage": "https://github.com/coinspect/md-report-parser#readme",
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0"
+  },
+  "dependencies": {
+    "highlightjs-solidity": "^2.0.5",
+    "markdown-it-anchor": "^8.6.4",
+    "markdown-it-highlightjs": "^4.0.1",
+    "markdown-it-metadata-block": "^1.0.2",
+    "markdown-it-table-of-contents": "^0.6.0",
+    "markdown-it-data-blocks": "github:coinspect/markdown-it-data-blocks",
+    "yaml": "^2.1.1"
+  }
+}
