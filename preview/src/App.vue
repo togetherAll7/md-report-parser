@@ -21,7 +21,7 @@
 
 </template>
 <script>
-import MdParser from '../../src/MdParser'
+import { MdParser } from '../../src/MdParser'
 // import { diff } from './lib/Diff'
 import 'highlight.js/styles/stackoverflow-light.css'
 const parser = MdParser()
@@ -35,8 +35,8 @@ export default {
     }
   },
   async beforeMount () {
-    this.example = await (await fetch('/templates/report-model.md')).text()
-    this.findingTemplate = await (await fetch('/templates/finding.md')).text()
+    this.example = await (await fetch('templates/report-model.md')).text()
+    this.findingTemplate = await (await fetch('templates/finding.md')).text()
   },
   computed: {
     output () {

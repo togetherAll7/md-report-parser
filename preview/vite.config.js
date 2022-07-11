@@ -4,12 +4,20 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
-export default defineConfig({
+
+const config = {
   plugins: [vue()],
-  base: "./",
+  build: {
+    sourcemap: false, // enable for debugging
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   }
+}
+
+export default defineConfig(({ command, mode }) => {
+  if (command === 'build') config.base = '/md-report-parser/'
+  return config
 })
