@@ -1,6 +1,10 @@
 
-- Customer: Example Customer
-- Type: Smart Contract audit
+--- metadata
+
+customer: Example customer
+reportType: Smart contract audit
+
+/--
 
 # Smart contract audit
 
@@ -8,17 +12,15 @@
 
 ## Findings
 
----
-
-type: finding
+--- finding
 
 TEST
 
 /--
 
----
+--- finding
 
-type: finding
+type: xxx
 id: xxx-2
 title: Finding title
 impact: Low
