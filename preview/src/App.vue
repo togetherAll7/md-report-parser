@@ -24,7 +24,6 @@
 import MdParser from '../../src/MdParser'
 // import { diff } from './lib/Diff'
 import 'highlight.js/styles/stackoverflow-light.css'
-import axios from 'axios'
 const parser = MdParser()
 export default {
   data () {
@@ -36,9 +35,8 @@ export default {
     }
   },
   async beforeMount () {
-    const { fetch } = this
-    this.example = await fetch('/templates/report-model.md')
-    this.findingTemplate = await fetch('/templates/finding.md')
+    this.example = await (await fetch('/templates/report-model.md')).text()
+    this.findingTemplate = await (await fetch('/templates/finding.md')).text()
   },
   computed: {
     output () {
@@ -50,10 +48,6 @@ export default {
     }
   },
   methods: {
-    async fetch (url) {
-      return (await axios.get(url)).data
-    },
-
     updateMd (event) {
       const { value } = event.target
       let { md, editions } = this
