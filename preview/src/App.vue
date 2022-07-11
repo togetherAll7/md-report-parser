@@ -79,7 +79,7 @@ export default {
 @import './assets/style/reports.styl'
 
 .md-editor,.md-preview
-  min-width calc(100% - 4em)
+  min-width calc(100% - 4em)  
   margin 2em
   border none
   min-height calc(100% - 4em)
