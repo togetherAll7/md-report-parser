@@ -4,7 +4,6 @@ import { flipObject } from './utils'
 const validateHMLValue = (value, def = HIGH) => [HIGH, MEDIUM, LOW].includes(value) ? value : def
 
 export const calculateTotalRisk = ({ impact, likelihood } = {}) => {
-  console.log({ impact, likelihood }, [HIGH, MEDIUM, LOW])
   impact = validateHMLValue(impact)
   likelihood = validateHMLValue(likelihood)
   const impactRate = parseInt(IMPACT[impact])
