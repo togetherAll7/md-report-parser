@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   chai: ^4.3.6
   highlightjs-solidity: ^2.0.5
+  markdown-it: ^13.0.1
   markdown-it-anchor: ^8.6.4
   markdown-it-data-blocks: github:coinspect/markdown-it-data-blocks
   markdown-it-highlightjs: ^4.0.1
@@ -12,8 +13,9 @@ specifiers:
 
 dependencies:
   highlightjs-solidity: 2.0.5
-  markdown-it-anchor: 8.6.4
-  markdown-it-data-blocks: github.com/coinspect/markdown-it-data-blocks/34ddaf5660830e5a0b04946443ef9316421ddbf8
+  markdown-it: 13.0.1
+  markdown-it-anchor: 8.6.4_markdown-it@13.0.1
+  markdown-it-data-blocks: github.com/coinspect/markdown-it-data-blocks/72b0b4a39b04cfd7968fa5d36982e0dfba64c032
   markdown-it-highlightjs: 4.0.1
   markdown-it-table-of-contents: 0.6.0
   yaml: 2.1.1
@@ -55,7 +57,6 @@ packages:
 
   /argparse/2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
-    dev: true
 
   /assertion-error/1.1.0:
     resolution: {integrity: sha512-jgsaNduz+ndvGyFt3uSuWqvy4lCnIJiovtouQN5JZHOKCS2QuhEdbcQHFhVksz2N2U9hXJo8odG7ETyWlEeuDw==}
@@ -195,6 +196,11 @@ packages:
   /emoji-regex/8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
     dev: true
+
+  /entities/3.0.1:
+    resolution: {integrity: sha512-WiyBqoomrwMdFG1e0kqvASYfnlb0lp8M5o5Fw2OFq1hNZxxcNk8Ik0Xm7LxzBhuidnZB/UtBqVCgUz3kBOP51Q==}
+    engines: {node: '>=0.12'}
+    dev: false
 
   /escalade/3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
@@ -341,6 +347,12 @@ packages:
       argparse: 2.0.1
     dev: true
 
+  /linkify-it/4.0.1:
+    resolution: {integrity: sha512-C7bfi1UZmoj8+PQx22XyeXCuBlokoyWQL5pWSP+EI6nzRylyThouddufc2c1NDIcP9k5agmN9fLpA7VNJfIiqw==}
+    dependencies:
+      uc.micro: 1.0.6
+    dev: false
+
   /locate-path/6.0.0:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
     engines: {node: '>=10'}
@@ -362,11 +374,13 @@ packages:
       get-func-name: 2.0.0
     dev: true
 
-  /markdown-it-anchor/8.6.4:
+  /markdown-it-anchor/8.6.4_markdown-it@13.0.1:
     resolution: {integrity: sha512-Ul4YVYZNxMJYALpKtu+ZRdrryYt/GlQ5CK+4l1bp/gWXOG2QWElt6AqF3Mih/wfUKdZbNAZVXGR73/n6U/8img==}
     peerDependencies:
       '@types/markdown-it': '*'
       markdown-it: '*'
+    dependencies:
+      markdown-it: 13.0.1
     dev: false
 
   /markdown-it-highlightjs/4.0.1:
@@ -378,6 +392,21 @@ packages:
   /markdown-it-table-of-contents/0.6.0:
     resolution: {integrity: sha512-jHvEjZVEibyW97zEYg19mZCIXO16lHbvRaPDkEuOfMPBmzlI7cYczMZLMfUvwkhdOVQpIxu3gx6mgaw46KsNsQ==}
     engines: {node: '>6.4.0'}
+    dev: false
+
+  /markdown-it/13.0.1:
+    resolution: {integrity: sha512-lTlxriVoy2criHP0JKRhO2VDG9c2ypWCsT237eDiLqi09rmbKoUetyGHq2uOIRoRS//kfoJckS0eUzzkDR+k2Q==}
+    hasBin: true
+    dependencies:
+      argparse: 2.0.1
+      entities: 3.0.1
+      linkify-it: 4.0.1
+      mdurl: 1.0.1
+      uc.micro: 1.0.6
+    dev: false
+
+  /mdurl/1.0.1:
+    resolution: {integrity: sha512-/sKlQJCBYVY9Ers9hqzKou4H6V5UWc/M59TH2dvkt+84itfnq7uFOMLpOiOS4ujvHP4etln18fmIxA5R5fll0g==}
     dev: false
 
   /minimatch/3.1.2:
@@ -555,6 +584,10 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /uc.micro/1.0.6:
+    resolution: {integrity: sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==}
+    dev: false
+
   /workerpool/6.2.1:
     resolution: {integrity: sha512-ILEIE97kDZvF9Wb9f6h5aXK4swSlKGUcOEGiIYb2OOu/IrDU9iwj0fD//SsA6E5ibwJxpEvhullJY4Sl4GcpAw==}
     dev: true
@@ -615,8 +648,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/coinspect/markdown-it-data-blocks/34ddaf5660830e5a0b04946443ef9316421ddbf8:
-    resolution: {tarball: https://codeload.github.com/coinspect/markdown-it-data-blocks/tar.gz/34ddaf5660830e5a0b04946443ef9316421ddbf8}
+  github.com/coinspect/markdown-it-data-blocks/72b0b4a39b04cfd7968fa5d36982e0dfba64c032:
+    resolution: {tarball: https://codeload.github.com/coinspect/markdown-it-data-blocks/tar.gz/72b0b4a39b04cfd7968fa5d36982e0dfba64c032}
     name: markdown-it-data-blocks
     version: 1.0.0
     dev: false
