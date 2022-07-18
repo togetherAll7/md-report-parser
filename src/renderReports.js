@@ -1,14 +1,19 @@
+import { renderTemplate } from './Templates'
 
 export const renderBlock = ({ metadataBlockTypeName }) => (tokens, idx, _options, env, self) => {
   const token = tokens[idx]
-  let html = ''
   if (token.nesting === 1) {
     const metadata = token.meta || {}
     const className = metadata[metadataBlockTypeName]
-    if (className) token.attrJoin('class', className)
-    if (Object.keys(metadata).length) {
-      html = `<small><pre>${JSON.stringify(metadata, null, 2)} </pre></small>`
-    }
+    if (className) token.attrJoin('class', `${className}`)
   }
-  return html + self.renderToken(tokens, idx, _options, env, self)
+  return self.renderToken(tokens, idx, _options, env, self)
+}
+
+
+export const renderMetadata = ({ metadataBlockTypeName }) => (tokens, idx, _options, env, self) => {
+  const token = tokens[idx]
+  const metadata = token.content || {}
+  const className = metadata[metadataBlockTypeName]
+  return className === 'finding' ? renderTemplate('findingHeader', metadata) : ''
 }
