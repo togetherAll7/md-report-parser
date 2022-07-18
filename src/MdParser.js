@@ -8,11 +8,13 @@ import { metadataParser } from './metadata'
 import { renderBlock, renderMetadata } from './renderReports'
 
 
-const debug = true
 const { metadataBlockTypeName } = parseOptions()
 
 export function MdParser (options = {}) {
+
+  const { debug } = options
   const dbo = { metadataBlockTypeName }
+
   const markdown = new MarkdownIt(options)
     .use(data_blocks, { metadataParser, debug, render: renderBlock(dbo), metadataRenderer: renderMetadata(dbo) })
     .use(markdown_it_highlightjs, { register: { solidity } })
