@@ -1,11 +1,14 @@
-import { HIGH, IMPACT, LOW, MEDIUM, RISK, LIKELIHOOD } from './constants'
+import { HIGH, IMPACT, RISK, LIKELIHOOD } from './constants'
 import { flipObject } from './utils'
 
-const validateHMLValue = (value, def = HIGH) => [HIGH, MEDIUM, LOW].includes(value) ? value : def
+
+const validateValues = (value, values, def) => Object.keys(values).includes(value) ? value : def
+const validateImpact = (value, def = HIGH) => validateValues(value, IMPACT, def)
+const validateLikelihood = (value, def = HIGH) => validateValues(value, LIKELIHOOD, def)
 
 export const calculateTotalRisk = ({ impact, likelihood } = {}) => {
-  impact = validateHMLValue(impact)
-  likelihood = validateHMLValue(likelihood)
+  impact = validateImpact(impact)
+  likelihood = validateLikelihood(likelihood)
   const impactRate = parseInt(IMPACT[impact])
   const likelihoodRate = parseInt(LIKELIHOOD[likelihood])
   const riskRate = Math.floor((impactRate + likelihoodRate) / 2)

@@ -15,12 +15,7 @@ export const IMPACT = {
   [HIGH]: 3
 }
 
-export const LIKELIHOOD = {
-  [NONE]: 0,
-  [LOW]: 1,
-  [MEDIUM]: 2,
-  [HIGH]: 3
-}
+export const LIKELIHOOD = { ...IMPACT }
 
 export const RISK = {
   0: INFO,
