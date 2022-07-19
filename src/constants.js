@@ -4,7 +4,7 @@ export const MEDIUM = 'medium'
 export const LOW = 'low'
 export const INFO = 'info'
 export const ZERO = 'zero'
-export const NONE = '-'
+export const NONE = '_'
 export const FINDING = 'finding'
 
 
