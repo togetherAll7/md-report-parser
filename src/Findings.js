@@ -15,16 +15,22 @@ export const calculateTotalRisk = ({ impact, likelihood } = {}) => {
   return { impact, likelihood, totalRisk }
 }
 
-
 const finding = {
   id: 'xxx-1',
   title: 'Untitled Finding',
   location: '',
   likelihood: HIGH,
-  impact: HIGH
+  impact: HIGH,
+  fixed: false
 }
 
-export const findingModel = Object.assign(finding, calculateTotalRisk(finding))
+export const parseFinding = (data) => {
+  const { impact, likelihood, totalRisk } = calculateTotalRisk(data)
+  const fixed = data.fixed ? true : false
+  return Object.assign({ ...data }, { impact, likelihood, totalRisk, fixed })
+}
+
+export const findingModel = parseFinding(finding)
 
 export const findingFields = Object.keys(findingModel)
 
