@@ -4,7 +4,7 @@ import markdown_it_anchor from 'markdown-it-anchor'
 import markdown_it_table_of_contents from 'markdown-it-table-of-contents'
 import { solidity } from 'highlightjs-solidity'
 import { default as data_blocks, parseOptions } from 'markdown-it-data-blocks'
-import { metadataParser } from './metadata'
+import { MetadataParser } from './metadata'
 import RenderReports from './renderReports'
 
 
@@ -12,7 +12,8 @@ const { metadataBlockTypeName } = parseOptions()
 
 export function MdParser (options = {}) {
 
-  const { debug } = options
+  const { debug, metadataCb } = options
+  const metadataParser = MetadataParser({ metadataCb })
 
   const markdown = new MarkdownIt(options)
     .use(data_blocks, { ...RenderReports({ metadataBlockTypeName }), metadataParser, debug })
@@ -20,8 +21,8 @@ export function MdParser (options = {}) {
     .use(markdown_it_anchor)
     .use(markdown_it_table_of_contents, { includeLevel: [2, 3, 4, 5, 6] })
   const render = src => markdown.render(src)
-  const parse = (src, env = {}) => {
-    return markdown.parse(src, env)
+  const parse = (src) => {
+    return markdown.parse(src)
   }
   return Object.freeze({ parse, render })
 }

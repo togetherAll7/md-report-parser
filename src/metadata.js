@@ -14,4 +14,11 @@ const validateMetadata = (metadata, type) => {
   return metadata
 }
 
-export const metadataParser = (str, { blockType }) => validateMetadata(parseMetadata(str), blockType)
+export const MetadataParser = ({ metadataCb } = {}) => (str, { blockType }) => {
+  const metadata = validateMetadata(parseMetadata(str), blockType)
+  if (typeof metadataCb === 'function') {
+    metadataCb(JSON.parse(JSON.stringify(metadata)))
+  }
+  return metadata
+}
+
