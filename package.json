@@ -4,6 +4,10 @@
   "description": "Markdown parser for security reports",
   "main": "index.js",
   "type": "module",
+  "exports": {
+    "require": "./index.cjs",
+    "import": "./index.js"
+  },
   "scripts": {
     "test": "mocha"
   },
