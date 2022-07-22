@@ -1,8 +1,8 @@
 
 
-const getFieldAttributes = (name, value) => { return { class: `field-${name}` } }
+const getFieldAttributes = (name: string, value: unknown) => { return { class: `field-${name}` } }
 
-export const tag = (t, content, attrs) => {
+export const tag = (t: string, content: unknown, attrs?: ArrayLike<unknown> | { [s: string]: unknown } | undefined) => {
   if (Array.isArray(content)) content = content.join('\n')
   if (typeof content === 'boolean') content = `${content}`
   content = content || ''
@@ -11,5 +11,5 @@ export const tag = (t, content, attrs) => {
   if (content.trim().split(' ').length === 1) a += ` data-value="${content.trim()}"`
   return `<${t} ${a}>${content}</${t}>`
 }
-export const dl = (data, attrs) => tag('dl', Object.entries(data)
+export const dl = (data: ArrayLike<unknown> | { [s: string]: unknown }, attrs: { class: string }) => tag('dl', Object.entries(data)
   .map(([name, value]) => tag('div', `${tag('dt', name)} ${tag('dd', value)}`, getFieldAttributes(name, value))), attrs)

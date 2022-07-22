@@ -10,7 +10,7 @@ import RenderReports from './renderReports'
 
 const { metadataBlockTypeName } = parseOptions()
 
-export function MdParser (options = {}) {
+export function MdParser (options :  MarkdownIt.Options & {debug? : any, metadataCb?: any} = {}) {
 
   const { debug, metadataCb } = options
   const metadataParser = MetadataParser({ metadataCb })
@@ -20,9 +20,9 @@ export function MdParser (options = {}) {
     .use(markdown_it_highlightjs, { register: { solidity } })
     .use(markdown_it_anchor)
     .use(markdown_it_table_of_contents, { includeLevel: [2, 3, 4, 5, 6] })
-  const render = src => markdown.render(src)
-  const parse = (src) => {
-    return markdown.parse(src)
+  const render = (src: any) => markdown.render(src)
+  const parse = (src: any) => {
+    return markdown.parse(src, {})
   }
   return Object.freeze({ parse, render })
 }

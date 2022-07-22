@@ -7,7 +7,6 @@ export const ZERO = 'zero'
 export const NONE = '_'
 export const FINDING = 'finding'
 
-
 export const IMPACT = {
   [NONE]: 0,
   [LOW]: 1,
