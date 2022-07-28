@@ -19,3 +19,7 @@ jobs:
       - run:
           name: "Test"
           command: pnpm run test
+      - run:
+          name: "Build"
+          command: pnpm run build
+              

@@ -2,11 +2,15 @@
   "name": "md-report-parser",
   "version": "1.0.0",
   "description": "Markdown parser for security reports",
-  "main": "out/index.js",
-  "types": "out/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest test/*.ts",
-    "lint": "eslint src --ext ts"
+    "lint": "eslint src --ext ts",
+    "clean":"rm -rf dist",
+    "build":"tsc --outDir dist",
+    "dev":"tsc --watch",
+    "prepare":"npm run build"
   },
   "repository": {
     "type": "git",
