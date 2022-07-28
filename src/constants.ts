@@ -15,7 +15,7 @@ export const IMPACT = {
 }
 
 export const LIKELIHOOD = { ...IMPACT }
-
+  /* eslint-disable @typescript-eslint/naming-convention */
 export const RISK = {
   0: INFO,
   1: LOW,

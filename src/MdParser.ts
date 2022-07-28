@@ -9,7 +9,7 @@ import RenderReports from './renderReports'
 
 
 const { metadataBlockTypeName } = parseOptions()
-
+  /* eslint-disable @typescript-eslint/naming-convention */
 export function MdParser (options :  MarkdownIt.Options & {debug? : any, metadataCb?: any} = {}) {
 
   const { debug, metadataCb } = options
