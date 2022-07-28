@@ -1,1 +1,1 @@
-declare module 'highlightjs-solidity';
+declare module 'highlightjs-solidity'

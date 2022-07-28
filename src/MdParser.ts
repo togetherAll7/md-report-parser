@@ -7,16 +7,20 @@ import { default as data_blocks, parseOptions } from 'markdown-it-data-blocks'
 import { MetadataParser } from './metadata'
 import RenderReports from './renderReports'
 
-
 const { metadataBlockTypeName } = parseOptions()
-  /* eslint-disable @typescript-eslint/naming-convention */
-export function MdParser (options :  MarkdownIt.Options & {debug? : any, metadataCb?: any} = {}) {
-
+/* eslint-disable @typescript-eslint/naming-convention */
+export function MdParser(
+  options: MarkdownIt.Options & { debug?: any; metadataCb?: any } = {}
+) {
   const { debug, metadataCb } = options
   const metadataParser = MetadataParser({ metadataCb })
 
   const markdown = new MarkdownIt(options)
-    .use(data_blocks, { ...RenderReports({ metadataBlockTypeName }), metadataParser, debug })
+    .use(data_blocks, {
+      ...RenderReports({ metadataBlockTypeName }),
+      metadataParser,
+      debug
+    })
     .use(markdown_it_highlightjs, { register: { solidity } })
     .use(markdown_it_anchor)
     .use(markdown_it_table_of_contents, { includeLevel: [2, 3, 4, 5, 6] })
@@ -28,4 +32,3 @@ export function MdParser (options :  MarkdownIt.Options & {debug? : any, metadat
 }
 
 export default MdParser
-

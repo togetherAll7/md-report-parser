@@ -15,7 +15,10 @@ jobs:
           command: pnpm install
       - run:
           name: "Lint"
-          command: pnpm run lint          
+          command: pnpm run lint
+      - run:
+          name: "Check code format"
+          command: pnpm run check-format                  
       - run:
           name: "Test"
           command: pnpm run test

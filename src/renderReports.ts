@@ -4,9 +4,13 @@ import Renderer from 'markdown-it/lib/renderer'
 // import StateBlock from 'markdown-it/lib/rules_block/state_block'
 // import MarkdownIt from 'markdown-it'
 
-  /* eslint-disable @typescript-eslint/naming-convention */
-export function RenderReports({ metadataBlockTypeName }: {metadataBlockTypeName: string}) {
-  const metadataRenderer : Renderer.RenderRule = (
+/* eslint-disable @typescript-eslint/naming-convention */
+export function RenderReports({
+  metadataBlockTypeName
+}: {
+  metadataBlockTypeName: string
+}) {
+  const metadataRenderer: Renderer.RenderRule = (
     tokens,
     idx,
     _options,
@@ -26,7 +30,9 @@ export function RenderReports({ metadataBlockTypeName }: {metadataBlockTypeName:
     if (token.nesting === 1) {
       const metadata = token.meta || {}
       const className = metadata[metadataBlockTypeName]
-      if (className) {token.attrJoin('class', `${className}`)}
+      if (className) {
+        token.attrJoin('class', `${className}`)
+      }
     }
     return self.renderToken(tokens, idx, _options)
   }

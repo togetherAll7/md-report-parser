@@ -7,10 +7,12 @@
   "scripts": {
     "test": "jest test/*.ts",
     "lint": "eslint src --ext ts",
-    "clean":"rm -rf dist",
-    "build":"tsc --outDir dist",
-    "dev":"tsc --watch",
-    "prepare":"npm run build"
+    "clean": "rm -rf dist",
+    "build": "tsc --outDir dist",
+    "dev": "tsc --watch",
+    "prepare": "npm run build",
+    "check-format": "prettier --check src",
+    "format": "prettier --write src && npm run lint -- --fix"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
     "@typescript-eslint/parser": "^5.31.0",
     "eslint": "^8.20.0",
     "jest": "^28.1.3",
+    "prettier": "^2.7.1",
     "ts-jest": "^28.0.7"
   },
   "dependencies": {
@@ -35,7 +38,7 @@
     "highlightjs-solidity": "^2.0.5",
     "markdown-it": "^13.0.1",
     "markdown-it-anchor": "^8.6.4",
-    "markdown-it-data-blocks": "github:coinspect/markdown-it-data-blocks",
+    "markdown-it-data-blocks": "coinspect/markdown-it-data-blocks",
     "markdown-it-highlightjs": "^4.0.1",
     "markdown-it-table-of-contents": "^0.6.0",
     "typescript": "^4.7.4",
