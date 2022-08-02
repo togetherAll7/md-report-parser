@@ -1,13 +1,12 @@
 import { HIGH, IMPACT, RISK, LIKELIHOOD } from './constants'
 import { flipObject } from './utils'
 
-const validateValues = (
-  value: string,
-  values: { low?: number; medium?: number },
-  def: string
-) => (Object.keys(values).includes(value) ? value : def)
+const validateValues = (value: string, values: {}, def: string) =>
+  Object.keys(values).includes(value) ? value : def
+
 const validateImpact = (value: string, def = HIGH) =>
   validateValues(value, IMPACT, def)
+
 const validateLikelihood = (value: any, def = HIGH): string =>
   validateValues(value, LIKELIHOOD, def)
 
