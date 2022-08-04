@@ -1,9 +1,11 @@
 import yaml from 'yaml'
 import { parseFinding } from './Findings'
 
-const parseMetadata = (str: string) => yaml.parse(str)
+export const parseMetadata = (str: string) => yaml.parse(str)
 
-const validateMetadata = (
+export const metadataToMd = (metadata: {}): string => yaml.stringify(metadata)
+
+export const validateMetadata = (
   metadata: string | { impact: any; likelihood: any } | undefined,
   type: any
 ) => {
