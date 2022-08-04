@@ -22,3 +22,5 @@ export const RISK = {
   2: MEDIUM,
   3: HIGH
 }
+
+export const HEADINGS = [...Array(6)].map((x, i) => `h${i}`)
