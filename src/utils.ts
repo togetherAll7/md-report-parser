@@ -18,3 +18,6 @@ export const filterObjectFields = (
       v[field] = value
       return v
     }, {})
+
+export const arrayUnique = (arr: any[]) =>
+  arr.filter((v, i, self) => self.indexOf(v) === i)
