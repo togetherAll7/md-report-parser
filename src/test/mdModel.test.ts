@@ -3,20 +3,52 @@ import {
   getOptions,
   MdBlock,
   createMdBlock,
-  mdDocToMd
+  mdDocToMd,
+  isMdBlock,
+  isMdDoc
 } from '../mdModel'
 import { findingModel } from '../Findings'
 import { metadataToMd } from '../metadata'
-
-function isMdBlock(block: any): block is MdBlock {
-  return (block as MdBlock).blockType !== undefined
-}
 
 const { openMarkup, closeMarkup } = getOptions()
 
 describe('mdModel', () => {
   const blockType = 'finding'
   const metadata = { ...findingModel }
+  const block = { blockType: 'xxx', metadata: {} }
+
+  describe('isMdBlock', () => {
+    const test = [
+      [block, true],
+      [{ ...block, children: [] }, true],
+      [{ ...block, children: [{}] }, false],
+      [{ ...block, children: [block, {}] }, false],
+      [{ ...block, children: [block] }, true],
+      [{ ...block, children: [block, block] }, true],
+      [{}, false],
+      [{ blockType: '', metadata: {} }, false]
+    ]
+
+    for (const [t, r] of test) {
+      it(`${JSON.stringify(t)} should return ${r}`, () => {
+        expect(isMdBlock(t)).toBe(r)
+      })
+    }
+  })
+
+  describe('isMdDoc', () => {
+    const test = [
+      [[], false],
+      [[undefined], false],
+      [[block, block], true]
+    ]
+
+    for (const [t, r] of test) {
+      it(`${JSON.stringify(t)}  should return ${r}`, () => {
+        expect(isMdDoc(t)).toBe(r)
+      })
+    }
+  })
 
   describe('createMdBlock', () => {
     it('should return a MdBlock', () => {

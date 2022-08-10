@@ -1,6 +1,7 @@
 import { parseOptions } from 'markdown-it-data-blocks'
 import { metadataToMd } from './metadata'
 import { HEADINGS } from './constants'
+import { arrayUnique } from './utils'
 
 export const getOptions = () => parseOptions()
 
@@ -24,6 +25,24 @@ export const createMdBlock = ({
   md = md || ''
   return { blockType, metadata, children, md }
 }
+
+export const isMdBlock = (x: any): boolean => {
+  if (!x) {
+    return false
+  }
+  const { blockType, children } = x as MdBlock
+  if (!blockType) {
+    return false
+  }
+  return children && children.length ? isMdBlockArr(children) : true
+}
+
+export function isMdBlockArr(arr: any | undefined[]) {
+  const result = arrayUnique(arr.map((c: any) => isMdBlock(c)))
+  return Array.isArray(result) && result.length === 1 && result[0] === true
+}
+
+export const isMdDoc = (x: any | undefined[]) => isMdBlockArr(x)
 
 export const mdBlockToMd = (block: MdBlock): string => {
   const { blockType, metadata, children, md } = createMdBlock(block)
