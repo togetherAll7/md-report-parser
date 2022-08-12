@@ -12,7 +12,8 @@
     "dev": "tsc --watch",
     "prepare": "npm run build",
     "check-format": "prettier --check src",
-    "format": "prettier --write src && npm run lint -- --fix"
+    "format": "prettier --write src && npm run lint -- --fix",
+    "test-file":"jest $FILE --collectCoverage false"
   },
   "repository": {
     "type": "git",
