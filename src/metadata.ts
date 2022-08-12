@@ -1,5 +1,5 @@
 import yaml from 'yaml'
-import { parseFinding } from './Findings'
+import { parseFinding, isFindingType } from './Findings'
 
 export const parseMetadata = (str: string) => yaml.parse(str)
 
@@ -12,10 +12,9 @@ export const validateMetadata = (
   if (typeof metadata !== 'object') {
     return metadata
   }
-  switch (type) {
-    case 'finding':
-      metadata = parseFinding(metadata)
-      break
+
+  if (isFindingType(type)) {
+    metadata = parseFinding(metadata)
   }
   return metadata
 }

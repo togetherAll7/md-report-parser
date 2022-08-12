@@ -1,4 +1,4 @@
-import { HIGH, IMPACT, RISK, LIKELIHOOD } from './constants'
+import { HIGH, IMPACT, RISK, LIKELIHOOD, FINDING } from './constants'
 import { flipObject } from './utils'
 
 const validateValues = (value: string, values: {}, def: string) =>
@@ -18,6 +18,8 @@ type RiskData = {
   likelihoodRate?: number
   riskRate?: number
 }
+
+export const isFindingType = (str: string): boolean => str === FINDING
 
 export const calculateTotalRisk = ({ impact, likelihood }: RiskData) => {
   impact = validateImpact(impact)

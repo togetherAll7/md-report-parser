@@ -9,11 +9,12 @@ import {
 } from '../mdModel'
 import { findingModel } from '../Findings'
 import { metadataToMd } from '../metadata'
+import { FINDING } from '../constants'
 
 const { openMarkup, closeMarkup } = getOptions()
 
 describe('mdModel', () => {
-  const blockType = 'finding'
+  const blockType = FINDING
   const metadata = { ...findingModel }
   const block = { blockType: 'xxx', metadata: {} }
 
