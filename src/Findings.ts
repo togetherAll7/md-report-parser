@@ -10,13 +10,16 @@ const validateImpact = (value: string, def = HIGH) =>
 const validateLikelihood = (value: any, def = HIGH): string =>
   validateValues(value, LIKELIHOOD, def)
 
-export const calculateTotalRisk = ({
-  impact,
-  likelihood
-}: {
+type RiskData = {
   impact: string
   likelihood: string
-}) => {
+  totalRisk?: string
+  impactRate?: number
+  likelihoodRate?: number
+  riskRate?: number
+}
+
+export const calculateTotalRisk = ({ impact, likelihood }: RiskData) => {
   impact = validateImpact(impact)
   likelihood = validateLikelihood(likelihood)
   const impactRate = IMPACT[impact as keyof typeof IMPACT]
@@ -28,7 +31,7 @@ export const calculateTotalRisk = ({
   impact = flippedImpact[impactRate as keyof typeof flippedImpact]
   likelihood =
     flippedLikelihood[likelihoodRate as keyof typeof flippedLikelihood]
-  return { impact, likelihood, totalRisk }
+  return { impact, likelihood, totalRisk, impactRate, likelihoodRate, riskRate }
 }
 
 const finding = {
