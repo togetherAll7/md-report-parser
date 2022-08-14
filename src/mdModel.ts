@@ -66,3 +66,46 @@ export const mdBlockToMd = (block: MdBlock): string => {
 
 export const mdDocToMd = (doc: MdDoc): string =>
   doc.map((block) => mdBlockToMd(block)).join('\n')
+
+interface ArraySortCallback<TypeOne> {
+  (param1: TypeOne, param2: TypeOne): number
+}
+
+interface FilterCallback<TypeOne> {
+  (param1: TypeOne, param2: TypeOne): boolean
+}
+
+export const sortBlocks = (
+  doc: MdDoc,
+  sortCb: ArraySortCallback<MdBlock>,
+  filterCb?: FilterCallback<MdBlock>
+): MdDoc => {
+  doc.sort((a, b) => {
+    if (!isMdBlock(a) || !isMdBlock(b)) {
+      return 0
+    }
+    if (typeof filterCb === 'function' && filterCb(a, b) !== true) {
+      return 0
+    }
+    return sortCb(a, b)
+  })
+  doc.forEach((block) => {
+    if (block.children) {
+      block.children = sortBlocks(block.children, sortCb, filterCb)
+    }
+  })
+  return doc
+}
+
+export const iterateBlocks = (doc: MdDoc, cb: Function) => {
+  doc.forEach((block) => {
+    if (!isMdBlock(block)) {
+      return
+    }
+    block = cb(block)
+    if (block && block.children) {
+      block.children = iterateBlocks(block.children, cb)
+    }
+  })
+  return doc
+}

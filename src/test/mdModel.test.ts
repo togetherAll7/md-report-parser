@@ -5,13 +5,20 @@ import {
   createMdBlock,
   mdDocToMd,
   isMdBlock,
-  isMdDoc
+  isMdDoc,
+  sortBlocks,
+  iterateBlocks,
+  MdDoc
 } from '../mdModel'
 import { findingModel } from '../Findings'
 import { metadataToMd } from '../metadata'
 import { FINDING } from '../constants'
+import { arrayUnique } from '../utils'
 
 const { openMarkup, closeMarkup } = getOptions()
+
+const reduceResult = (arr: MdDoc) =>
+  arrayUnique(arr.map(({ blockType }) => blockType))
 
 describe('mdModel', () => {
   const blockType = FINDING
@@ -105,10 +112,70 @@ describe('mdModel', () => {
       }
       const expected = toMdArr(obj).join('\n')
       const result = mdBlockToMd(obj)
-      console.log({ result, expected })
       expect(result).toBe(expected)
     })
   })
 
-  describe('mdDocToMd', () => {})
+  describe.skip('mdDocToMd', () => {
+    // Write test
+  })
+
+  const createBlocks = (a: any[]) =>
+    a.map((blockType: string) => createMdBlock({ blockType, metadata: {} }))
+
+  describe('sortBlocks', () => {
+    const blocks = createBlocks(['c', 'd', 'a', 'b'])
+
+    const [b1, b2] = blocks
+
+    b1.children = createBlocks(['c', 'b', 'd', 'a'])
+    b2.children = createBlocks(['a', 'c', 'b', 'd'])
+
+    const sortCb = (a: MdBlock, b: MdBlock) => {
+      if (a.blockType > b.blockType) {
+        return 1
+      }
+      if (a.blockType < b.blockType) {
+        return -1
+      }
+      return 0
+    }
+
+    it('should sort objects and children', () => {
+      const sorted = sortBlocks([...blocks], sortCb)
+      const expected = ['a', 'b', 'c', 'd']
+      expect(reduceResult(sorted)).toStrictEqual(expected)
+      expect(reduceResult(b1.children as MdDoc)).toStrictEqual(expected)
+      expect(reduceResult(b2.children as MdDoc)).toStrictEqual(expected)
+    })
+
+    it('should sort AND filter', () => {
+      const filterCb = (a: MdBlock, b: MdBlock) =>
+        a.metadata.sort && b.metadata.sort
+      const key = 2
+
+      blocks[key].children = createBlocks(['a', 'c', 'b', 'd']).map((x) => {
+        x.metadata.sort = true
+        return x
+      })
+
+      const sorted = sortBlocks([...blocks], sortCb, filterCb)
+
+      const expected = ['a', 'b', 'c', 'd']
+      const result = reduceResult(sorted[2].children as MdDoc)
+      expect(result).toStrictEqual(expected)
+    })
+  })
+
+  describe.skip('iterateBlocks', () => {
+    const blocks = createBlocks(['c', 'd', 'a', 'b'])
+    const test = 'test'
+    const newBlocks = iterateBlocks(blocks, (block: MdBlock) => {
+      block.metadata.test = 'test'
+      return block
+    })
+    expect(blocks.map(({ metadata }) => metadata.test)).toStrictEqual(
+      blocks.map(() => test)
+    )
+  })
 })
