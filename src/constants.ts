@@ -6,6 +6,13 @@ export const INFO = 'info'
 export const ZERO = 'zero'
 export const NONE = '_'
 export const FINDING = 'finding'
+export const FINDING_ID_SEPARATOR = '-'
+export const FINDING_ID_PREFIX_MIN_LENGTH = 3
+export const FINDING_ID_DEFAULT_PREFIX = 'ISSUE'
+export const FINDING_ID_ZERO_PADDING = 3
+export const FINDING_TITLE_LEVEL = 3
+export const FINDING_SECTIONS = ['Description', 'Recommendation', 'Status']
+export const TXT_PLACEHOLDER = '[...]'
 
 export const IMPACT = {
   [NONE]: 0,
