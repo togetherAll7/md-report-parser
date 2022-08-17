@@ -21,7 +21,8 @@
   },
   "exclude": [
     "src/test",
-    "dist",
+    "coverage",
+    "dist/**/*",
     "out"
   ]
 }
