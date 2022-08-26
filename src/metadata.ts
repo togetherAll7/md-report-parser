@@ -1,20 +1,32 @@
+import { StructuredType } from 'typescript'
 import yaml from 'yaml'
-import { parseFinding, isFindingType } from './Findings'
+import { parseFinding, isFindingType, FindingMetadata } from './Findings'
+import { LOW } from './constants'
 
 export const parseMetadata = (str: string) => yaml.parse(str)
 
 export const metadataToMd = (metadata: {}): string => yaml.stringify(metadata)
 
+export type Metadata = {
+  impact?: any
+  likelihood?: any
+  title?: string
+  location?: string
+}
+
 export const validateMetadata = (
-  metadata: string | { impact: any; likelihood: any } | undefined,
+  metadata: string | Metadata | undefined,
   type: any
 ) => {
   if (typeof metadata !== 'object') {
-    return metadata
+    return metadata || {}
   }
 
   if (isFindingType(type)) {
-    metadata = parseFinding(metadata)
+    const { impact, likelihood } = metadata
+    metadata.impact = impact || LOW
+    metadata.likelihood = likelihood || LOW
+    metadata = parseFinding(metadata as FindingMetadata)
   }
   return metadata
 }

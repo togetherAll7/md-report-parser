@@ -29,6 +29,7 @@ export type FindingMetadata = {
   likelihoodRate?: number
   riskRate?: number
   fixed?: boolean
+  location?: string
 }
 
 interface ArraySortCallback<TypeOne> {
