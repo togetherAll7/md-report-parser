@@ -52,6 +52,7 @@ function headersToDataBlocksSections(md: MarkdownIt) {
       }
     }
 
+    let skip = false
     for (let i = 0, l = state.tokens.length; i < l; i++) {
       const token = state.tokens[i]
 
@@ -64,8 +65,15 @@ function headersToDataBlocksSections(md: MarkdownIt) {
         closeSectionsToCurrentNesting(nestedLevel)
       }
 
+      if (type === openName) {
+        skip = true
+      }
+      if (type === closeName) {
+        skip = false
+      }
+
       // add sections before headers
-      if (type === 'heading_open') {
+      if (type === 'heading_open' && !skip) {
         const section: Section = {
           header: headingLevel(token.tag),
           nesting: nestedLevel
