@@ -5,6 +5,8 @@ import { arrayUnique } from './utils'
 
 export const getOptions = () => parseOptions()
 
+export const isHeadingType = (type: string) => HEADINGS.includes(type)
+
 export type MdBlock = {
   blockType: string
   metadata: { [key: string]: any }
@@ -47,13 +49,16 @@ export const isMdDoc = (x: any | undefined[]) => isMdBlockArr(x)
 export const mdBlockToMd = (block: MdBlock): string => {
   const { blockType, metadata, children, md } = createMdBlock(block)
   const { openMarkup, closeMarkup } = getOptions()
-  const child = children?.map((ch) => mdBlockToMd(ch)).join('\n')
-  let resultMd = [md, child]
-  if (HEADINGS.includes(blockType)) {
+  let resultMd = [md]
+  if (children?.length) {
+    resultMd.push(children?.map((ch) => mdBlockToMd(ch)).join('\n') || '')
+  }
+  if (isHeadingType(blockType)) {
     const markup = '#'.repeat(parseInt(blockType.replace('h', '')))
     const title = metadata.title || ''
-    resultMd = [`${markup} ${title}`, ...resultMd]
+    resultMd = [`${markup} ${title}`, '', ...resultMd]
   } else {
+    delete metadata.type
     resultMd = [
       `${openMarkup} ${blockType}`,
       metadataToMd(metadata),
@@ -61,7 +66,7 @@ export const mdBlockToMd = (block: MdBlock): string => {
       `${closeMarkup}`
     ]
   }
-  return resultMd.filter((x) => x).join('\n')
+  return resultMd.join('\n')
 }
 
 export const mdDocToMd = (doc: MdDoc): string =>
