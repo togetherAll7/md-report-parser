@@ -43,7 +43,7 @@ describe('MdParser', function () {
 
   describe('toMd', () => {
     it('Minimal  test', () => {
-      expect(parser.toMd(parser.parse(src))).toBe(src)
+      expect(parser.toMd(parser.parse(src))).toBe(`${src}\n\n`)
     })
   })
 })

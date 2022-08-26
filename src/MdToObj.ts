@@ -3,84 +3,131 @@ import {
   default as data_blocks,
   NAME as DATA_BLOCKS
 } from 'markdown-it-data-blocks'
-import { getOptions, MdDoc, createMdBlock } from './mdModel'
+import { MdDoc, createMdBlock, isHeadingType, MdBlock } from './mdModel'
 import headerSectionsToDataBlocks from './markdown-it-headers-to-data-blocks-sections'
 import Token from 'markdown-it/lib/token'
-import { MdParserOptions } from './MdParser'
+import { MdParserOptions, getDataBlocksPluginOptions } from './MdParser'
+// const { metadataBlockTypeName } = getOptions()
 
-const { metadataBlockTypeName } = getOptions()
+const isHeadingOpen = ({ type }: Token) => type === 'heading_open'
 
 const isHeadingClose = ({ type }: Token) => type === 'heading_close'
 
-const headingTokensToMd = (pos: number, tokens: Token[]) => {
+const isBlockDataOpeningTag = ({ type }: Token) =>
+  type === `${DATA_BLOCKS}_open`
+
+const isBlockDataClosingTag = ({ type }: Token) =>
+  type === `${DATA_BLOCKS}_close`
+
+const getEndingBlock = (token: Token, segment: Token[]) =>
+  segment.findIndex(
+    (t) =>
+      isBlockDataClosingTag(t) &&
+      t.tag === token.tag &&
+      JSON.stringify(t.map) === JSON.stringify(token.map)
+  )
+
+const newLineTokens = ['paragraph_close', 'soft_break', 'heading_close']
+const isNewLine = ({ type }: Token) => newLineTokens.includes(type)
+
+const getMd = (segment: Token[], start: number, end: number): string => {
+  return segment
+    .slice(start, end)
+    .map((t) => {
+      let nl = isNewLine(t) ? '\n' : ''
+      return `${t.content}${nl}`
+    })
+    .join('')
+}
+
+const headingTokensToMd = (
+  pos: number,
+  tokens: Token[],
+  open: boolean = false
+) => {
   const segment = tokens.slice(pos)
-  let end = segment.findIndex(isHeadingClose)
+  let end = segment.findIndex(open ? isHeadingOpen : isHeadingClose)
   if (end < 0) {
     end = tokens.length
   }
-  const md = segment
-    .slice(0, end)
-    .map(({ content }) => content)
-    .join('')
+  const md = getMd(segment, 0, end)
 
   return { md, end }
 }
 
-/* eslint-disable @typescript-eslint/naming-convention */
-export function MdToObj(options: MdParserOptions = {}): Function {
-  const { debug } = options
-
+const createParser = (options: MdParserOptions = {}) => {
   const parser = new MarkdownIt('zero')
   parser.block.ruler.enable(['heading'])
+  parser.use(data_blocks, {
+    ...getDataBlocksPluginOptions(options),
+    wrapOnly: true
+  })
   parser.use(headerSectionsToDataBlocks)
-  parser.use(data_blocks, { debug })
 
-  const isBlockDataOpeningTag = ({ type }: Token) =>
-    type === `${DATA_BLOCKS}_open`
+  // parser.enable('code')
+  return parser
+}
 
-  const isBlockDataClosingTag = ({ type }: Token) =>
-    type === `${DATA_BLOCKS}_close`
+/* eslint-disable @typescript-eslint/naming-convention */
+export function MdToObj(options: MdParserOptions = {}): Function {
+  const parser = createParser(options)
 
-  /*   const isBlockDataTag = (token: Token) =>
-    isBlockDataOpeningTag(token) || isBlockDataClosingTag(token) */
+  const getTokens = (src: string) => parser.parse(src, {})
 
   const parseHeadings = (tokens: Token[]): MdDoc => {
     const result: MdDoc = []
     for (let i = 0; i < tokens.length; i++) {
       const token = tokens[i]
-      const { meta, map } = token || {}
+      const { meta } = token || {}
+
       if (isBlockDataOpeningTag(token)) {
+        const blockType = meta.type
+        let metadata = meta || {}
+        let children: MdDoc = []
+        let md = ''
         const segment = tokens.slice(i + 1)
-        const endBlock = segment
-          .slice()
-          .findIndex(
-            (t) =>
-              isBlockDataClosingTag(t) &&
-              JSON.stringify(t.map) === JSON.stringify(map)
-          )
+        const endBlock = getEndingBlock(token, segment)
         let end = segment.findIndex(isBlockDataOpeningTag)
         if (end > endBlock || end < 0) {
           end = endBlock
         }
-        const metadata = meta || {}
-        const blockType = metadata.type
-        const heading = headingTokensToMd(i, tokens)
-        metadata.title = heading.md
-        const md = segment
-          .slice(heading.end, end)
-          .map(({ content }) => content)
-          .join('')
-        const children = parseHeadings(segment.slice(end, endBlock + 1))
+
+        if (!isHeadingType(blockType)) {
+          // Finding blocks
+
+          // md = token.content
+          const childrenTokens = getTokens(token.content)
+          md = headingTokensToMd(0, childrenTokens, true).md
+
+          const metadataToken = segment.find(
+            (t) => t.type === `${DATA_BLOCKS}_metadata_open`
+          )
+
+          if (metadataToken && metadataToken.meta) {
+            metadata = metadataToken.meta
+          }
+
+          children = parseHeadings(childrenTokens)
+        } else {
+          // Heading blocks
+          const heading = headingTokensToMd(i, tokens)
+          metadata.title = heading.md
+          md = getMd(segment, heading.end, end)
+
+          const ch = segment.slice(end, endBlock + 1)
+          children = ch.length > 1 ? parseHeadings(ch) : []
+        }
+
         const block = createMdBlock({ blockType, metadata, children, md })
         result.push(block)
-        i = endBlock
+        i += endBlock + 1
       }
     }
     return result
   }
 
   const parse = (src: string): MdDoc => {
-    const tokens = parser.parse(src, {})
+    const tokens = getTokens(src)
     return parseHeadings(tokens)
   }
 

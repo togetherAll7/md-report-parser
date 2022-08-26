@@ -14,6 +14,7 @@ import { findingModel } from '../Findings'
 import { metadataToMd } from '../metadata'
 import { FINDING } from '../constants'
 import { arrayUnique } from '../utils'
+import { removeEmptyLines } from './test.helpers'
 
 const { openMarkup, closeMarkup } = getOptions()
 
@@ -69,6 +70,7 @@ describe('mdModel', () => {
       const expected = [
         `${openMarkup} ${blockType}`,
         ...metadataToMd(metadata).split('\n'),
+        '',
         closeMarkup
       ].join('\n')
       expect(mdBlockToMd({ blockType, metadata })).toBe(expected)
@@ -112,7 +114,7 @@ describe('mdModel', () => {
       }
       const expected = toMdArr(obj).join('\n')
       const result = mdBlockToMd(obj)
-      expect(result).toBe(expected)
+      expect(removeEmptyLines(result)).toBe(removeEmptyLines(expected))
     })
   })
 

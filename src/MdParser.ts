@@ -26,19 +26,22 @@ export type MdParserOptions = MarkdownIt.Options & {
 const { metadataBlockTypeName } = getOptions()
 const titleLevel = FINDING_TITLE_LEVEL
 
-/* eslint-disable @typescript-eslint/naming-convention */
-export function MdParser(options: MdParserOptions = {}): MdParserDef {
+export const getDataBlocksPluginOptions = (options: MdParserOptions) => {
   const { debug, metadataCb } = options
   const metadataParser = MetadataParser({ metadataCb })
+  return {
+    ...RenderReports({ metadataBlockTypeName }),
+    metadataParser,
+    debug,
+    titleLevel
+  }
+}
 
+/* eslint-disable @typescript-eslint/naming-convention */
+export function MdParser(options: MdParserOptions = {}): MdParserDef {
   // Markdown-it instance for rendering
   const renderer = new MarkdownIt(options)
-    .use(data_blocks, {
-      ...RenderReports({ metadataBlockTypeName }),
-      metadataParser,
-      debug,
-      titleLevel
-    })
+    .use(data_blocks, getDataBlocksPluginOptions(options))
     .use(markdown_it_highlightjs, { register: { solidity } })
     .use(markdown_it_anchor)
     .use(markdown_it_table_of_contents, { includeLevel: [2, 3, 4, 5, 6] })
@@ -51,7 +54,7 @@ export function MdParser(options: MdParserOptions = {}): MdParserDef {
     return renderer.parse(src, {})
   }
 
-  const toMd = (data: MdDoc) => mdDocToMd(data)
+  const toMd = (doc: MdDoc) => mdDocToMd(doc)
 
   const editMd = (md: string, cbs: Function[]): string => {
     let doc = parse(md)
