@@ -63,7 +63,8 @@ export const mdBlockToMd = (block: MdBlock): string => {
       `${openMarkup} ${blockType}`,
       metadataToMd(metadata),
       ...resultMd,
-      `${closeMarkup}`
+      `${closeMarkup}`,
+      ''
     ]
   }
   return resultMd.join('\n')

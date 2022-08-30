@@ -71,7 +71,8 @@ describe('mdModel', () => {
         `${openMarkup} ${blockType}`,
         ...metadataToMd(metadata).split('\n'),
         '',
-        closeMarkup
+        closeMarkup,
+        ''
       ].join('\n')
       expect(mdBlockToMd({ blockType, metadata })).toBe(expected)
     })
