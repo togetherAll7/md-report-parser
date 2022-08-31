@@ -3,7 +3,6 @@ import {
   getOptions,
   MdBlock,
   createMdBlock,
-  mdDocToMd,
   isMdBlock,
   isMdDoc,
   sortBlocks,

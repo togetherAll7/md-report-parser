@@ -15,7 +15,6 @@ describe('MdToObj', () => {
     const result = parse(md)
     expect(Array.isArray(result)).toBe(true)
     expect(isMdDoc(result)).toBe(true)
-    console.log(mdDocToMd(result), md)
     expect(mdDocToMd(result)).toBe(md)
   })
 })

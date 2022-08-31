@@ -48,6 +48,33 @@ Finding Status
 
 /--
 
+--- finding
+
+id: xxx-001
+title: Untitled finding
+location: test
+impact: low
+likelihood: low
+fixed: false
+totalRisk: low
+
+#### Description
+
+[...]
+
+#### Recommendation
+
+[...]
+
+#### Status
+
+[...]
+
+/--
+
+
+
+
 ## Disclaimer
 
 ## Other section
