@@ -8,7 +8,8 @@ import {
   sortFindingsByRisk,
   iterateFindings,
   reindexFindings,
-  createFindingId
+  createFindingId,
+  parseFindingId
 } from '../Findings'
 import {
   FINDING,
@@ -19,9 +20,13 @@ import {
   LOW,
   MEDIUM
 } from '../constants'
-import { createMdBlock, isMdBlock, MdBlock } from '../mdModel'
+import { createMdBlock, isMdBlock, MdBlock, MdDoc, mdDocToMd } from '../mdModel'
 import { arrayUnique } from '../utils'
-import { parse } from 'path'
+
+import { getFile, removeEmptyLines } from './test.helpers'
+import MdToObj from '../MdToObj'
+
+const example = getFile('example.md')
 
 const testRisk = [
   [HIGH, LOW, MEDIUM],
@@ -66,6 +71,32 @@ describe('findings', () => {
         expect(calculateTotalRisk(params).totalRisk).toBe(totalRisk)
       })
     }
+  })
+
+  describe('parseFindingId', () => {
+    const decoId = (prefix: any, numeral: any) => {
+      return { prefix, numeral }
+    }
+
+    it('should parse ids', () => {
+      expect(parseFindingId('xxx-0001')).toStrictEqual(decoId('xxx', 1))
+      expect(parseFindingId('xxx-0010')).toStrictEqual(decoId('xxx', 10))
+      expect(parseFindingId('xx-0010')).toStrictEqual(
+        decoId(FINDING_ID_DEFAULT_PREFIX, 10)
+      )
+      expect(parseFindingId('xxx-----0010')).toStrictEqual(decoId('xxx', 1))
+      expect(parseFindingId('-0001')).toStrictEqual(
+        decoId(FINDING_ID_DEFAULT_PREFIX, 1)
+      )
+      expect(parseFindingId('-1')).toStrictEqual(
+        decoId(FINDING_ID_DEFAULT_PREFIX, 1)
+      )
+      expect(parseFindingId('0')).toStrictEqual(
+        decoId(FINDING_ID_DEFAULT_PREFIX, 1)
+      )
+      expect(parseFindingId('xxx-')).toStrictEqual(decoId('xxx', 1))
+      expect(parseFindingId('aaaa')).toStrictEqual(decoId('aaaa', 1))
+    })
   })
 
   describe('createFindingId', () => {
@@ -159,15 +190,64 @@ describe('findings', () => {
         return { blockType: FINDING, metadata }
       })
 
-    it('should reindex findings', () => {
-      const expected = ids.map((x, i) =>
-        createFindingId(`${prefix}-${ids[0]}`, i)
-      )
+    const expected = ids.map((x, i) =>
+      createFindingId(`${prefix}-${ids[0]}`, i)
+    )
 
+    it('should reindex findings', () => {
       const reindexed = reindexFindings([...findings])
       expect(reindexed.map(({ metadata }) => metadata.id)).toStrictEqual(
         expected
       )
+      expect(reindexFindings([...reindexed])).toStrictEqual(reindexed)
+    })
+
+    it('should reindex findings (multiple prefixes)', () => {
+      const pa = 'aaa'
+      const pb = 'bbb'
+      const ids = [
+        createFindingId(pa, 8),
+        createFindingId(pb, 100),
+        createFindingId(pa, 2),
+        createFindingId(pb, 1),
+        createFindingId(pb, 8)
+      ]
+
+      const expected = [
+        createFindingId(pa, 8),
+        createFindingId(pb, 100),
+        createFindingId(pa, 9),
+        createFindingId(pb, 101),
+        createFindingId(pb, 102)
+      ]
+
+      const findings = ids.map((id) => {
+        const metadata = parseFinding({ id, impact: HIGH, likelihood: LOW })
+        return {
+          blockType: FINDING,
+          metadata
+        }
+      })
+      const reindexed = reindexFindings([...findings])
+
+      expect(reindexed.map(({ metadata }) => metadata.id)).toStrictEqual(
+        expected
+      )
+      expect(reindexFindings([...reindexed])).toStrictEqual(reindexed)
+    })
+
+    it('should reindex findings (example.md)', () => {
+      const reindexed = reindexFindings(MdToObj()(example))
+      const findings: MdDoc = []
+      iterateFindings(reindexed, (block: MdBlock) => {
+        findings.push(block)
+        return block
+      })
+
+      expect(findings.length > 0).toBe(true)
+      const ids = findings.map((f) => f.metadata.id).map(parseFindingId)
+      const numerals = ids.map(({ numeral }) => numeral)
+      expect([...numerals].sort()).toStrictEqual(numerals)
     })
   })
 })

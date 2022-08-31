@@ -61,6 +61,17 @@ export const isFindingId = (str: string | undefined): boolean =>
 export const splitFindingId = (id: string | undefined) =>
   id ? id.split(FINDING_ID_SEPARATOR) : []
 
+export const parseFindingId = (
+  id: string
+): { prefix: string; numeral: number } => {
+  let [prefix, n] = splitFindingId(id)
+  const numeral = parseInt(n || '1')
+  if (prefix.length < FINDING_ID_PREFIX_MIN_LENGTH || !prefix) {
+    prefix = FINDING_ID_DEFAULT_PREFIX
+  }
+  return { prefix, numeral }
+}
+
 export const createFindingId = (prefixOrId?: string, n: number = 0) => {
   let [prefix, prev] = isFindingId(prefixOrId)
     ? splitFindingId(prefixOrId)
@@ -133,6 +144,7 @@ export const iterateFindings = (doc: MdDoc, cb: Function) => {
     if (isFindingBlock(block)) {
       cb(block)
     }
+    return block
   })
 }
 
@@ -145,13 +157,21 @@ export const sortFindingsByRisk = (doc: MdDoc): MdDoc =>
   })
 
 export const reindexFindings = (doc: MdDoc): MdDoc => {
-  const first = doc.find(
-    (block) => isFindingBlock(block) && isFindingId(block.metadata.id)
-  )
-  const [prefix, n] = splitFindingId(first?.metadata.id || createFindingId())
-  let next = parseInt(n) - 1
+  interface Pmap {
+    [key: string]: number
+  }
+
+  let map: Pmap = {}
+
   iterateFindings(doc, (block: MdBlock) => {
-    block.metadata.id = createFindingId(prefix, next++)
+    const { metadata } = block
+    let { prefix, numeral } = parseFindingId(metadata.id)
+    if (!map[prefix]) {
+      map[prefix] = numeral
+    }
+    block.metadata.id = createFindingId(prefix, map[prefix] - 1)
+    map[prefix] = map[prefix] + 1
+    return block
   })
   return doc
 }

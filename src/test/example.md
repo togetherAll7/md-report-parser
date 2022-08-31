@@ -72,8 +72,29 @@ totalRisk: low
 
 /--
 
+--- finding
 
+id: xxx-009
+title: Untitled finding
+location: test
+impact: low
+likelihood: low
+fixed: false
+totalRisk: low
 
+#### Description
+
+[...]
+
+#### Recommendation
+
+[...]
+
+#### Status
+
+[...]
+
+/--
 
 ## Disclaimer
 
