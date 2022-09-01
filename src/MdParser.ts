@@ -37,15 +37,18 @@ export const getDataBlocksPluginOptions = (options: MdParserOptions) => {
   }
 }
 
-/* eslint-disable @typescript-eslint/naming-convention */
-export function MdParser(options: MdParserOptions = {}): MdParserDef {
-  // Markdown-it instance for rendering
-  const renderer = new MarkdownIt(options)
+export function setupMarkdownIt(md: MarkdownIt, options: MdParserOptions = {}) {
+  return md
     .use(data_blocks, getDataBlocksPluginOptions(options))
     .use(markdown_it_highlightjs, { register: { solidity } })
     .use(markdown_it_anchor)
     .use(markdown_it_table_of_contents, { includeLevel: [2, 3, 4, 5, 6] })
+}
 
+/* eslint-disable @typescript-eslint/naming-convention */
+export function MdParser(options: MdParserOptions = {}): MdParserDef {
+  // Markdown-it instance for rendering
+  const renderer = setupMarkdownIt(new MarkdownIt(options), options)
   const parse = MdToObj(options)
 
   const render = (src: string) => renderer.render(src)
