@@ -1,8 +1,11 @@
 import { MdParser } from '../MdParser'
 import { isMdDoc } from '../mdModel'
+import { getFile } from './test.helpers'
+import exp from 'constants'
 
 const parser = MdParser()
 const src = '# Test'
+const finding = getFile('finding.md')
 
 describe('MdParser', function () {
   it('MdParser should have a "mdParse" method', () => {
@@ -32,6 +35,11 @@ describe('MdParser', function () {
       expect(parser.render(src).trim()).toEqual(
         '<h1 id="test" tabindex="-1">Test</h1>'.trim()
       )
+    })
+
+    it('render a finding', () => {
+      const html = parser.render(finding)
+      expect(/^<div class="finding"/.test(html)).toBe(true)
     })
   })
 
