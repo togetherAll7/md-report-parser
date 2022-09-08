@@ -2,13 +2,15 @@ import MarkdownIt from 'markdown-it'
 import markdown_it_highlightjs from 'markdown-it-highlightjs'
 import markdown_it_anchor from 'markdown-it-anchor'
 import markdown_it_table_of_contents from 'markdown-it-table-of-contents'
+import markdown_it_wrap_document from './markdown-it-document-wrapper'
 import { solidity } from 'highlightjs-solidity'
-import { default as data_blocks } from 'markdown-it-data-blocks'
+import { default as data_blocks, openName } from 'markdown-it-data-blocks'
 import { MetadataParser } from './metadata'
 import RenderReports from './renderReports'
 import { getOptions, mdDocToMd, MdDoc } from './mdModel'
 import { MdToObj } from './MdToObj'
-import { FINDING_TITLE_LEVEL } from './constants'
+import { FINDING_TITLE_LEVEL, FINDING } from './constants'
+import Token from 'markdown-it/lib/token'
 
 export type MdParserDef = {
   mdParse: Function
@@ -37,12 +39,21 @@ export const getDataBlocksPluginOptions = (options: MdParserOptions) => {
   }
 }
 
+const cssCb = (tokens: Token[]) => {
+  const findings = tokens.filter(
+    ({ type, meta }) =>
+      type === openName && meta[metadataBlockTypeName] === FINDING
+  )
+  return findings.length ? ['report'] : []
+}
+
 export function setupMarkdownIt(md: MarkdownIt, options: MdParserOptions = {}) {
   return md
     .use(data_blocks, getDataBlocksPluginOptions(options))
     .use(markdown_it_highlightjs, { register: { solidity } })
     .use(markdown_it_anchor)
     .use(markdown_it_table_of_contents, { includeLevel: [2, 3, 4, 5, 6] })
+    .use(markdown_it_wrap_document, { cssCb })
 }
 
 /* eslint-disable @typescript-eslint/naming-convention */

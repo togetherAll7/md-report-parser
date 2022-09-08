@@ -37,9 +37,9 @@ describe('MdParser', function () {
       )
     })
 
-    it('render a finding', () => {
+    it('should render a div.report with div.finding inside', () => {
       const html = parser.render(finding)
-      expect(/^<div class="finding"/.test(html)).toBe(true)
+      expect(/^<div class="report"><div class="finding"/.test(html)).toBe(true)
     })
   })
 
