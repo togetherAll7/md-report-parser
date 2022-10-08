@@ -6,8 +6,9 @@ const name = 'document_wrapper'
 const openName = `${name}_open`
 const closeName = `${name}_close`
 
-const isOpenToken = (token: Token): boolean => token.type === openName
-const isCloseToken = (token: Token): boolean => token.type === closeName
+const isOpenToken = (token: Token): boolean => token && token.type === openName
+const isCloseToken = (token: Token): boolean =>
+  token && token.type === closeName
 
 type Options = {
   cssCb: Function | undefined
@@ -26,6 +27,9 @@ export default function document_wrapper(
       return
     }
     const tokens = state.tokens
+    if (!tokens.length) {
+      return
+    }
     const opened = isOpenToken(tokens[0])
     const closed = isCloseToken(tokens[tokens.length - 1])
     if (opened && closed) {
