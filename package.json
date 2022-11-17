@@ -13,7 +13,7 @@
     "prepare": "npm run build",
     "check-format": "prettier --check src",
     "format": "prettier --write src && npm run lint -- --fix",
-    "test-file":"jest $FILE --collectCoverage false"
+    "test-file": "jest $FILE --collectCoverage false"
   },
   "repository": {
     "type": "git",
@@ -42,6 +42,7 @@
     "markdown-it-anchor": "^8.6.4",
     "markdown-it-data-blocks": "coinspect/markdown-it-data-blocks",
     "markdown-it-highlightjs": "^4.0.1",
+    "markdown-it-replace-link": "^1.1.0",
     "markdown-it-table-of-contents": "^0.6.0",
     "typescript": "^4.7.4",
     "yaml": "^2.1.1"

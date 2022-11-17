@@ -11,6 +11,7 @@ import { getOptions, mdDocToMd, MdDoc } from './mdModel'
 import { MdToObj } from './MdToObj'
 import { FINDING_TITLE_LEVEL, FINDING } from './constants'
 import Token from 'markdown-it/lib/token'
+import { default as markdown_it_replace_link } from 'markdown-it-replace-link'
 
 export type MdParserDef = {
   mdParse: Function
@@ -23,6 +24,7 @@ export type MdParserDef = {
 export type MdParserOptions = MarkdownIt.Options & {
   debug?: boolean | undefined
   metadataCb?: Function | undefined
+  replaceLink?: (link: string, env?: any) => string | undefined
 }
 
 const { metadataBlockTypeName } = getOptions()
@@ -54,6 +56,7 @@ export function setupMarkdownIt(md: MarkdownIt, options: MdParserOptions = {}) {
     .use(markdown_it_anchor)
     .use(markdown_it_table_of_contents, { includeLevel: [2, 3, 4, 5, 6] })
     .use(markdown_it_wrap_document, { cssCb })
+    .use(markdown_it_replace_link, options)
 }
 
 /* eslint-disable @typescript-eslint/naming-convention */
