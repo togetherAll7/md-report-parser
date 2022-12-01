@@ -1,4 +1,11 @@
-import { filterObjectFields, flipObject, arrayUnique } from '../utils'
+import {
+  filterObjectFields,
+  flipObject,
+  arrayUnique,
+  camelCaseToKebab,
+  camelCaseToText,
+  toCamelCase
+} from '../utils'
 
 describe('flipObjects', () => {
   it('should "flip" an object', () => {
@@ -35,4 +42,48 @@ describe('arrayUnique', () => {
       'test'
     ])
   })
+})
+
+describe('camelCaseToKebab', () => {
+  const test = [
+    ['thisIsATest', 'this-is-a-test'],
+    ['fooBarBaz', 'foo-bar-baz'],
+    ['ABC', 'abc'],
+    ['Abc', 'abc'],
+    ['abc', 'abc'],
+    ['AbC', 'ab-c']
+  ]
+  for (const [value, expected] of test) {
+    it(`camelCaseToKebab(${value}) should return ${expected}`, () => {
+      expect(camelCaseToKebab(value)).toBe(expected)
+    })
+  }
+})
+
+describe('camelCaseToText', () => {
+  const test = [
+    ['fooBar', 'Foo Bar'],
+    ['fooBarBaz', 'Foo Bar Baz']
+  ]
+  for (const [value, expected] of test) {
+    it(`camelCaseToText(${value}) should return ${expected}`, () => {
+      expect(camelCaseToText(value)).toBe(expected)
+    })
+  }
+})
+
+describe('toCamelCase', () => {
+  const test = [
+    ['foo', 'foo'],
+    ['foo Bar', 'fooBar'],
+    ['foo bar baz', 'fooBarBaz'],
+    ['foo Bar', 'fooBar'],
+    ['Foo BAR', 'fooBar'],
+    ['FooBar', 'foobar']
+  ]
+  for (const [value, expected] of test) {
+    it(`toCamelCase(${value}) should return ${expected}`, () => {
+      expect(toCamelCase(value)).toBe(expected)
+    })
+  }
 })

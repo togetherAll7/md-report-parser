@@ -21,3 +21,22 @@ export const filterObjectFields = (
 
 export const arrayUnique = (arr: any[]) =>
   arr.filter((v, i, self) => self.indexOf(v) === i)
+
+export const camelCaseToKebab = (str: string) =>
+  str
+    .replace(/((?<=[a-z\d])[A-Z]|(?<=[A-Z\d])[A-Z](?=[a-z]))/g, '-$1')
+    .toLowerCase()
+
+export const camelCaseToText = (str: string) =>
+  str.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())
+
+export const toCamelCase = (str: string) => {
+  return str
+    .toLowerCase()
+    .replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
+      if (+match === 0) {
+        return '' // or if (/\s+/.test(match)) for white spaces
+      }
+      return index === 0 ? match.toLowerCase() : match.toUpperCase()
+    })
+}
