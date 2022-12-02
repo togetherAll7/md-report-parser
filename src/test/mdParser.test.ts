@@ -1,7 +1,6 @@
 import { MdParser } from '../MdParser'
 import { isMdDoc } from '../mdModel'
 import { getFile } from './test.helpers'
-import exp from 'constants'
 
 const parser = MdParser()
 const src = '# Test'
