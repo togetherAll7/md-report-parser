@@ -1,4 +1,3 @@
-import exp from 'constants'
 import MarkdownIt from 'markdown-it'
 import markdown_it_wrap_document from '../markdown-it-document-wrapper'
 

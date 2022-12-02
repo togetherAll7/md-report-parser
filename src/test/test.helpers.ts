@@ -13,3 +13,6 @@ export const removeEmptyLines = (str: string) =>
     .split('\n')
     .filter((x) => x)
     .join('\n')
+
+export const removeNewLines = (str: string) =>
+  str.replace(/\r?\n|\r/g, '').trim()
