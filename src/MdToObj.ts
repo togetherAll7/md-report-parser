@@ -69,7 +69,7 @@ const createParser = (options: MdParserOptions = {}) => {
 }
 
 /* eslint-disable @typescript-eslint/naming-convention */
-export function MdToObj(options: MdParserOptions = {}): Function {
+export function MdToObj(options: MdParserOptions = {}): (md: string) => MdDoc {
   const parser = createParser(options)
 
   const getTokens = (src: string) => parser.parse(src, {})

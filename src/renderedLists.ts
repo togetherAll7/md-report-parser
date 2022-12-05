@@ -1,7 +1,8 @@
 import { FINDING_LIST, FINDING_RESUME } from './constants'
+import { MdDoc } from './mdModel'
 
 export const getRenderedLists = (
-  md: string,
+  data: any,
   name: string
 ): string | undefined => {
   switch (name) {
@@ -14,4 +15,8 @@ export const getRenderedLists = (
       break
   }
   return
+}
+
+export const parseRenderedLists = (parse: (md: string) => MdDoc) => {
+  return (md: string, name: string) => getRenderedLists(parse(md), name)
 }

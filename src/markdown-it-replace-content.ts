@@ -7,6 +7,10 @@ const closeName = `${name}_close`
 const contentName = `${name}_content`
 const tag = 'div'
 
+export interface RenderListCb {
+  (md: string, key: string): string | undefined
+}
+
 export const getListName = (str: string | undefined): string | undefined => {
   if (!str) {
     return
@@ -18,8 +22,9 @@ export const getListName = (str: string | undefined): string | undefined => {
 /* eslint-disable @typescript-eslint/naming-convention */
 export default function render_lists(
   md: MarkdownIt,
-  contentCB: (md: string, key: string) => string | undefined
+  options: { renderListCb: RenderListCb; skipKeys?: string[] }
 ) {
+  const { renderListCb, skipKeys } = options
   const replaceContent = (
     state: StateBlock,
     startLine: number,
@@ -29,18 +34,20 @@ export default function render_lists(
     if (silent) {
       return false
     }
-    const opener = state.getLines(startLine, startLine + 1, 0, false)
+    const end = startLine + 1
+    const opener = state.getLines(startLine, end, 0, false)
     if (opener.charCodeAt(0) !== 0x5b /* [ */) {
       return false
     }
 
     const name = getListName(opener)
-    if (!name) {
+    if (!name || (Array.isArray(skipKeys) && skipKeys.includes(name))) {
       return false
     }
-    const content = contentCB(state.src, name)
 
-    if (!content) {
+    const content = renderListCb(state.src, name)
+
+    if (undefined === content || null === content) {
       return false
     }
 
@@ -51,7 +58,7 @@ export default function render_lists(
     token.meta = { name, content }
     token = state.push(closeName, tag, -1)
 
-    state.line = endLine + 1
+    state.line = end
 
     return true
   }
