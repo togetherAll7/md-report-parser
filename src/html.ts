@@ -10,12 +10,16 @@ export const tag = (
   if (Array.isArray(content)) {
     content = content.join('\n')
   }
-  if (typeof content === 'boolean') {
+
+  if (['boolean', 'number'].includes(typeof content)) {
     content = `${content}`
   }
   content = content || ''
+
   if (typeof content !== 'string') {
-    throw new Error('Content should be a string')
+    throw new Error(
+      `Content should be a string, (typeof content = ${typeof content})`
+    )
   }
   let a = attrs
     ? Object.entries(attrs)
@@ -42,3 +46,28 @@ export const dl = (
     ),
     attrs
   )
+
+export const table = (
+  data: any[],
+  fields: { [key: string]: string },
+  attrs?: { class: string }
+) => {
+  if (!data.length) {
+    return
+  }
+
+  const fieldNames = Object.keys(fields)
+  const header = tag(
+    'tr',
+    fieldNames.map((fieldName) => tag('th', `${fields[fieldName]}`))
+  )
+  const cells = data
+    .map((d) =>
+      tag(
+        'tr',
+        fieldNames.map((fieldName) => tag('td', d[fieldName]))
+      )
+    )
+    .join('')
+  return tag('table', `${header}${cells}`, attrs)
+}
