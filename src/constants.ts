@@ -34,3 +34,4 @@ export const HEADINGS = [...Array(6)].map((x, i) => `h${i}`)
 
 export const FINDING_LIST = 'finding-list'
 export const FINDING_RESUME = 'finding-resume'
+export const FINDING_HEADER = 'findingHeader'

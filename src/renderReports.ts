@@ -1,6 +1,7 @@
 import { renderTemplate } from './Templates'
 import Renderer from 'markdown-it/lib/renderer'
 import { isFindingType } from './Findings'
+import { FINDING_HEADER } from './constants'
 
 /* eslint-disable @typescript-eslint/naming-convention */
 export function RenderReports({
@@ -19,7 +20,7 @@ export function RenderReports({
     const metadata = token.meta || {}
     const className = metadata[metadataBlockTypeName]
     return isFindingType(className)
-      ? renderTemplate('findingHeader', metadata)
+      ? renderTemplate(FINDING_HEADER, metadata)
       : ''
   }
 
