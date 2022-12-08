@@ -169,7 +169,7 @@ describe('mdModel', () => {
     })
   })
 
-  describe.skip('iterateBlocks', () => {
+  describe('iterateBlocks', () => {
     const blocks = createBlocks(['c', 'd', 'a', 'b'])
     const test = 'test'
     const newBlocks = iterateBlocks(blocks, (block: MdBlock) => {
