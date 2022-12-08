@@ -1,20 +1,17 @@
-import { FINDING_LIST, FINDING_RESUME } from './constants'
 import { MdDoc } from './mdModel'
+import { renderTemplate } from './Templates'
 
 export const getRenderedLists = (
-  data: any,
+  doc: MdDoc,
   name: string
 ): string | undefined => {
-  switch (name) {
-    case FINDING_LIST:
-      return `<pre>${FINDING_LIST}</pre>`
-      break
-
-    case FINDING_RESUME:
-      return `<pre>${FINDING_RESUME}</pre>`
-      break
+  try {
+    const html = renderTemplate(name, doc)
+    return html
+  } catch (err) {
+    console.error(err)
+    return ''
   }
-  return
 }
 
 export const parseRenderedLists = (parse: (md: string) => MdDoc) => {

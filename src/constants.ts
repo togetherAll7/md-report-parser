@@ -13,7 +13,20 @@ export const FINDING_ID_ZERO_PADDING = 3
 export const FINDING_TITLE_LEVEL = 3
 export const FINDING_SECTIONS = ['Description', 'Recommendation', 'Status']
 export const TXT_PLACEHOLDER = '[...]'
+export const TOTAL_RISK = 'totalRisk'
+export const ID = 'id'
+export const IMACT_RATE = 'impactRate'
+export const TITLE = 'title'
+export const TOTAL = 'total'
+export const NOT_FIXED = 'notFixed'
+export const PARTIALLY_FIXED = 'partiallyFixed'
+export const OPEN = 'open'
+export const FIXED_PERCENT = 'fixedPercent'
 
+export const LIKELIHOOD_RATE = 'likelihoodRate'
+export const RISK_RATE = 'riskRate'
+export const FIXED = 'fixed'
+export const LOCATION = 'location'
 export const IMPACT = {
   [NONE]: 0,
   [LOW]: 1,

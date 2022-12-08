@@ -9,7 +9,15 @@ reportType: Smart contract audit
 
 [[toc]]
 
-## Findings
+## Executive Summary
+
+[[finding-resume]]
+
+## Summary of Findings
+
+[[finding-list]]
+
+## Detailed Findings
 
 --- finding
 id: xxx-2

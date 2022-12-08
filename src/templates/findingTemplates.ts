@@ -1,17 +1,18 @@
 import { FINDING_HEADER, FINDING_LIST, FINDING_RESUME } from '../constants'
-import { dl } from '../html'
+import { dl, table } from '../html'
 import { filterObjectFields } from '../utils'
-import { findingFields } from '../Findings'
-import * as pug from 'pug'
-import path from 'path'
+import {
+  findingFields,
+  getFindings,
+  FINDING_LIST_TITLES,
+  getFindingResumeData,
+  FINDING_RESUME_TITLES
+} from '../Findings'
+import { MdDoc } from '../mdModel'
 
 const findingRenderFields = findingFields.filter(
   (f) => !['title', 'id'].includes(f)
 )
-
-const getTemplate = (name: string) => path.join(__dirname, name)
-const renderPug = (name: string, data: any) =>
-  pug.renderFile(getTemplate(name), data)
 
 export default {
   [FINDING_HEADER]: (data: ArrayLike<unknown> | { [s: string]: unknown }) =>
@@ -19,9 +20,8 @@ export default {
       class: 'finding-header'
     }),
 
-  [FINDING_LIST]: (data: ArrayLike<unknown>) =>
-    renderPug('findingList.pug', data),
+  [FINDING_LIST]: (doc: MdDoc) => table(getFindings(doc), FINDING_LIST_TITLES),
 
-  [FINDING_RESUME]: (data: ArrayLike<unknown>) =>
-    renderPug('findingResume.pug', data)
+  [FINDING_RESUME]: (doc: MdDoc) =>
+    table(getFindingResumeData(getFindings(doc)), FINDING_RESUME_TITLES)
 }

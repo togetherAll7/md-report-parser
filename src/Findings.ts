@@ -6,10 +6,22 @@ import {
   FINDING_ID_ZERO_PADDING,
   FINDING_SECTIONS,
   FINDING_TITLE_LEVEL,
+  FIXED,
   HIGH,
   IMPACT,
   LIKELIHOOD,
-  RISK
+  RISK,
+  TOTAL_RISK,
+  ID,
+  TITLE,
+  NONE,
+  PARTIALLY_FIXED,
+  TOTAL,
+  NOT_FIXED,
+  OPEN,
+  FIXED_PERCENT,
+  MEDIUM,
+  LOW
 } from './constants'
 import {
   createMdBlock,
@@ -18,7 +30,7 @@ import {
   sortBlocks,
   iterateBlocks
 } from './mdModel'
-import { flipObject } from './utils'
+import { flipObject, camelCaseToText, toCamelCase } from './utils'
 
 export type FindingMetadata = {
   id?: string
@@ -174,4 +186,74 @@ export const reindexFindings = (doc: MdDoc): MdDoc => {
     return block
   })
   return doc
+}
+
+export const getFindings = (doc: MdDoc) => {
+  const findings: any[] = []
+  iterateFindings(doc, (f: any) => findings.push(f))
+  return findings.map(({ metadata }) => metadata)
+}
+
+export const findingListFieds = [ID, TITLE, TOTAL_RISK, FIXED]
+
+interface Sarasa {
+  [key: string]: string
+}
+
+export const FINDING_LIST_TITLES = findingFields.reduce(
+  (v: { [k: string]: string }, a: string) => {
+    v[a] = camelCaseToText(a)
+    return v
+  },
+  {}
+)
+
+export const FINDING_RESUME_RISKS = [HIGH, MEDIUM, LOW]
+export const FINDING_RESUME_FIELDS = [OPEN, FIXED, TOTAL]
+
+export const FINDING_RESUME_TITLES = FINDING_RESUME_RISKS.reduce(
+  (v: { [k: string]: string }, a) => {
+    v[a] = `${a} risk`
+    return v
+  },
+  {}
+)
+
+export const getFindingResume = (findings: any[]) => {
+  const resume: { [key: string]: any } = {}
+  if (!findings.length) {
+    return
+  }
+  for (const risk of Object.values(RISK)) {
+    const perRiskFindings = findings.filter((f) => f.totalRisk === risk)
+    const total = perRiskFindings.length
+    const fixed = perRiskFindings.filter((f) => f.fixedKey === FIXED).length
+    const partiallyFixed = perRiskFindings.filter(
+      (f) => f.fixedKey === PARTIALLY_FIXED
+    ).length
+
+    resume[risk] = {
+      [TOTAL]: total,
+      [FIXED]: fixed,
+      [NOT_FIXED]: total ? total - fixed : 0,
+      [PARTIALLY_FIXED]: partiallyFixed,
+      [OPEN]: total ? total - fixed - partiallyFixed : 0,
+      [FIXED_PERCENT]: fixed ? `${Math.ceil((fixed * 100) / total)}%` : NONE
+    }
+  }
+
+  return resume
+}
+
+export const getFindingResumeData = (findings: any[]) => {
+  const data = getFindingResume(findings)
+  if (!data) {
+    return []
+  }
+  return FINDING_RESUME_FIELDS.map((field) =>
+    FINDING_RESUME_RISKS.reduce((v: { [key: string]: string }, risk) => {
+      v[risk] = data[risk][field]
+      return v
+    }, {})
+  )
 }
