@@ -9,7 +9,7 @@ import {
   iterateBlocks,
   MdDoc
 } from '../mdModel'
-import { findingModel } from '../Findings'
+import { FINDING_MODEL } from '../Findings'
 import { metadataToMd } from '../metadata'
 import { FINDING } from '../constants'
 import { arrayUnique } from '../utils'
@@ -22,7 +22,7 @@ const reduceResult = (arr: MdDoc) =>
 
 describe('mdModel', () => {
   const blockType = FINDING
-  const metadata = { ...findingModel }
+  const metadata = { ...FINDING_MODEL }
   const block = { blockType: 'xxx', metadata: {} }
 
   describe('isMdBlock', () => {

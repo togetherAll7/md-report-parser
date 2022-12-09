@@ -111,7 +111,7 @@ export const calculateTotalRisk = ({ impact, likelihood }: FindingMetadata) => {
   return { impact, likelihood, totalRisk, impactRate, likelihoodRate, riskRate }
 }
 
-const finding = {
+const NEW_FINDING_MODEL = {
   id: createFindingId(),
   title: 'Untitled Finding',
   location: '',
@@ -126,9 +126,9 @@ export const parseFinding = (data: FindingMetadata) => {
   return Object.assign({ ...data }, { impact, likelihood, totalRisk, fixed })
 }
 
-export const findingModel = parseFinding(finding)
+export const FINDING_MODEL = parseFinding(NEW_FINDING_MODEL)
 
-export const findingFields = Object.keys(findingModel)
+export const findingFields = Object.keys(FINDING_MODEL)
 
 export const isFindingBlock = (block: MdBlock) => isFindingType(block.blockType)
 
