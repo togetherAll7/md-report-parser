@@ -48,3 +48,7 @@ export const HEADINGS = [...Array(6)].map((x, i) => `h${i}`)
 export const FINDING_LIST = 'finding-list'
 export const FINDING_RESUME = 'finding-resume'
 export const FINDING_HEADER = 'findingHeader'
+
+export const CUSTOMER_NAME = 'customerName'
+export const REPORT_TYPE = 'reportType'
+export const SMART_CONTRACT_AUDIT_KEY = 'smartContractAudit'

@@ -141,7 +141,9 @@ describe('findings', () => {
   })
 
   describe('sortFindingsByRisk', () => {
-    const blocks = testRisk.map(parseFinding).map(createFindingBlock)
+    const blocks = testRisk
+      .map(parseFinding)
+      .map((meta) => createFindingBlock(meta))
 
     it('should sort findings by risk', () => {
       const sorted = sortFindingsByRisk([...blocks])

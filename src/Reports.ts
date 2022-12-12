@@ -1,0 +1,10 @@
+import {
+  CUSTOMER_NAME,
+  REPORT_TYPE,
+  SMART_CONTRACT_AUDIT_KEY
+} from './constants'
+
+export const REPORT_METADATA = {
+  [CUSTOMER_NAME]: 'Customer Name',
+  [REPORT_TYPE]: SMART_CONTRACT_AUDIT_KEY
+}

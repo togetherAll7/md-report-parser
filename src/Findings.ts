@@ -21,7 +21,8 @@ import {
   OPEN,
   FIXED_PERCENT,
   MEDIUM,
-  LOW
+  LOW,
+  TXT_PLACEHOLDER
 } from './constants'
 import {
   createMdBlock,
@@ -132,11 +133,15 @@ export const findingFields = Object.keys(FINDING_MODEL)
 
 export const isFindingBlock = (block: MdBlock) => isFindingType(block.blockType)
 
-export const createFindingBlock = (metadata: FindingMetadata): MdBlock => {
+export const createFindingBlock = (
+  metadata: FindingMetadata,
+  placeholders?: boolean
+): MdBlock => {
   metadata = parseFinding(metadata)
   const blockType = `h${FINDING_TITLE_LEVEL}`
+  const md = placeholders ? `${TXT_PLACEHOLDER}\n` : ''
   const children = FINDING_SECTIONS.map((title) =>
-    createMdBlock({ blockType, metadata: { title } })
+    createMdBlock({ blockType, metadata: { title }, md })
   )
   return createMdBlock({ blockType: FINDING, metadata, children })
 }

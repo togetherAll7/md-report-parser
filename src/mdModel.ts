@@ -46,9 +46,21 @@ export function isMdBlockArr(arr: any | undefined[]) {
 
 export const isMdDoc = (x: any | undefined[]) => isMdBlockArr(x)
 
+export const wrapBlock = (blockType: string, content: string) => {
+  if (!blockType) {
+    throw new Error('Missing blockType')
+  }
+  const { openMarkup, closeMarkup } = getOptions()
+  return [
+    `${openMarkup} ${blockType}`,
+    `${content}`,
+    `${closeMarkup}`,
+    ''
+  ].join('\n')
+}
+
 export const mdBlockToMd = (block: MdBlock): string => {
   const { blockType, metadata, children, md } = createMdBlock(block)
-  const { openMarkup, closeMarkup } = getOptions()
   let resultMd = [md]
   if (children?.length) {
     resultMd.push(children?.map((ch) => mdBlockToMd(ch)).join('\n') || '')
@@ -60,11 +72,7 @@ export const mdBlockToMd = (block: MdBlock): string => {
   } else {
     delete metadata.type
     resultMd = [
-      `${openMarkup} ${blockType}`,
-      metadataToMd(metadata),
-      ...resultMd,
-      `${closeMarkup}`,
-      ''
+      wrapBlock(blockType, [metadataToMd(metadata), ...resultMd].join('\n'))
     ]
   }
   return resultMd.join('\n')
