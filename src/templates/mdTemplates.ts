@@ -32,5 +32,3 @@ ${createFinding()}
 ${TXT_PLACEHOLDER}
   `
 }
-
-console.log(createNewReport())
