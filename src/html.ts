@@ -1,4 +1,5 @@
 const getFieldAttributes = (name: string, value: unknown) => {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   return { class: `field-${name}` }
 }
 
@@ -47,6 +48,12 @@ export const dl = (
     attrs
   )
 
+const getFieldData = (data: any, fieldName: string) => {
+  const value = `${data[fieldName]}`
+  const attrs = getFieldAttributes(fieldName, value)
+  return { value, attrs }
+}
+
 export const table = (
   data: any[],
   fields: { [key: string]: string },
@@ -59,13 +66,19 @@ export const table = (
   const fieldNames = Object.keys(fields)
   const header = tag(
     'tr',
-    fieldNames.map((fieldName) => tag('th', `${fields[fieldName]}`))
+    fieldNames.map((fieldName) => {
+      const { value, attrs } = getFieldData(fields, fieldName)
+      return tag('th', value, attrs)
+    })
   )
   const cells = data
     .map((d) =>
       tag(
         'tr',
-        fieldNames.map((fieldName) => tag('td', d[fieldName]))
+        fieldNames.map((fieldName) => {
+          const { value, attrs } = getFieldData(d, fieldName)
+          return tag('td', value, attrs)
+        })
       )
     )
     .join('')

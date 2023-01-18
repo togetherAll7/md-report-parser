@@ -8,15 +8,16 @@ describe('html', () => {
     const fields = { [A]: 'foo', [B]: 'bar' }
     const data = [{ [A]: 'test_a', [B]: 'test_b' }]
     const html = table(data, fields)
+    console.log(html)
     const expected =
       '<table >' +
       '<tr>' +
-      `<th  data-value="${fields[A]}">${fields[A]}</th>` +
-      `<th  data-value="${fields[B]}">${fields[B]}</th>` +
+      `<th  class="field-${A}"  data-value="${fields[A]}">${fields[A]}</th>` +
+      `<th  class="field-${B}" data-value="${fields[B]}">${fields[B]}</th>` +
       '</tr>' +
       '<tr>' +
-      `<td data-value="${data[0][A]}">${data[0][A]}</td>` +
-      `<td data-value="${data[0][B]}">${data[0][B]}</td>` +
+      `<td class="field-${A}" data-value="${data[0][A]}">${data[0][A]}</td>` +
+      `<td class="field-${B}" data-value="${data[0][B]}">${data[0][B]}</td>` +
       '</tr>' +
       '</table>'
 
