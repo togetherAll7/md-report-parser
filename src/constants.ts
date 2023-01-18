@@ -52,3 +52,5 @@ export const FINDING_HEADER = 'findingHeader'
 export const CUSTOMER_NAME = 'customerName'
 export const REPORT_TYPE = 'reportType'
 export const SMART_CONTRACT_AUDIT_KEY = 'smartContractAudit'
+
+export const REPORT_HEADER = 'report-header'
