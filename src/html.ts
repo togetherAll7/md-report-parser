@@ -3,9 +3,11 @@ const getFieldAttributes = (name: string, value: unknown) => {
   return { class: `field-${name}` }
 }
 
+const isAutoClosedTag = (tag: string) => ['img', 'input'].includes(tag)
+
 export const tag = (
   t: string,
-  content: unknown,
+  content?: unknown,
   attrs?: ArrayLike<unknown> | { [s: string]: unknown } | undefined
 ) => {
   if (Array.isArray(content)) {
@@ -27,10 +29,10 @@ export const tag = (
         .map(([n, v]) => `${n}="${v}"`)
         .join(' ')
     : ''
-  if (content.trim().split(' ').length === 1) {
+  if (content && content.trim().split(' ').length === 1) {
     a += ` data-value="${content.trim()}"`
   }
-  return `<${t} ${a}>${content}</${t}>`
+  return `<${t} ${a} ` + (isAutoClosedTag(t) ? '/>' : `>${content}</${t}>`)
 }
 export const dl = (
   data: ArrayLike<unknown> | { [s: string]: unknown },
