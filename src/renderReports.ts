@@ -2,6 +2,7 @@ import { renderTemplate } from './Templates'
 import Renderer from 'markdown-it/lib/renderer'
 import { isFindingType } from './Findings'
 import { FINDING_HEADER } from './constants'
+import { camelCaseToKebab } from './utils'
 
 /* eslint-disable @typescript-eslint/naming-convention */
 export function RenderReports({
@@ -31,8 +32,17 @@ export function RenderReports({
     if (token.nesting === 1) {
       const metadata = token.meta || {}
       const className = getClassName(metadata)
+      const { totalRisk, fixed, likelihood, impact } = metadata
       if (className) {
         token.attrJoin('class', `${className}`)
+      }
+
+      const fields: any = { totalRisk, fixed, likelihood, impact }
+      for (const field in fields) {
+        const value = fields[field]
+        if (value) {
+          token.attrJoin(`data-${camelCaseToKebab(field)}`, value)
+        }
       }
     }
     return self.renderToken(tokens, idx, _options)
