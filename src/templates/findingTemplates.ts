@@ -20,7 +20,10 @@ export default {
       class: 'finding-header'
     }),
 
-  [FINDING_LIST]: (doc: MdDoc) => table(getFindings(doc), FINDING_LIST_TITLES),
+  [FINDING_LIST]: (doc: MdDoc) => {
+    const { id, title, totalRisk, fixed } = FINDING_LIST_TITLES
+    return table(getFindings(doc), { id, title, totalRisk, fixed })
+  },
 
   [FINDING_RESUME]: (doc: MdDoc) =>
     table(getFindingResumeData(getFindings(doc)), FINDING_RESUME_TITLES)
