@@ -17,6 +17,7 @@ import {
   getFindings,
   FINDING_LIST_TITLES,
   getFindingResumeData,
+  FINDING_RESUME_RISKS,
   FINDING_RESUME_TITLES
 } from '../Findings'
 import { MdDoc, getDocMetadata } from '../mdModel'
@@ -56,8 +57,25 @@ export default {
   },
 
   [FINDING_RESUME]: (doc: MdDoc) => {
-    console.log(getFindingResumeData(getFindings(doc)))
-    return table(getFindingResumeData(getFindings(doc)), FINDING_RESUME_TITLES)
+    const titles = FINDING_RESUME_TITLES
+    const data = Object.entries(getFindingResumeData(getFindings(doc))).reduce(
+      (v: any[], [status, d]) => {
+        const x = Object.entries(d).reduce(
+          (xv: { [key: string]: any }, [risk, value]) => {
+            xv[risk] =
+              tag('div', status, { class: 'label' }) +
+              tag('div', value, { class: 'value' })
+            return xv
+          },
+          {}
+        )
+        v.push(x)
+        return v
+      },
+      []
+    )
+
+    return table(Object.values(data), titles)
   },
 
   [REPORT_HEADER]: (doc: MdDoc) => renderReportHeader(doc)
