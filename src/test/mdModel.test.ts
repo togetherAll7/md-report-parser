@@ -7,7 +7,8 @@ import {
   isMdDoc,
   sortBlocks,
   iterateBlocks,
-  MdDoc
+  MdDoc,
+  getDocMetadata
 } from '../mdModel'
 import { FINDING_MODEL } from '../Findings'
 import { metadataToMd } from '../metadata'
@@ -179,5 +180,23 @@ describe('mdModel', () => {
     expect(blocks.map(({ metadata }) => metadata.test)).toStrictEqual(
       blocks.map(() => test)
     )
+  })
+
+  describe('getDocMetadata', () => {
+    it('should return an empty object', () => {
+      const doc = createBlocks(['foo', 'bar'])
+      expect(getDocMetadata(doc)).toStrictEqual({})
+    })
+
+    it('should return the metadata of the first metadata block', () => {
+      const metadata = { foo: 'FOO', bar: 'BaR', baz: 'bAz' }
+      const blockType = 'metadata'
+      const doc: MdDoc = [
+        { blockType, metadata },
+        { blockType: 'xxx', metadata: {} },
+        { blockType, metadata: { test: 'foo' } }
+      ]
+      expect(getDocMetadata(doc)).toStrictEqual(metadata)
+    })
   })
 })

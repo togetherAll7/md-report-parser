@@ -123,3 +123,9 @@ export const iterateBlocks = (doc: MdDoc, cb: Function) => {
   })
   return doc
 }
+
+export const getDocMetadata = (doc: MdDoc) => {
+  const { metadata } =
+    doc.filter(({ blockType }) => blockType === 'metadata')[0] || {}
+  return metadata || {}
+}
