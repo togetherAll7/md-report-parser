@@ -3,13 +3,11 @@ const getFieldAttributes = (name: string, value: unknown) => {
   return { class: `field-${name}` }
 }
 
+type TagAttributes = ArrayLike<unknown> | { [s: string]: unknown } | undefined
+
 const isAutoClosedTag = (tag: string) => ['img', 'input'].includes(tag)
 
-export const tag = (
-  t: string,
-  content?: unknown,
-  attrs?: ArrayLike<unknown> | { [s: string]: unknown } | undefined
-) => {
+export const tag = (t: string, content?: unknown, attrs?: TagAttributes) => {
   if (Array.isArray(content)) {
     content = content.join('\n')
   }
@@ -85,4 +83,23 @@ export const table = (
     )
     .join('')
   return tag('table', `${header}${cells}`, attrs)
+}
+
+interface ObjData {
+  [key: string]: string
+}
+
+export const ul = (data: ObjData | string[], attrs?: TagAttributes) => {
+  const isArray = Array.isArray(data)
+  const values = Object.entries(data).map(([field, value]) => {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const att = isArray ? {} : { 'data-field': field }
+    return { field, value, att }
+  })
+
+  return tag(
+    'ul',
+    values.map(({ value, att }) => tag('li', value, att)),
+    attrs
+  )
 }

@@ -1,5 +1,7 @@
-import { table, tag } from '../html'
+import { table, tag, ul } from '../html'
 import { removeWhiteSpace } from './test.helpers'
+
+const clear = (s: string) => s.replace(/ /g, '').replace(/\n/g, '')
 
 describe('html', () => {
   describe('tag', () => {
@@ -19,6 +21,29 @@ describe('html', () => {
       for (const t of tags) {
         expect(tag(t)).toBe(`<${t}  />`)
       }
+    })
+  })
+
+  describe('ul', () => {
+    it('should render a list from an array', () => {
+      const data = ['foo', 'bar', 'baz']
+      const html = ul(data)
+      const expected = `<ul  >${data
+        .map((d) => `<li data-value="${d}" >${d}</li>`)
+        .join('')}</ul>`
+      expect(clear(html)).toBe(clear(expected))
+    })
+
+    it('should render a list from an object', () => {
+      const data = { foo: 'FOO', bar: 'BAR', baz: 'BAZ' }
+      const html = ul(data)
+      const expected = `<ul  >${Object.entries(data)
+        .map(
+          ([field, value]) =>
+            `<li  data-field="${field}" data-value="${value}">${value}</li>`
+        )
+        .join('')}</ul>`
+      expect(clear(html)).toBe(clear(expected))
     })
   })
 
