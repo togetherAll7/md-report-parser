@@ -57,7 +57,8 @@ const getFieldData = (data: any, fieldName: string) => {
 export const table = (
   data: any[],
   fields: { [key: string]: string },
-  attrs?: { class: string }
+  attrs?: { class: string },
+  rowAttrs?: any[]
 ) => {
   if (!data.length) {
     return
@@ -72,13 +73,14 @@ export const table = (
     })
   )
   const cells = data
-    .map((d) =>
+    .map((d, i) =>
       tag(
         'tr',
         fieldNames.map((fieldName) => {
           const { value, attrs } = getFieldData(d, fieldName)
           return tag('td', value, attrs)
-        })
+        }),
+        rowAttrs ? rowAttrs[i] : undefined
       )
     )
     .join('')
