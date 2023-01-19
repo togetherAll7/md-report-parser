@@ -1,5 +1,10 @@
-import { FINDING_HEADER, FINDING_LIST, FINDING_RESUME } from '../constants'
-import { dl, table } from '../html'
+import {
+  FINDING_HEADER,
+  FINDING_LIST,
+  FINDING_RESUME,
+  REPORT_HEADER
+} from '../constants'
+import { dl, table, tag, ul } from '../html'
 import { filterObjectFields } from '../utils'
 import {
   findingFields,
@@ -8,11 +13,24 @@ import {
   getFindingResumeData,
   FINDING_RESUME_TITLES
 } from '../Findings'
-import { MdDoc } from '../mdModel'
+import { MdDoc, getDocMetadata } from '../mdModel'
 
 const findingRenderFields = findingFields.filter(
   (f) => !['title', 'id'].includes(f)
 )
+
+const renderReportHeader = (doc: MdDoc) => {
+  const metadata = getDocMetadata(doc)
+  const { reportType, customerName, productName, date, version } = metadata
+  return (
+    tag('div', tag('img', '', { src: 'logo.svg', alt: 'logo' }), {
+      class: 'logo'
+    }) +
+    tag('div', productName, { class: 'title' }) +
+    tag('div', reportType, { class: 'subtitle' }) +
+    tag('div', ul({ version, customerName, date }), { class: 'foot' })
+  )
+}
 
 export default {
   [FINDING_HEADER]: (data: ArrayLike<unknown> | { [s: string]: unknown }) =>
@@ -26,5 +44,7 @@ export default {
   },
 
   [FINDING_RESUME]: (doc: MdDoc) =>
-    table(getFindingResumeData(getFindings(doc)), FINDING_RESUME_TITLES)
+    table(getFindingResumeData(getFindings(doc)), FINDING_RESUME_TITLES),
+
+  [REPORT_HEADER]: (doc: MdDoc) => renderReportHeader(doc)
 }

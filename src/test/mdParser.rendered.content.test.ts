@@ -1,7 +1,9 @@
-import { FINDING_LIST, FINDING_RESUME } from '../constants'
+import { FINDING_LIST, FINDING_RESUME, REPORT_HEADER } from '../constants'
 import { getRenderedLists } from '../renderedLists'
 import { removeNewLines, getFile } from './test.helpers'
 import { MdParser } from '../MdParser'
+import { metadataToMd } from '../metadata'
+import { wrapBlock } from '../mdModel'
 const parser = MdParser()
 
 const title = 'test'
@@ -25,5 +27,24 @@ describe('mdParser replace content', () => {
     const html = removeNewLines(parser.render(md))
     expect(html).toContain(`div class="${FINDING_LIST}"><table`)
     expect(html).toContain(`div class="${FINDING_RESUME}"><table`)
+  })
+})
+
+describe('mdParser report header, doc metadata', () => {
+  const metadata: { [key: string]: any } = {
+    customerName: 'customer name',
+    date: Date.now()
+  }
+  const md = `
+${wrapBlock('metadata', metadataToMd(metadata))}
+
+[[${REPORT_HEADER}]]`
+
+  it('should render the report header', () => {
+    const html = removeNewLines(parser.render(md))
+    expect(html).toContain('<div class="report-header')
+    for (const m in metadata) {
+      expect(html).toContain(`li data-field="${m}"`)
+    }
   })
 })
