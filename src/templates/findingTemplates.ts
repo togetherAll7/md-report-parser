@@ -4,6 +4,7 @@ import {
   FINDING_RESUME,
   REPORT_HEADER
 } from '../constants'
+import { logo } from '../templates/logo'
 import { dl, table, tag, ul } from '../html'
 import { filterObjectFields } from '../utils'
 import {
@@ -23,7 +24,7 @@ const renderReportHeader = (doc: MdDoc) => {
   const metadata = getDocMetadata(doc)
   const { reportType, customerName, productName, date, version } = metadata
   return (
-    tag('div', tag('img', '', { src: 'logo.svg', alt: 'logo' }), {
+    tag('div', logo.content, {
       class: 'logo'
     }) +
     tag('div', productName, { class: 'title' }) +
