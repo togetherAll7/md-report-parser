@@ -22,7 +22,8 @@ import {
   FIXED_PERCENT,
   MEDIUM,
   LOW,
-  TXT_PLACEHOLDER
+  TXT_PLACEHOLDER,
+  REPORTED
 } from './constants'
 import {
   createMdBlock,
@@ -214,7 +215,7 @@ export const FINDING_LIST_TITLES = findingFields.reduce(
 )
 
 export const FINDING_RESUME_RISKS = [HIGH, MEDIUM, LOW]
-export const FINDING_RESUME_FIELDS = [OPEN, FIXED, TOTAL]
+export const FINDING_RESUME_FIELDS = [OPEN, FIXED, REPORTED]
 
 export const FINDING_RESUME_TITLES = FINDING_RESUME_RISKS.reduce(
   (v: { [k: string]: string }, a) => {
@@ -236,9 +237,9 @@ export const getFindingResume = (findings: any[]) => {
     const partiallyFixed = perRiskFindings.filter(
       (f) => f.fixedKey === PARTIALLY_FIXED
     ).length
-
     resume[risk] = {
       [TOTAL]: total,
+      [REPORTED]: total,
       [FIXED]: fixed,
       [NOT_FIXED]: total ? total - fixed : 0,
       [PARTIALLY_FIXED]: partiallyFixed,
@@ -255,10 +256,18 @@ export const getFindingResumeData = (findings: any[]) => {
   if (!data) {
     return []
   }
-  return FINDING_RESUME_FIELDS.map((field) =>
-    FINDING_RESUME_RISKS.reduce((v: { [key: string]: string }, risk) => {
-      v[risk] = data[risk][field]
+
+  return FINDING_RESUME_FIELDS.reduce(
+    (v: { [key: string]: any }, field: string) => {
+      v[field] = FINDING_RESUME_RISKS.reduce(
+        (v: { [key: string]: string }, risk) => {
+          v[risk] = data[risk][field]
+          return v
+        },
+        {}
+      )
       return v
-    }, {})
+    },
+    {}
   )
 }
