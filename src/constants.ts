@@ -54,3 +54,7 @@ export const REPORT_TYPE = 'reportType'
 export const SMART_CONTRACT_AUDIT_KEY = 'smartContractAudit'
 
 export const REPORT_HEADER = 'report-header'
+
+export const PRODUCT_NAME = 'productName'
+export const REPORT_DATE = 'date'
+export const REPORT_VERSION = 'version'

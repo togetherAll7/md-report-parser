@@ -1,8 +1,13 @@
 import {
+  CUSTOMER_NAME,
   FINDING_HEADER,
   FINDING_LIST,
   FINDING_RESUME,
-  REPORT_HEADER
+  PRODUCT_NAME,
+  REPORT_DATE,
+  REPORT_HEADER,
+  REPORT_TYPE,
+  REPORT_VERSION
 } from '../constants'
 import { logo } from '../templates/logo'
 import { dl, table, tag, ul } from '../html'
@@ -22,14 +27,20 @@ const findingRenderFields = findingFields.filter(
 
 const renderReportHeader = (doc: MdDoc) => {
   const metadata = getDocMetadata(doc)
-  const { reportType, customerName, productName, date, version } = metadata
+  const footerData = [REPORT_VERSION, CUSTOMER_NAME, REPORT_DATE].reduce(
+    (v: { [key: string]: string }, a) => {
+      v[a] = metadata[a]
+      return v
+    },
+    {}
+  )
   return (
     tag('div', logo.content, {
       class: 'logo'
     }) +
-    tag('div', productName, { class: 'title' }) +
-    tag('div', reportType, { class: 'subtitle' }) +
-    tag('div', ul({ version, customerName, date }), { class: 'foot' })
+    tag('div', metadata[PRODUCT_NAME], { class: 'title' }) +
+    tag('div', metadata[REPORT_TYPE], { class: 'subtitle' }) +
+    tag('div', ul(footerData), { class: 'foot' })
   )
 }
 
@@ -44,8 +55,10 @@ export default {
     return table(getFindings(doc), { id, title, totalRisk, fixed })
   },
 
-  [FINDING_RESUME]: (doc: MdDoc) =>
-    table(getFindingResumeData(getFindings(doc)), FINDING_RESUME_TITLES),
+  [FINDING_RESUME]: (doc: MdDoc) => {
+    console.log(getFindingResumeData(getFindings(doc)))
+    return table(getFindingResumeData(getFindings(doc)), FINDING_RESUME_TITLES)
+  },
 
   [REPORT_HEADER]: (doc: MdDoc) => renderReportHeader(doc)
 }
