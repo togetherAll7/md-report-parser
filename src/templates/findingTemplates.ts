@@ -17,8 +17,8 @@ import {
   getFindings,
   FINDING_LIST_TITLES,
   getFindingResumeData,
-  FINDING_RESUME_RISKS,
-  FINDING_RESUME_TITLES
+  FINDING_RESUME_TITLES,
+  FINDING_RESUME_FIELDS
 } from '../Findings'
 import { MdDoc, getDocMetadata } from '../mdModel'
 
@@ -74,8 +74,14 @@ export default {
       },
       []
     )
-
-    return table(Object.values(data), titles)
+    return table(
+      Object.values(data),
+      titles,
+      undefined,
+      FINDING_RESUME_FIELDS.map((f) => {
+        return { class: f }
+      })
+    )
   },
 
   [REPORT_HEADER]: (doc: MdDoc) => renderReportHeader(doc)
