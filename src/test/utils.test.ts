@@ -4,7 +4,9 @@ import {
   arrayUnique,
   camelCaseToKebab,
   camelCaseToText,
-  toCamelCase
+  toCamelCase,
+  getMonthName,
+  getReportDate
 } from '../utils'
 
 describe('flipObjects', () => {
@@ -86,4 +88,37 @@ describe('toCamelCase', () => {
       expect(toCamelCase(value)).toBe(expected)
     })
   }
+})
+
+describe('getMonthName', () => {
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ]
+  for (const m in months) {
+    const name = months[m]
+
+    it(`${m} should return ${name}`, () => {
+      expect(getMonthName(new Date(2020, parseInt(m), 1))).toBe(name)
+    })
+  }
+})
+
+describe('getReportDate', () => {
+  it('should return a report date', () => {
+    const d = new Date()
+    const year = d.getFullYear()
+    const month = getMonthName(d)
+    expect(getReportDate()).toBe(`${month} ${year}`)
+  })
 })

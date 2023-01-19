@@ -40,3 +40,11 @@ export const toCamelCase = (str: string) => {
       return index === 0 ? match.toLowerCase() : match.toUpperCase()
     })
 }
+
+export const getMonthName = (d: Date) =>
+  d.toLocaleString('default', { month: 'long' })
+
+export const getReportDate = (d?: Date) => {
+  d = d || new Date()
+  return `${getMonthName(d)} ${d.getFullYear()}`
+}
