@@ -139,7 +139,8 @@ export const createFindingBlock = (
   placeholders?: boolean
 ): MdBlock => {
   metadata = parseFinding(metadata)
-  const blockType = `h${FINDING_TITLE_LEVEL}`
+  const subtitleLevel = FINDING_TITLE_LEVEL + 1
+  const blockType = `h${subtitleLevel}`
   const md = placeholders ? `${TXT_PLACEHOLDER}\n` : ''
   const children = FINDING_SECTIONS.map((title) =>
     createMdBlock({ blockType, metadata: { title }, md })
