@@ -15,8 +15,6 @@ export const createFinding = () =>
 export const createNewReport = () => {
   const metadataBlock = wrapBlock('metadata', metadataToMd(REPORT_METADATA))
   return `
-![cover](cover.svg)
-
 ${metadataBlock}
 
 [[${REPORT_HEADER}]]
