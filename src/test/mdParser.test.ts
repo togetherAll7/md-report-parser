@@ -1,6 +1,8 @@
 import { MdParser } from '../MdParser'
 import { isMdDoc } from '../mdModel'
 import { getFile } from './test.helpers'
+import { createNewReport } from '../templates/mdTemplates'
+import { REPORT_METADATA } from '../Reports'
 
 const parser = MdParser()
 const src = '# Test'
@@ -51,6 +53,14 @@ describe('MdParser', function () {
   describe('toMd', () => {
     it('Minimal  test', () => {
       expect(parser.toMd(parser.parse(src))).toBe(`${src}\n\n`)
+    })
+  })
+
+  describe('getMetadata', () => {
+    const md = createNewReport()
+    it('should return the docs metadata', () => {
+      const metadata = parser.getMetadata(md)
+      expect(metadata).toStrictEqual({ ...REPORT_METADATA, type: 'metadata' })
     })
   })
 })

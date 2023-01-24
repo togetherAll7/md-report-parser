@@ -17,6 +17,7 @@ import {
   RenderListCb
 } from './markdown-it-replace-content'
 import { parseRenderedLists } from './renderedLists'
+import { getDocMetadata } from './mdModel'
 
 export type MdParserDef = {
   mdParse: Function
@@ -24,6 +25,7 @@ export type MdParserDef = {
   parse: Function
   toMd: Function
   editMd: Function
+  getMetadata: Function
 }
 
 export type MdParserOptions = MarkdownIt.Options & {
@@ -94,7 +96,9 @@ export function MdParser(options: MdParserOptions = {}): MdParserDef {
     return toMd(doc)
   }
 
-  return Object.freeze({ mdParse, render, parse, toMd, editMd })
+  const getMetadata = (md: string) => getDocMetadata(parse(md))
+
+  return Object.freeze({ mdParse, render, parse, toMd, editMd, getMetadata })
 }
 
 export default MdParser
