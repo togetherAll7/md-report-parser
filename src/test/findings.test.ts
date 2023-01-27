@@ -9,16 +9,22 @@ import {
   iterateFindings,
   reindexFindings,
   createFindingId,
-  parseFindingId
+  parseFindingId,
+  getFindingResume,
+  getFindingResumeData
 } from '../Findings'
 import {
   FINDING,
   FINDING_ID_DEFAULT_PREFIX,
   FINDING_ID_SEPARATOR,
   FINDING_SECTIONS,
+  FIXED,
   HIGH,
   LOW,
-  MEDIUM
+  MEDIUM,
+  OPEN,
+  REPORTED,
+  NONE
 } from '../constants'
 import { createMdBlock, isMdBlock, MdBlock, MdDoc, mdDocToMd } from '../mdModel'
 import { arrayUnique } from '../utils'
@@ -250,6 +256,47 @@ describe('findings', () => {
       const ids = findings.map((f) => f.metadata.id).map(parseFindingId)
       const numerals = ids.map(({ numeral }) => numeral)
       expect([...numerals].sort()).toStrictEqual(numerals)
+    })
+  })
+
+  describe('getfindingResumeData', () => {
+    const data = [
+      [HIGH, HIGH, true],
+      [MEDIUM, MEDIUM, true],
+      [LOW, LOW, true],
+      [HIGH, HIGH, false],
+      [MEDIUM, MEDIUM, false],
+      [LOW, LOW, false],
+      [HIGH, HIGH, NONE],
+      [MEDIUM, MEDIUM, NONE],
+      [LOW, LOW, NONE]
+    ].map(([likelihood, impact, fixed]) => {
+      return { likelihood, impact, fixed }
+    })
+    const findings = data.map((f: any) => parseFinding(f))
+
+    const resumeData = getFindingResumeData(findings)
+    it(`should return [${OPEN}] findings`, () => {
+      expect(resumeData[OPEN]).toStrictEqual({
+        [HIGH]: 1,
+        [MEDIUM]: 1,
+        [LOW]: 1
+      })
+    })
+
+    it(`should return [${FIXED}] findings`, () => {
+      expect(resumeData[FIXED]).toStrictEqual({
+        [HIGH]: 2,
+        [MEDIUM]: 2,
+        [LOW]: 2
+      })
+    })
+    it(`should return [${REPORTED}] findings`, () => {
+      expect(resumeData[REPORTED]).toStrictEqual({
+        [HIGH]: 3,
+        [MEDIUM]: 3,
+        [LOW]: 3
+      })
     })
   })
 })

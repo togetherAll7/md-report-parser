@@ -234,21 +234,20 @@ export const getFindingResume = (findings: any[]) => {
   for (const risk of Object.values(RISK)) {
     const perRiskFindings = findings.filter((f) => f.totalRisk === risk)
     const total = perRiskFindings.length
-    const fixed = perRiskFindings.filter((f) => f.fixedKey === FIXED).length
+    const fixed = perRiskFindings.filter((f) => f[FIXED] === true).length
     const partiallyFixed = perRiskFindings.filter(
-      (f) => f.fixedKey === PARTIALLY_FIXED
+      (f) => f[FIXED] === NONE
     ).length
     resume[risk] = {
       [TOTAL]: total,
       [REPORTED]: total,
       [FIXED]: fixed,
       [NOT_FIXED]: total ? total - fixed : 0,
-      [PARTIALLY_FIXED]: partiallyFixed,
+      [PARTIALLY_FIXED]: partiallyFixed, // not working 'fixed' is boolean
       [OPEN]: total ? total - fixed - partiallyFixed : 0,
       [FIXED_PERCENT]: fixed ? `${Math.ceil((fixed * 100) / total)}%` : NONE
     }
   }
-
   return resume
 }
 
