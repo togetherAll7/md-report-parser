@@ -9,7 +9,7 @@ import { MetadataParser } from './metadata'
 import RenderReports from './renderReports'
 import { getOptions, mdDocToMd, MdDoc } from './mdModel'
 import { MdToObj } from './MdToObj'
-import { FINDING_TITLE_LEVEL, FINDING } from './constants'
+import { FINDING_TITLE_LEVEL, FINDING, TOC_INCLUDED_LEVELS } from './constants'
 import Token from 'markdown-it/lib/token'
 import { default as markdown_it_replace_link } from 'markdown-it-replace-link'
 import {
@@ -62,7 +62,7 @@ export function setupMarkdownIt(md: MarkdownIt, options: MdParserOptions = {}) {
     .use(data_blocks, getDataBlocksPluginOptions(options))
     .use(markdown_it_highlightjs, { register: { solidity } })
     .use(markdown_it_anchor)
-    .use(markdown_it_table_of_contents, { includeLevel: [2, 3, 4, 5, 6] })
+    .use(markdown_it_table_of_contents, { includeLevel: TOC_INCLUDED_LEVELS })
     .use(markdown_it_wrap_document, { cssCb })
     .use(markdown_it_replace_link, options)
     .use(markdown_it_replace_content, { ...options, skipKeys: ['toc'] })

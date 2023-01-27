@@ -63,3 +63,4 @@ export const PRODUCT_NAME_PLACEHOLDER = 'PRODUCT_NAME'
 export const CUSTOMER_NAME_PLACEHOLDER = 'CUSTOMER_NAME'
 export const COVER_FILE = 'coverFile'
 export const COVER_FILE_NAME = 'cover.svg'
+export const TOC_INCLUDED_LEVELS = [2, 3]
