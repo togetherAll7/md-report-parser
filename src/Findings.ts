@@ -38,12 +38,26 @@ export type FindingMetadata = {
   id?: string
   impact: string
   likelihood: string
-  totalRisk?: string
+  risk?: string
   impactRate?: number
   likelihoodRate?: number
   riskRate?: number
-  fixed?: boolean
+  status?: FindingStatus
   location?: string
+}
+
+export enum FindingStatus {
+  open = 'Open',
+  fixed = 'Fixed',
+  partiallyFixed = 'Partially Fixed',
+  acknowledged = 'Acknowledged',
+  deferred = 'Deferred'
+}
+
+export enum Condition {
+  ok = '√',
+  warning = '⚠',
+  problem = 'X'
 }
 
 interface ArraySortCallback<TypeOne> {
@@ -104,13 +118,32 @@ export const calculateTotalRisk = ({ impact, likelihood }: FindingMetadata) => {
   const impactRate = IMPACT[impact as keyof typeof IMPACT]
   const likelihoodRate = LIKELIHOOD[likelihood as keyof typeof LIKELIHOOD]
   const riskRate = Math.floor((impactRate + likelihoodRate) / 2)
-  const totalRisk = RISK[riskRate as keyof typeof RISK]
+  const risk = RISK[riskRate as keyof typeof RISK]
   const flippedImpact = flipObject(IMPACT)
   const flippedLikelihood = flipObject(LIKELIHOOD)
   impact = flippedImpact[impactRate as keyof typeof flippedImpact]
   likelihood =
     flippedLikelihood[likelihoodRate as keyof typeof flippedLikelihood]
-  return { impact, likelihood, totalRisk, impactRate, likelihoodRate, riskRate }
+  return { impact, likelihood, risk, impactRate, likelihoodRate, riskRate }
+}
+
+export const calculateCondition = (
+  status: FindingStatus,
+  totalRisk: string
+): Condition => {
+  if (status === FindingStatus.fixed) {
+    return Condition.ok
+  }
+  if (totalRisk === HIGH || totalRisk === MEDIUM) {
+    if (status === FindingStatus.open) {
+      return Condition.problem
+    }
+    return Condition.warning
+  }
+  if (status === FindingStatus.partiallyFixed) {
+    return Condition.ok
+  }
+  return Condition.warning
 }
 
 const NEW_FINDING_MODEL = {
@@ -119,13 +152,16 @@ const NEW_FINDING_MODEL = {
   location: '',
   likelihood: HIGH,
   impact: HIGH,
-  fixed: false
+  status: FindingStatus.open
 }
 
 export const parseFinding = (data: FindingMetadata) => {
-  const { impact, likelihood, totalRisk } = calculateTotalRisk(data)
-  const fixed = data.fixed ? true : false
-  return Object.assign({ ...data }, { impact, likelihood, totalRisk, fixed })
+  const { impact, likelihood, risk } = calculateTotalRisk(data)
+  const condition = calculateCondition(data.status || FindingStatus.open, risk)
+  return Object.assign(
+    { ...data },
+    { impact, likelihood, risk, status: data.status, condition }
+  )
 }
 
 export const FINDING_MODEL = parseFinding(NEW_FINDING_MODEL)
@@ -203,10 +239,6 @@ export const getFindings = (doc: MdDoc) => {
 
 export const findingListFieds = [ID, TITLE, TOTAL_RISK, FIXED]
 
-interface Sarasa {
-  [key: string]: string
-}
-
 export const FINDING_LIST_TITLES = findingFields.reduce(
   (v: { [k: string]: string }, a: string) => {
     v[a] = camelCaseToText(a)
@@ -216,7 +248,14 @@ export const FINDING_LIST_TITLES = findingFields.reduce(
 )
 
 export const FINDING_RESUME_RISKS = [HIGH, MEDIUM, LOW]
-export const FINDING_RESUME_FIELDS = [OPEN, FIXED, REPORTED]
+export const FINDING_RESUME_FIELDS: string[] = Object.values(FindingStatus)
+  .map((s) => s.toString())
+  .concat([REPORTED])
+export const MANDATORY_RESUME_FIELDS = [
+  FindingStatus.open.toString(),
+  FindingStatus.fixed.toString(),
+  REPORTED
+]
 
 export const FINDING_RESUME_TITLES = FINDING_RESUME_RISKS.reduce(
   (v: { [k: string]: string }, a) => {
@@ -232,23 +271,30 @@ export const getFindingResume = (findings: any[]) => {
     return
   }
   for (const risk of Object.values(RISK)) {
-    const perRiskFindings = findings.filter((f) => f.totalRisk === risk)
+    const perRiskFindings = findings.filter((f) => f.risk === risk)
     const total = perRiskFindings.length
-    const fixed = perRiskFindings.filter((f) => f[FIXED] === true).length
-    const partiallyFixed = perRiskFindings.filter(
-      (f) => f[FIXED] === NONE
-    ).length
+    const grouped = groupByStatus(perRiskFindings)
     resume[risk] = {
       [TOTAL]: total,
       [REPORTED]: total,
-      [FIXED]: fixed,
-      [NOT_FIXED]: total ? total - fixed : 0,
-      [PARTIALLY_FIXED]: partiallyFixed, // not working 'fixed' is boolean
-      [OPEN]: total ? total - fixed - partiallyFixed : 0,
-      [FIXED_PERCENT]: fixed ? `${Math.ceil((fixed * 100) / total)}%` : NONE
+      ...grouped,
+      [FIXED_PERCENT]: grouped[FindingStatus.fixed]
+        ? `${Math.ceil((grouped[FindingStatus.fixed] * 100) / total)}%`
+        : NONE
     }
   }
   return resume
+}
+
+const groupByStatus = (findings: any[]) => {
+  return findings.reduce((v: { [key: string]: any }, f) => {
+    const status = f.status
+    if (!v[status]) {
+      v[status] = 0
+    }
+    v[status] = v[status] + 1
+    return v
+  }, {})
 }
 
 export const getFindingResumeData = (findings: any[]) => {
@@ -257,11 +303,11 @@ export const getFindingResumeData = (findings: any[]) => {
     return []
   }
 
-  return FINDING_RESUME_FIELDS.reduce(
+  const resume = FINDING_RESUME_FIELDS.reduce(
     (v: { [key: string]: any }, field: string) => {
       v[field] = FINDING_RESUME_RISKS.reduce(
         (v: { [key: string]: string }, risk) => {
-          v[risk] = data[risk][field]
+          v[risk] = data[risk][field] || 0
           return v
         },
         {}
@@ -270,4 +316,15 @@ export const getFindingResumeData = (findings: any[]) => {
     },
     {}
   )
+
+  Object.keys(resume).forEach((k) => {
+    if (!MANDATORY_RESUME_FIELDS.includes(k)) {
+      // If all risks are 0, remove the field
+      if (Object.values(resume[k]).every((v) => v === 0)) {
+        delete resume[k]
+      }
+    }
+  })
+
+  return resume
 }

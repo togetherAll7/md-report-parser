@@ -5,7 +5,8 @@ location: null
 impact: low
 likelihood: low
 fixed: false
-totalRisk: low
+status: open
+risk: low
 
 #### Description
 

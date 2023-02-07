@@ -25,7 +25,8 @@ title: Finding title
 impact: low
 likelihood: high
 location: /test/
-totalRisk: medium
+risk: medium
+status: open
 fixed: false
 
 An orphan **text**
@@ -64,7 +65,8 @@ location: test
 impact: low
 likelihood: low
 fixed: false
-totalRisk: low
+status: open
+risk: low
 
 #### Description
 
@@ -88,7 +90,8 @@ location: test
 impact: low
 likelihood: low
 fixed: false
-totalRisk: low
+status: open
+risk: low
 
 #### Description
 
