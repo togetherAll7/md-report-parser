@@ -22,11 +22,11 @@ reportType: Smart contract audit
 --- finding
 id: xxx-2
 title: Finding title
-impact: low
 likelihood: high
-location: /test/
+impact: low
 risk: medium
 status: open
+location: /test/
 fixed: false
 
 An orphan **text**
@@ -61,12 +61,12 @@ Finding Status
 
 id: xxx-001
 title: Untitled finding
-location: test
-impact: low
 likelihood: low
-fixed: false
-status: open
+impact: low
 risk: low
+status: open
+location: test
+fixed: false
 
 #### Description
 
@@ -86,12 +86,12 @@ risk: low
 
 id: xxx-009
 title: Untitled finding
-location: test
-impact: low
 likelihood: low
-fixed: false
-status: open
+impact: low
 risk: low
+status: open
+location: test
+fixed: false
 
 #### Description
 

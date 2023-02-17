@@ -1,12 +1,12 @@
 --- finding
 id: xxx-1
 title: Untitled finding
-location: null
-impact: low
 likelihood: low
-fixed: false
-status: open
+impact: low
 risk: low
+status: open
+location: null
+fixed: false
 
 #### Description
 
