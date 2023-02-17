@@ -13,7 +13,7 @@ export const FINDING_ID_ZERO_PADDING = 3
 export const FINDING_TITLE_LEVEL = 3
 export const FINDING_SECTIONS = ['Description', 'Recommendation', 'Status']
 export const TXT_PLACEHOLDER = '[...]'
-export const TOTAL_RISK = 'Risk'
+export const TOTAL_RISK = 'risk'
 export const ID = 'id'
 export const IMACT_RATE = 'impactRate'
 export const TITLE = 'title'
@@ -28,6 +28,7 @@ export const LIKELIHOOD_RATE = 'likelihoodRate'
 export const RISK_RATE = 'riskRate'
 export const FIXED = 'fixed'
 export const LOCATION = 'location'
+export const IMPACT_KEY = 'impact'
 export const IMPACT = {
   [NONE]: 0,
   [LOW]: 1,
@@ -35,6 +36,7 @@ export const IMPACT = {
   [HIGH]: 3
 }
 
+export const LIKELIHOOD_KEY = 'likelihood'
 export const LIKELIHOOD = { ...IMPACT }
 /* eslint-disable @typescript-eslint/naming-convention */
 export const RISK = {
@@ -64,3 +66,16 @@ export const CUSTOMER_NAME_PLACEHOLDER = 'CUSTOMER_NAME'
 export const COVER_FILE = 'coverFile'
 export const COVER_FILE_NAME = 'cover.svg'
 export const TOC_INCLUDED_LEVELS = [2, 3]
+export const STATUS = 'status'
+export const CONDITION = 'condition'
+
+export const SORTED_FINDING_FIELDS: string[] = [
+  ID,
+  TITLE,
+  LIKELIHOOD_KEY,
+  IMPACT_KEY,
+  TOTAL_RISK,
+  STATUS,
+  CONDITION,
+  LOCATION
+]

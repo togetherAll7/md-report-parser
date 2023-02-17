@@ -15,15 +15,13 @@ import {
   ID,
   TITLE,
   NONE,
-  PARTIALLY_FIXED,
   TOTAL,
-  NOT_FIXED,
-  OPEN,
   FIXED_PERCENT,
   MEDIUM,
   LOW,
   TXT_PLACEHOLDER,
-  REPORTED
+  REPORTED,
+  SORTED_FINDING_FIELDS
 } from './constants'
 import {
   createMdBlock,
@@ -148,11 +146,11 @@ export const calculateCondition = (
 
 const NEW_FINDING_MODEL = {
   id: createFindingId(),
-  title: 'Untitled Finding',
-  location: '',
   likelihood: HIGH,
   impact: HIGH,
-  status: FindingStatus.open
+  title: 'Untitled Finding',
+  status: FindingStatus.open,
+  location: ''
 }
 
 export const parseFinding = (data: FindingMetadata) => {
@@ -162,6 +160,14 @@ export const parseFinding = (data: FindingMetadata) => {
     { ...data },
     { impact, likelihood, risk, status: data.status, condition }
   )
+}
+
+export const sortFindingFields = (finding: any) => {
+  const newFinding: { [key: string]: any } = {}
+  for (const f of SORTED_FINDING_FIELDS) {
+    newFinding[f] = finding[f]
+  }
+  return { ...newFinding, ...finding }
 }
 
 export const FINDING_MODEL = parseFinding(NEW_FINDING_MODEL)

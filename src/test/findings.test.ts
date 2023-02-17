@@ -12,7 +12,9 @@ import {
   parseFindingId,
   getFindingResume,
   getFindingResumeData,
-  FindingStatus
+  FindingStatus,
+  FINDING_MODEL,
+  sortFindingFields
 } from '../Findings'
 import {
   FINDING,
@@ -22,7 +24,8 @@ import {
   HIGH,
   LOW,
   MEDIUM,
-  REPORTED
+  REPORTED,
+  SORTED_FINDING_FIELDS
 } from '../constants'
 import { createMdBlock, isMdBlock, MdBlock, MdDoc, mdDocToMd } from '../mdModel'
 import { arrayUnique } from '../utils'
@@ -47,6 +50,16 @@ const testRisk = [
 })
 
 describe('findings', () => {
+  describe('Sort finding fields', () => {
+    const findingCases = [FINDING_MODEL, { risk: LOW }, {}, { id: 'x' }]
+    for (const testFinding of findingCases) {
+      it('should order the finding fields', () => {
+        expect(Object.keys(sortFindingFields(testFinding))).toStrictEqual(
+          SORTED_FINDING_FIELDS
+        )
+      })
+    }
+  })
   describe('isFindingId', () => {
     const ok = ['xxx-001', 'abcdefghijk-123', 'abc-100'].map((x) => [x, true])
     const bad = [
