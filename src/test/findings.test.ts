@@ -287,8 +287,8 @@ describe('findings', () => {
       [HIGH, HIGH, FindingStatus.partiallyFixed],
       [MEDIUM, MEDIUM, FindingStatus.partiallyFixed],
       [LOW, LOW, FindingStatus.partiallyFixed]
-    ].map(([likelihood, impact, status]) => {
-      return { likelihood, impact, status }
+    ].map(([likelihood, impact, remediation]) => {
+      return { likelihood, impact, remediation }
     })
     const findings = data.map((f: any) => parseFinding(f))
 
@@ -339,8 +339,8 @@ describe('findings', () => {
 
   describe('getfindingResumeDataWithCeroFields', () => {
     const data = [[HIGH, HIGH, FindingStatus.partiallyFixed]].map(
-      ([likelihood, impact, status]) => {
-        return { likelihood, impact, status }
+      ([likelihood, impact, remediation]) => {
+        return { likelihood, impact, remediation }
       }
     )
     const findings = data.map((f: any) => parseFinding(f))

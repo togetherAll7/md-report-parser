@@ -4,7 +4,8 @@ title: Untitled finding
 likelihood: low
 impact: low
 risk: low
-status: open
+remediation: open
+status: ⚠
 location: null
 fixed: false
 

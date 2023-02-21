@@ -19,7 +19,7 @@ id: ISSUE-001
 title: Untitled Finding
 likelihood: high
 impact: high
-status: Open
+remediation: Open
 totalRisk: high
 location: ""
 
@@ -42,7 +42,7 @@ id: ISSUE-002
 title: Untitled Finding
 likelihood: high
 impact: high
-status: Fixed
+remediation: Fixed
 totalRisk: high
 location: ""
 
@@ -65,7 +65,7 @@ id: ISSUE-003
 title: Untitled Finding
 likelihood: high
 impact: high
-status: Partially Fixed
+remediation: Partially Fixed
 totalRisk: high
 location: ""
 
@@ -88,7 +88,7 @@ id: ISSUE-004
 title: Untitled Finding
 likelihood: high
 impact: high
-status: Acknowledged
+remediation: Acknowledged
 totalRisk: high
 location: ""
 
@@ -111,7 +111,7 @@ id: ISSUE-005
 title: Untitled Finding
 likelihood: high
 impact: high
-status: Deferred
+remediation: Deferred
 totalRisk: high
 location: ""
 
@@ -134,7 +134,7 @@ id: ISSUE-006
 title: Untitled Finding
 likelihood: low
 impact: high
-status: Open
+remediation: Open
 totalRisk: medium
 location: ""
 
@@ -157,7 +157,7 @@ id: ISSUE-007
 title: Untitled Finding
 likelihood: medium
 impact: medium
-status: Fixed
+remediation: Fixed
 totalRisk: medium
 location: ""
 
@@ -180,7 +180,7 @@ id: ISSUE-008
 title: Untitled Finding
 likelihood: low
 impact: low
-status: Partially Fixed
+remediation: Partially Fixed
 totalRisk: low
 location: ""
 
@@ -203,7 +203,7 @@ id: ISSUE-009
 title: Untitled Finding
 likelihood: medium
 impact: low
-status: Acknowledged
+remediation: Acknowledged
 totalRisk: low
 location: ""
 
@@ -226,7 +226,7 @@ id: ISSUE-010
 title: Untitled Finding
 likelihood: low
 impact: low
-status: Deferred
+remediation: Deferred
 totalRisk: low
 location: ""
 

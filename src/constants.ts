@@ -45,6 +45,7 @@ export const RISK = {
   2: MEDIUM,
   3: HIGH
 }
+export const RISK_KEY = 'risk'
 
 export const HEADINGS = [...Array(6)].map((x, i) => `h${i}`)
 
@@ -68,6 +69,7 @@ export const COVER_FILE_NAME = 'cover.svg'
 export const TOC_INCLUDED_LEVELS = [2, 3]
 export const STATUS = 'status'
 export const CONDITION = 'condition'
+export const REMEDIATION = 'remediation'
 
 export const SORTED_FINDING_FIELDS: string[] = [
   ID,
@@ -75,7 +77,7 @@ export const SORTED_FINDING_FIELDS: string[] = [
   LIKELIHOOD_KEY,
   IMPACT_KEY,
   TOTAL_RISK,
+  REMEDIATION,
   STATUS,
-  CONDITION,
   LOCATION
 ]

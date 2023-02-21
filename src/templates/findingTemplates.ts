@@ -52,8 +52,8 @@ export default {
     }),
 
   [FINDING_LIST]: (doc: MdDoc) => {
-    const { id, title, risk, condition } = FINDING_LIST_TITLES
-    return table(getFindings(doc), { id, title, risk, condition })
+    const { id, title, risk, status } = FINDING_LIST_TITLES
+    return table(getFindings(doc), { id, title, risk, status })
   },
 
   [FINDING_RESUME]: (doc: MdDoc) => {

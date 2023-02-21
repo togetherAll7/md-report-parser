@@ -21,7 +21,13 @@ import {
   LOW,
   TXT_PLACEHOLDER,
   REPORTED,
-  SORTED_FINDING_FIELDS
+  SORTED_FINDING_FIELDS,
+  STATUS,
+  CONDITION,
+  IMPACT_KEY,
+  LIKELIHOOD_KEY,
+  RISK_KEY,
+  REMEDIATION
 } from './constants'
 import {
   createMdBlock,
@@ -40,8 +46,9 @@ export type FindingMetadata = {
   impactRate?: number
   likelihoodRate?: number
   riskRate?: number
-  status?: FindingStatus
+  status?: string
   location?: string
+  remediation?: FindingStatus
 }
 
 export enum FindingStatus {
@@ -126,19 +133,19 @@ export const calculateTotalRisk = ({ impact, likelihood }: FindingMetadata) => {
 }
 
 export const calculateCondition = (
-  status: FindingStatus,
+  remediation: FindingStatus,
   totalRisk: string
 ): Condition => {
-  if (status === FindingStatus.fixed) {
+  if (remediation === FindingStatus.fixed) {
     return Condition.ok
   }
   if (totalRisk === HIGH || totalRisk === MEDIUM) {
-    if (status === FindingStatus.open) {
+    if (remediation === FindingStatus.open) {
       return Condition.problem
     }
     return Condition.warning
   }
-  if (status === FindingStatus.partiallyFixed) {
+  if (remediation === FindingStatus.partiallyFixed) {
     return Condition.ok
   }
   return Condition.warning
@@ -149,17 +156,23 @@ const NEW_FINDING_MODEL = {
   likelihood: HIGH,
   impact: HIGH,
   title: 'Untitled Finding',
-  status: FindingStatus.open,
+  remediation: FindingStatus.open,
   location: ''
 }
 
 export const parseFinding = (data: FindingMetadata) => {
   const { impact, likelihood, risk } = calculateTotalRisk(data)
-  const condition = calculateCondition(data.status || FindingStatus.open, risk)
+  const condition = calculateCondition(data.remediation || FindingStatus.open, risk)
   return sortFindingFields(
     Object.assign(
       { ...data },
-      { impact, likelihood, risk, status: data.status, condition }
+      {
+        [IMPACT_KEY]: impact,
+        [LIKELIHOOD_KEY]: likelihood,
+        [RISK_KEY]: risk,
+        [REMEDIATION]: data.remediation,
+        [STATUS]: condition
+      }
     )
   )
 }
@@ -281,7 +294,7 @@ export const getFindingResume = (findings: any[]) => {
   for (const risk of Object.values(RISK)) {
     const perRiskFindings = findings.filter((f) => f.risk === risk)
     const total = perRiskFindings.length
-    const grouped = groupByStatus(perRiskFindings)
+    const grouped = groupByRemediation(perRiskFindings)
     resume[risk] = {
       [TOTAL]: total,
       [REPORTED]: total,
@@ -294,13 +307,13 @@ export const getFindingResume = (findings: any[]) => {
   return resume
 }
 
-const groupByStatus = (findings: any[]) => {
+const groupByRemediation = (findings: any[]) => {
   return findings.reduce((v: { [key: string]: any }, f) => {
-    const status = f.status
-    if (!v[status]) {
-      v[status] = 0
+    const remediation = f.remediation
+    if (!v[remediation]) {
+      v[remediation] = 0
     }
-    v[status] = v[status] + 1
+    v[remediation] = v[remediation] + 1
     return v
   }, {})
 }

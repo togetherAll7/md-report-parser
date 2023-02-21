@@ -25,7 +25,8 @@ title: Finding title
 likelihood: high
 impact: low
 risk: medium
-status: open
+remediation: open
+status: ⚠
 location: /test/
 fixed: false
 
@@ -64,7 +65,8 @@ title: Untitled finding
 likelihood: low
 impact: low
 risk: low
-status: open
+remediation: open
+status: ⚠
 location: test
 fixed: false
 
@@ -89,7 +91,8 @@ title: Untitled finding
 likelihood: low
 impact: low
 risk: low
-status: open
+remediation: open
+status: ⚠
 location: test
 fixed: false
 

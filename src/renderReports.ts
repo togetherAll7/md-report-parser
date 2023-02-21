@@ -32,12 +32,12 @@ export function RenderReports({
     if (token.nesting === 1) {
       const metadata = token.meta || {}
       const className = getClassName(metadata)
-      const { risk, likelihood, impact, status, condition } = metadata
+      const { risk, likelihood, impact, remediation, condition } = metadata
       if (className) {
         token.attrJoin('class', `${className}`)
       }
 
-      const fields: any = { risk, likelihood, impact, status, condition }
+      const fields: any = { risk, likelihood, impact, remediation, condition }
       for (const field in fields) {
         const value = fields[field]
         if (value) {
