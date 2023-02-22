@@ -69,7 +69,7 @@ export const COVER_FILE_NAME = 'cover.svg'
 export const TOC_INCLUDED_LEVELS = [2, 3]
 export const STATUS = 'status'
 export const CONDITION = 'condition'
-export const REMEDIATION = 'remediation'
+export const REMEDIATION = 'resolution'
 
 export const SORTED_FINDING_FIELDS: string[] = [
   ID,

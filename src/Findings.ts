@@ -27,7 +27,8 @@ import {
   IMPACT_KEY,
   LIKELIHOOD_KEY,
   RISK_KEY,
-  REMEDIATION
+  REMEDIATION,
+  LOCATION
 } from './constants'
 import {
   createMdBlock,
@@ -48,7 +49,7 @@ export type FindingMetadata = {
   riskRate?: number
   status?: string
   location?: string
-  remediation?: FindingStatus
+  resolution?: FindingStatus
 }
 
 export enum FindingStatus {
@@ -152,17 +153,20 @@ export const calculateCondition = (
 }
 
 const NEW_FINDING_MODEL = {
-  id: createFindingId(),
-  likelihood: HIGH,
-  impact: HIGH,
-  title: 'Untitled Finding',
-  remediation: FindingStatus.open,
-  location: ''
+  [ID]: createFindingId(),
+  [LIKELIHOOD_KEY]: HIGH,
+  [IMPACT_KEY]: HIGH,
+  [TITLE]: 'Untitled Finding',
+  [REMEDIATION]: FindingStatus.open,
+  [LOCATION]: ''
 }
 
 export const parseFinding = (data: FindingMetadata) => {
   const { impact, likelihood, risk } = calculateTotalRisk(data)
-  const condition = calculateCondition(data.remediation || FindingStatus.open, risk)
+  const condition = calculateCondition(
+    data[REMEDIATION] || FindingStatus.open,
+    risk
+  )
   return sortFindingFields(
     Object.assign(
       { ...data },
@@ -170,7 +174,7 @@ export const parseFinding = (data: FindingMetadata) => {
         [IMPACT_KEY]: impact,
         [LIKELIHOOD_KEY]: likelihood,
         [RISK_KEY]: risk,
-        [REMEDIATION]: data.remediation,
+        [REMEDIATION]: data[REMEDIATION],
         [STATUS]: condition
       }
     )
@@ -309,7 +313,7 @@ export const getFindingResume = (findings: any[]) => {
 
 const groupByRemediation = (findings: any[]) => {
   return findings.reduce((v: { [key: string]: any }, f) => {
-    const remediation = f.remediation
+    const remediation = f[REMEDIATION]
     if (!v[remediation]) {
       v[remediation] = 0
     }
