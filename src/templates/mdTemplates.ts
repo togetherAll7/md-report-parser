@@ -23,10 +23,6 @@ ${metadataBlock}
 
 [[toc]]
 
-## Detailed Findings
-
-${createFinding()}
-
 ## Summary of Findings
 
 [[${FINDING_LIST}]]
@@ -34,6 +30,10 @@ ${createFinding()}
 ## Executive Summary
  
 [[${FINDING_RESUME}]]
+
+## Detailed Findings
+
+${createFinding()}
 
 ## Disclaimer
 
