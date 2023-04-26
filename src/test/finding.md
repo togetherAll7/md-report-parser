@@ -6,7 +6,10 @@ impact: low
 risk: low
 resolution: open
 status: ⚠
-location: null
+location:
+  - Location1
+  - foo/bar/baz
+  - foo/bar
 fixed: false
 
 #### Description
