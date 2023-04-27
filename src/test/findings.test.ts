@@ -14,7 +14,8 @@ import {
   getFindingResumeData,
   FindingStatus,
   FINDING_MODEL,
-  sortFindingFields
+  sortFindingFields,
+  Condition
 } from '../Findings'
 import {
   FINDING,
@@ -22,9 +23,13 @@ import {
   FINDING_ID_SEPARATOR,
   FINDING_SECTIONS,
   HIGH,
+  INFO,
+  LIKELIHOOD,
   LOW,
   MEDIUM,
+  NONE,
   REPORTED,
+  RESOLUTION,
   SORTED_FINDING_FIELDS
 } from '../constants'
 import { createMdBlock, isMdBlock, MdBlock, MdDoc, mdDocToMd } from '../mdModel'
@@ -32,6 +37,11 @@ import { arrayUnique } from '../utils'
 
 import { getFile, removeEmptyLines } from './test.helpers'
 import MdToObj from '../MdToObj'
+import { LIKELIHOOD_KEY } from '../constants'
+import { TOTAL_RISK } from '../constants'
+import { RISK_KEY } from '../constants'
+import { IMPACT_KEY } from '../constants'
+import { STATUS } from '../constants'
 
 const example = getFile('example.md')
 
@@ -60,6 +70,29 @@ describe('findings', () => {
       })
     }
   })
+
+  describe('parseFinding', () => {
+    it('should return finding default values', () => {
+      const finding = parseFinding({ impact: '', likelihood: '' })
+      expect(Object.keys(finding)).toStrictEqual(Object.keys(FINDING_MODEL))
+      expect(finding[LIKELIHOOD_KEY]).toBe(HIGH)
+      expect(finding[IMPACT_KEY]).toBe(HIGH)
+      expect(finding[RISK_KEY]).toBe(HIGH)
+      expect(finding[RESOLUTION]).toBe(FindingStatus.open)
+      expect(finding[STATUS]).toBe(Condition.problem)
+    })
+
+    it('should return finding default values for INFO findings', () => {
+      const finding = parseFinding({ impact: NONE, likelihood: NONE })
+      expect(Object.keys(finding)).toStrictEqual(Object.keys(FINDING_MODEL))
+      expect(finding[LIKELIHOOD_KEY]).toBe(NONE)
+      expect(finding[IMPACT_KEY]).toBe(NONE)
+      expect(finding[RISK_KEY]).toBe(INFO)
+      expect(finding[RESOLUTION]).toBe(FindingStatus.open)
+      expect(finding[STATUS]).toBe(Condition.warning)
+    })
+  })
+
   describe('isFindingId', () => {
     const ok = ['xxx-001', 'abcdefghijk-123', 'abc-100'].map((x) => [x, true])
     const bad = [

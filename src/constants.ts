@@ -23,6 +23,7 @@ export const PARTIALLY_FIXED = 'partiallyFixed'
 export const OPEN = 'open'
 export const FIXED_PERCENT = 'fixedPercent'
 export const REPORTED = 'reported'
+export const RESOLUTION = 'resolution'
 
 export const LIKELIHOOD_RATE = 'likelihoodRate'
 export const RISK_RATE = 'riskRate'

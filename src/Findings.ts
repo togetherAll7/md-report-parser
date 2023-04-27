@@ -162,11 +162,9 @@ const NEW_FINDING_MODEL = {
 }
 
 export const parseFinding = (data: FindingMetadata) => {
+  data[REMEDIATION] = data[REMEDIATION] || FindingStatus.open
   const { impact, likelihood, risk } = calculateTotalRisk(data)
-  const condition = calculateCondition(
-    data[REMEDIATION] || FindingStatus.open,
-    risk
-  )
+  const condition = calculateCondition(data[REMEDIATION], risk)
   return sortFindingFields(
     Object.assign(
       { ...data },
