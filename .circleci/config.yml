@@ -8,21 +8,18 @@ jobs:
     steps:
       - checkout
       - run:
-          name: install pnpm
-          command: curl -L https://pnpm.js.org/pnpm.js | node - add --global pnpm
-      - run:
           name: Install dependencies
-          command: pnpm install
+          command: npm install
       - run:
           name: "Lint"
-          command: pnpm run lint
+          command: npm run lint
       - run:
           name: "Check code format"
-          command: pnpm run check-format                  
+          command: npm run check-format                  
       - run:
           name: "Test"
-          command: pnpm run test
+          command: npm run test
       - run:
           name: "Build"
-          command: pnpm run clean && pnpm run build
+          command: npm run clean && npm run build
               
