@@ -54,6 +54,20 @@ describe('MdParser', function () {
     it('Minimal  test', () => {
       expect(parser.toMd(parser.parse(src))).toBe(`${src}\n\n`)
     })
+
+    it('Should keep line breaks', () => {
+      const md = src + '\n\nline 1\n\nline 2\n\nline 3\n'
+      const parsed = parser.parse(md)
+      const reparsed = parser.toMd(parsed)
+      expect(reparsed).toBe(md)
+    })
+
+    it('Should not keep more than 2 line breaks', () => {
+      const md = src + '\n\nline 1\n\nline 2\n\n\n\nline 3\n'
+      const parsed = parser.parse(md)
+      const reparsed = parser.toMd(parsed)
+      expect(reparsed).toBe(md.replace(/\n\n\n\n/g, '\n\n'))
+    })
   })
 
   describe('getMetadata', () => {
