@@ -35,10 +35,7 @@ const getMd = (segment: Token[], start: number, end: number): string => {
   return s
     .map((t, i) => {
       let nl = isNewLine(t) ? '\n' : ''
-      if (
-        t.type === 'paragraph_close' &&
-        s[i + 1]?.type === 'paragraph_open'
-      ) {
+      if (t.type === 'paragraph_close' && s[i + 1]?.type === 'paragraph_open') {
         nl += '\n'
       }
       return `${t.content}${nl}`
