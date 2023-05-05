@@ -15,9 +15,11 @@ import {
   FindingStatus,
   FINDING_MODEL,
   sortFindingFields,
-  Condition
+  Condition,
+  isAllowedInfoImpact
 } from '../Findings'
 import {
+  ALLOWED_INFO_IMPACT,
   FINDING,
   FINDING_ID_DEFAULT_PREFIX,
   FINDING_ID_SEPARATOR,
@@ -30,7 +32,8 @@ import {
   NONE,
   REPORTED,
   RESOLUTION,
-  SORTED_FINDING_FIELDS
+  SORTED_FINDING_FIELDS,
+  DEFAULT_INFO_IMPACT
 } from '../constants'
 import { createMdBlock, isMdBlock, MdBlock, MdDoc, mdDocToMd } from '../mdModel'
 import { arrayUnique } from '../utils'
@@ -44,7 +47,7 @@ import { IMPACT_KEY } from '../constants'
 import { STATUS } from '../constants'
 
 const example = getFile('example.md')
-
+// likelihood, impact, totalRisk
 const testRisk = [
   [HIGH, LOW, MEDIUM],
   [HIGH, MEDIUM, MEDIUM],
@@ -54,10 +57,14 @@ const testRisk = [
   [MEDIUM, HIGH, MEDIUM],
   [LOW, LOW, LOW],
   [LOW, MEDIUM, LOW],
-  [LOW, HIGH, MEDIUM]
-].map(([likelihood, impact, totalRisk]) => {
-  return { likelihood, impact, totalRisk }
-})
+  [LOW, HIGH, MEDIUM],
+  [NONE, '', INFO],
+  ['', '', INFO]
+]
+  .concat(ALLOWED_INFO_IMPACT.map((impact) => [NONE, impact, INFO]))
+  .map(([likelihood, impact, totalRisk]) => {
+    return { likelihood, impact, totalRisk }
+  })
 
 describe('findings', () => {
   describe('Sort finding fields', () => {
@@ -75,18 +82,18 @@ describe('findings', () => {
     it('should return finding default values', () => {
       const finding = parseFinding({ impact: '', likelihood: '' })
       expect(Object.keys(finding)).toStrictEqual(Object.keys(FINDING_MODEL))
-      expect(finding[LIKELIHOOD_KEY]).toBe(HIGH)
-      expect(finding[IMPACT_KEY]).toBe(HIGH)
-      expect(finding[RISK_KEY]).toBe(HIGH)
+      expect(finding[LIKELIHOOD_KEY]).toBe(NONE)
+      expect(finding[IMPACT_KEY]).toBe(DEFAULT_INFO_IMPACT)
+      expect(finding[RISK_KEY]).toBe(INFO)
       expect(finding[RESOLUTION]).toBe(FindingStatus.open)
-      expect(finding[STATUS]).toBe(Condition.problem)
+      expect(finding[STATUS]).toBe(Condition.warning)
     })
 
     it('should return finding default values for INFO findings', () => {
       const finding = parseFinding({ impact: NONE, likelihood: NONE })
       expect(Object.keys(finding)).toStrictEqual(Object.keys(FINDING_MODEL))
       expect(finding[LIKELIHOOD_KEY]).toBe(NONE)
-      expect(finding[IMPACT_KEY]).toBe(NONE)
+      expect(finding[IMPACT_KEY]).toBe(DEFAULT_INFO_IMPACT)
       expect(finding[RISK_KEY]).toBe(INFO)
       expect(finding[RESOLUTION]).toBe(FindingStatus.open)
       expect(finding[STATUS]).toBe(Condition.warning)
@@ -118,7 +125,14 @@ describe('findings', () => {
       it(`${JSON.stringify(params)}, should result ${JSON.stringify({
         totalRisk
       })}`, () => {
-        expect(calculateTotalRisk(params).risk).toBe(totalRisk)
+        const result = calculateTotalRisk(params)
+        expect(result.risk).toBe(totalRisk)
+        if (!likelihood) {
+          expect(result.risk).toBe(INFO)
+        }
+        if (result.risk === INFO) {
+          expect(isAllowedInfoImpact(result.impact)).toBe(true)
+        }
       })
     }
   })
@@ -198,7 +212,7 @@ describe('findings', () => {
     it('should sort findings by risk', () => {
       const sorted = sortFindingsByRisk([...blocks])
       const risk = sorted.map(({ metadata }) => metadata.totalRisk)
-      expect(arrayUnique(risk)).toStrictEqual([HIGH, MEDIUM, LOW])
+      expect(arrayUnique(risk)).toStrictEqual([HIGH, MEDIUM, LOW, INFO])
     })
   })
 

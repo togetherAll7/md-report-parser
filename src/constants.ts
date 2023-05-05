@@ -71,6 +71,9 @@ export const TOC_INCLUDED_LEVELS = [2, 3]
 export const STATUS = 'status'
 export const CONDITION = 'condition'
 export const REMEDIATION = 'resolution'
+export const RECOMMENTATION = 'recommendation'
+export const BUG = 'bug'
+export const WARNING = 'warning'
 
 export const SORTED_FINDING_FIELDS: string[] = [
   ID,
@@ -85,3 +88,5 @@ export const SORTED_FINDING_FIELDS: string[] = [
 
 export const CODE_MARK = '```'
 export const TECH_BITS = 'tech-bits'
+export const ALLOWED_INFO_IMPACT = [RECOMMENTATION, BUG, WARNING]
+export const DEFAULT_INFO_IMPACT = RECOMMENTATION

@@ -28,7 +28,10 @@ import {
   LIKELIHOOD_KEY,
   RISK_KEY,
   REMEDIATION,
-  LOCATION
+  LOCATION,
+  INFO,
+  ALLOWED_INFO_IMPACT,
+  DEFAULT_INFO_IMPACT
 } from './constants'
 import {
   createMdBlock,
@@ -76,7 +79,10 @@ const validateValues = (value: string, values: {}, def: string) =>
 const validateImpact = (value: string, def = HIGH) =>
   validateValues(value, IMPACT, def)
 
-const validateLikelihood = (value: any, def = HIGH): string =>
+const validateInfoImpact = (value: string, def = DEFAULT_INFO_IMPACT) =>
+  validateValues(value, ALLOWED_INFO_IMPACT, def)
+
+const validateLikelihood = (value: any, def = NONE): string =>
   validateValues(value, LIKELIHOOD, def)
 
 export const isFindingType = (str: string): boolean => str === FINDING
@@ -91,6 +97,12 @@ export const isFindingId = (str: string | undefined): boolean =>
         'i'
       ).test(str)
     : false
+
+export const isAllowedInfoImpact = (value: string) =>
+  ALLOWED_INFO_IMPACT.includes(value)
+
+export const parseInfoImpact = (value: string) =>
+  isAllowedInfoImpact(value) ? value : DEFAULT_INFO_IMPACT
 
 export const splitFindingId = (id: string | undefined) =>
   id ? id.split(FINDING_ID_SEPARATOR) : []
@@ -119,17 +131,31 @@ export const createFindingId = (prefixOrId?: string, n: number = 0) => {
 }
 
 export const calculateTotalRisk = ({ impact, likelihood }: FindingMetadata) => {
-  impact = validateImpact(impact)
   likelihood = validateLikelihood(likelihood)
-  const impactRate = IMPACT[impact as keyof typeof IMPACT]
-  const likelihoodRate = LIKELIHOOD[likelihood as keyof typeof LIKELIHOOD]
+  const isInfo = likelihood === NONE
+
+  impact = isInfo ? validateInfoImpact(impact) : validateImpact(impact)
+
+  const impactRate = isInfo ? 0 : IMPACT[impact as keyof typeof IMPACT]
+
+  const likelihoodRate = isInfo
+    ? 0
+    : LIKELIHOOD[likelihood as keyof typeof LIKELIHOOD]
+
   const riskRate = Math.floor((impactRate + likelihoodRate) / 2)
-  const risk = RISK[riskRate as keyof typeof RISK]
+
+  const risk = isInfo ? INFO : RISK[riskRate as keyof typeof RISK]
+
   const flippedImpact = flipObject(IMPACT)
   const flippedLikelihood = flipObject(LIKELIHOOD)
-  impact = flippedImpact[impactRate as keyof typeof flippedImpact]
+  impact =
+    risk === INFO
+      ? impact
+      : flippedImpact[impactRate as keyof typeof flippedImpact]
   likelihood =
-    flippedLikelihood[likelihoodRate as keyof typeof flippedLikelihood]
+    risk === INFO
+      ? likelihood
+      : flippedLikelihood[likelihoodRate as keyof typeof flippedLikelihood]
   return { impact, likelihood, risk, impactRate, likelihoodRate, riskRate }
 }
 
