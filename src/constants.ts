@@ -82,3 +82,6 @@ export const SORTED_FINDING_FIELDS: string[] = [
   STATUS,
   LOCATION
 ]
+
+export const CODE_MARK = '```'
+export const TECH_BITS = 'tech-bits'

@@ -3,7 +3,9 @@ import {
   FINDING_LIST,
   FINDING_RESUME,
   TXT_PLACEHOLDER,
-  REPORT_HEADER
+  REPORT_HEADER,
+  CODE_MARK,
+  TECH_BITS
 } from '../constants'
 import { metadataToMd } from '../metadata'
 import { wrapBlock, mdBlockToMd } from '../mdModel'
@@ -38,5 +40,13 @@ ${createFinding()}
 ## Disclaimer
 
 ${TXT_PLACEHOLDER}
-  `
+
+## Appendix
+
+### File hashes
+
+${CODE_MARK}${TECH_BITS}
+1234567890abcdef1234567890abcdef12345678 contracts/MyContract.sol
+${CODE_MARK}
+`
 }
