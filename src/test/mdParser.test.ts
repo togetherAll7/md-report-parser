@@ -1,8 +1,9 @@
 import { MdParser } from '../MdParser'
-import { isMdDoc } from '../mdModel'
+import { isMdDoc, wrapBlock } from '../mdModel'
 import { getFile } from './test.helpers'
 import { createNewReport } from '../templates/mdTemplates'
 import { REPORT_METADATA } from '../Reports'
+import { metadataToMd } from '../metadata'
 
 const parser = MdParser()
 const src = '# Test'
@@ -41,6 +42,12 @@ describe('MdParser', function () {
     it('should render a div.report with div.finding inside', () => {
       const html = parser.render(finding)
       expect(/^<div class="report"><div class="finding"/.test(html)).toBe(true)
+    })
+
+    it('should render a div.concert-doc if metadata but no findings', () => {
+      const metadataBlock = wrapBlock('metadata', metadataToMd(REPORT_METADATA))
+      const html = parser.render(metadataBlock)
+      expect(/^<div class="concert-doc"/.test(html)).toBe(true)
     })
   })
 

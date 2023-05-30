@@ -9,7 +9,14 @@ import { MetadataParser } from './metadata'
 import RenderReports from './renderReports'
 import { getOptions, mdDocToMd, MdDoc } from './mdModel'
 import { MdToObj } from './MdToObj'
-import { FINDING_TITLE_LEVEL, FINDING, TOC_INCLUDED_LEVELS } from './constants'
+import {
+  FINDING_TITLE_LEVEL,
+  FINDING,
+  TOC_INCLUDED_LEVELS,
+  CONCERT_GENERIC_DOCUMENT,
+  REPORT,
+  METADATA
+} from './constants'
 import Token from 'markdown-it/lib/token'
 import { default as markdown_it_replace_link } from 'markdown-it-replace-link'
 import {
@@ -54,7 +61,17 @@ const cssCb = (tokens: Token[]) => {
     ({ type, meta }) =>
       type === openName && meta[metadataBlockTypeName] === FINDING
   )
-  return findings.length ? ['report'] : []
+  if (findings.length) {
+    return [REPORT]
+  }
+  const metadata = tokens.filter(
+    ({ type, meta }) =>
+      type === openName && meta[metadataBlockTypeName] === METADATA
+  )
+  if (metadata.length) {
+    return [CONCERT_GENERIC_DOCUMENT]
+  }
+  return []
 }
 
 export function setupMarkdownIt(md: MarkdownIt, options: MdParserOptions = {}) {
