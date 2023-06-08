@@ -64,7 +64,7 @@ export enum FindingStatus {
 }
 
 export enum Condition {
-  ok = '√',
+  ok = '✓',
   warning = '⚠',
   problem = 'X'
 }
