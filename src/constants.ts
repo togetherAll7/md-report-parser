@@ -93,3 +93,21 @@ export const CODE_MARK = '```'
 export const TECH_BITS = 'tech-bits'
 export const ALLOWED_INFO_IMPACT = [RECOMMENTATION, BUG, WARNING]
 export const DEFAULT_INFO_IMPACT = RECOMMENTATION
+
+export const FINDING_STATUS = {
+  open: 'Open',
+  fixed: 'Fixed',
+  partiallyFixed: 'Partially Fixed',
+  acknowledged: 'Acknowledged',
+  deferred: 'Deferred'
+} as const
+
+export type FindingStatus = (typeof FINDING_STATUS)[keyof typeof FINDING_STATUS]
+
+export const CONDITIONS = {
+  ok: '✓',
+  warning: '⚠',
+  problem: 'X'
+} as const
+
+export type Condition = (typeof CONDITIONS)[keyof typeof CONDITIONS]

@@ -31,7 +31,11 @@ import {
   LOCATION,
   INFO,
   ALLOWED_INFO_IMPACT,
-  DEFAULT_INFO_IMPACT
+  DEFAULT_INFO_IMPACT,
+  FindingStatus,
+  Condition,
+  FINDING_STATUS,
+  CONDITIONS
 } from './constants'
 import {
   createMdBlock,
@@ -53,20 +57,6 @@ export type FindingMetadata = {
   status?: string
   location?: string
   resolution?: FindingStatus
-}
-
-export enum FindingStatus {
-  open = 'Open',
-  fixed = 'Fixed',
-  partiallyFixed = 'Partially Fixed',
-  acknowledged = 'Acknowledged',
-  deferred = 'Deferred'
-}
-
-export enum Condition {
-  ok = '✓',
-  warning = '⚠',
-  problem = 'X'
 }
 
 interface ArraySortCallback<TypeOne> {
@@ -163,19 +153,19 @@ export const calculateCondition = (
   remediation: FindingStatus,
   totalRisk: string
 ): Condition => {
-  if (remediation === FindingStatus.fixed) {
-    return Condition.ok
+  if (remediation === FINDING_STATUS.fixed) {
+    return CONDITIONS.ok
   }
   if (totalRisk === HIGH || totalRisk === MEDIUM) {
-    if (remediation === FindingStatus.open) {
-      return Condition.problem
+    if (remediation === FINDING_STATUS.open) {
+      return CONDITIONS.problem
     }
-    return Condition.warning
+    return CONDITIONS.warning
   }
-  if (remediation === FindingStatus.partiallyFixed) {
-    return Condition.ok
+  if (remediation === FINDING_STATUS.partiallyFixed) {
+    return CONDITIONS.ok
   }
-  return Condition.warning
+  return CONDITIONS.warning
 }
 
 const NEW_FINDING_MODEL = {
@@ -183,12 +173,12 @@ const NEW_FINDING_MODEL = {
   [LIKELIHOOD_KEY]: HIGH,
   [IMPACT_KEY]: HIGH,
   [TITLE]: 'Untitled Finding',
-  [REMEDIATION]: FindingStatus.open,
+  [REMEDIATION]: FINDING_STATUS.open,
   [LOCATION]: ''
 }
 
 export const parseFinding = (data: FindingMetadata) => {
-  data[REMEDIATION] = data[REMEDIATION] || FindingStatus.open
+  data[REMEDIATION] = data[REMEDIATION] || FINDING_STATUS.open
   const { impact, likelihood, risk } = calculateTotalRisk(data)
   const condition = calculateCondition(data[REMEDIATION], risk)
   return sortFindingFields(
@@ -297,12 +287,12 @@ export const FINDING_LIST_TITLES = findingFields.reduce(
 )
 
 export const FINDING_RESUME_RISKS = [HIGH, MEDIUM, LOW]
-export const FINDING_RESUME_FIELDS: string[] = Object.values(FindingStatus)
+export const FINDING_RESUME_FIELDS: string[] = Object.values(FINDING_STATUS)
   .map((s) => s.toString())
   .concat([REPORTED])
 export const MANDATORY_RESUME_FIELDS = [
-  FindingStatus.open.toString(),
-  FindingStatus.fixed.toString(),
+  FINDING_STATUS.open.toString(),
+  FINDING_STATUS.fixed.toString(),
   REPORTED
 ]
 
@@ -327,8 +317,8 @@ export const getFindingResume = (findings: any[]) => {
       [TOTAL]: total,
       [REPORTED]: total,
       ...grouped,
-      [FIXED_PERCENT]: grouped[FindingStatus.fixed]
-        ? `${Math.ceil((grouped[FindingStatus.fixed] * 100) / total)}%`
+      [FIXED_PERCENT]: grouped[FINDING_STATUS.fixed]
+        ? `${Math.ceil((grouped[FINDING_STATUS.fixed] * 100) / total)}%`
         : NONE
     }
   }
