@@ -94,20 +94,30 @@ export const TECH_BITS = 'tech-bits'
 export const ALLOWED_INFO_IMPACT = [RECOMMENTATION, BUG, WARNING]
 export const DEFAULT_INFO_IMPACT = RECOMMENTATION
 
+export const STATUS_OPEN = 'Open'
+export const STATUS_FIXED = 'Fixed'
+export const STATUS_PARTIALLY_FIXED = 'Partially Fixed'
+export const STATUS_ACKNOWLEDGED = 'Acknowledged'
+export const STATUS_DEFERRED = 'Deferred'
+
 export const FINDING_STATUS = {
-  open: 'Open',
-  fixed: 'Fixed',
-  partiallyFixed: 'Partially Fixed',
-  acknowledged: 'Acknowledged',
-  deferred: 'Deferred'
+  open: STATUS_OPEN,
+  fixed: STATUS_FIXED,
+  partiallyFixed: STATUS_PARTIALLY_FIXED,
+  acknowledged: STATUS_ACKNOWLEDGED,
+  deferred: STATUS_DEFERRED
 } as const
 
 export type FindingStatus = (typeof FINDING_STATUS)[keyof typeof FINDING_STATUS]
 
+export const CONDITION_OK = '✓'
+export const CONDITION_WARNING = '⚠'
+export const CONDITION_PROBLEM = 'X'
+
 export const CONDITIONS = {
-  ok: '✓',
-  warning: '⚠',
-  problem: 'X'
+  ok: CONDITION_OK,
+  warning: CONDITION_WARNING,
+  problem: CONDITION_PROBLEM
 } as const
 
 export type Condition = (typeof CONDITIONS)[keyof typeof CONDITIONS]
