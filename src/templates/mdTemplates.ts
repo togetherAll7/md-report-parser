@@ -14,8 +14,9 @@ import { createFindingBlock, FINDING_MODEL } from '../Findings'
 export const createFinding = () =>
   mdBlockToMd(createFindingBlock(FINDING_MODEL, true))
 
-export const createNewReport = () => {
+export const createNewReport = (reportFindings?: any[]): string => {
   const metadataBlock = wrapBlock('metadata', metadataToMd(REPORT_METADATA))
+  const findings = reportFindings || [createFinding()]
   return `
 ${metadataBlock}
 
@@ -35,7 +36,7 @@ ${metadataBlock}
 
 ## Detailed Findings
 
-${createFinding()}
+${findings.join('\n')}
 
 ## Disclaimer
 
