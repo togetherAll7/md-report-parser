@@ -14,7 +14,8 @@ import {
   getFindingResumeData,
   FINDING_MODEL,
   sortFindingFields,
-  isAllowedInfoImpact
+  isAllowedInfoImpact,
+  createFindigsExampleMetadata
 } from '../Findings'
 import {
   ALLOWED_INFO_IMPACT,
@@ -34,7 +35,8 @@ import {
   DEFAULT_INFO_IMPACT,
   FINDING_STATUS,
   CONDITION,
-  CONDITIONS
+  CONDITIONS,
+  IMPACT
 } from '../constants'
 import { createMdBlock, isMdBlock, MdBlock, MdDoc, mdDocToMd } from '../mdModel'
 import { arrayUnique } from '../utils'
@@ -427,6 +429,17 @@ describe('findings', () => {
         [MEDIUM]: 0,
         [LOW]: 0
       })
+    })
+  })
+
+  describe('Create Findings Metadata Example', () => {
+    const total =
+      Object.keys(IMPACT).length *
+      Object.keys(LIKELIHOOD).length *
+      Object.keys(FINDING_STATUS).length
+    const findings = createFindigsExampleMetadata()
+    it('findings.length should be equal to all posible combinations', () => {
+      expect(findings.length).toBe(total)
     })
   })
 })

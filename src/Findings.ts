@@ -367,3 +367,26 @@ export const getFindingResumeData = (findings: any[]) => {
 
   return resume
 }
+
+export const createFindigsExampleMetadata = (): FindingMetadata[] => {
+  const findings: any[] = []
+  let position = 0
+  Object.keys(IMPACT).forEach((impact) => {
+    Object.keys(LIKELIHOOD).forEach((likelihood) => {
+      Object.values(FINDING_STATUS).forEach((resolution) => {
+        const id = createFindingId('EXAMPLE', position++)
+        const location = '/foo/bar/baz'
+        // const title = `Example finding ${position} ${impact} ${likelihood} ${resolution}`
+        const metadata = parseFinding({
+          id,
+          impact,
+          likelihood,
+          resolution,
+          location
+        })
+        findings.push(metadata)
+      })
+    })
+  })
+  return findings
+}
