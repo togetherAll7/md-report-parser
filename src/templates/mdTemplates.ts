@@ -9,10 +9,25 @@ import {
 } from '../constants'
 import { metadataToMd } from '../metadata'
 import { wrapBlock, mdBlockToMd } from '../mdModel'
-import { createFindingBlock, FINDING_MODEL } from '../Findings'
+import {
+  createFindingBlock,
+  FINDING_MODEL,
+  createFindigsExampleMetadata,
+  type FindingMetadata
+} from '../Findings'
 
-export const createFinding = () =>
-  mdBlockToMd(createFindingBlock(FINDING_MODEL, true))
+export const createFinding = (model?: any) => {
+  model = model || FINDING_MODEL
+  return mdBlockToMd(createFindingBlock(model, true))
+}
+
+export const createExampleFindings = (meta: FindingMetadata[]): any[] => {
+  return meta.map((metadata) => {
+    const { impact, likelihood, resolution } = metadata
+    const title = `Example finding ${impact} ${likelihood} ${resolution}`
+    return createFinding(Object.assign(metadata, { title }))
+  })
+}
 
 export const createNewReport = (reportFindings?: any[]): string => {
   const metadataBlock = wrapBlock('metadata', metadataToMd(REPORT_METADATA))
@@ -51,3 +66,6 @@ ${CODE_MARK}${TECH_BITS}
 ${CODE_MARK}
 `
 }
+
+export const createExampleReport = () =>
+  createNewReport(createExampleFindings(createFindigsExampleMetadata()))
