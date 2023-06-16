@@ -24,6 +24,8 @@ export const TOTAL = 'total'
 export const NOT_FIXED = 'notFixed'
 export const PARTIALLY_FIXED = 'partiallyFixed'
 export const OPEN = 'open'
+const ACKNOWLEDGED = 'acknowledged'
+const DEFERRED = 'deferred'
 export const FIXED_PERCENT = 'fixedPercent'
 export const REPORTED = 'reported'
 export const RESOLUTION = 'resolution'
@@ -77,6 +79,8 @@ export const REMEDIATION = 'resolution'
 export const RECOMMENTATION = 'recommendation'
 export const BUG = 'bug'
 export const WARNING = 'warning'
+const OK = 'ok'
+const PROBLEM = 'problem'
 
 export const SORTED_FINDING_FIELDS: string[] = [
   ID,
@@ -101,11 +105,11 @@ export const STATUS_ACKNOWLEDGED = 'Acknowledged'
 export const STATUS_DEFERRED = 'Deferred'
 
 export const FINDING_STATUS = {
-  open: STATUS_OPEN,
-  fixed: STATUS_FIXED,
-  partiallyFixed: STATUS_PARTIALLY_FIXED,
-  acknowledged: STATUS_ACKNOWLEDGED,
-  deferred: STATUS_DEFERRED
+  [OPEN]: STATUS_OPEN,
+  [FIXED]: STATUS_FIXED,
+  [PARTIALLY_FIXED]: STATUS_PARTIALLY_FIXED,
+  [ACKNOWLEDGED]: STATUS_ACKNOWLEDGED,
+  [DEFERRED]: STATUS_DEFERRED
 } as const
 
 export type FindingStatus = typeof FINDING_STATUS[keyof typeof FINDING_STATUS]
@@ -115,9 +119,9 @@ export const CONDITION_WARNING = '⚠'
 export const CONDITION_PROBLEM = 'X'
 
 export const CONDITIONS = {
-  ok: CONDITION_OK,
-  warning: CONDITION_WARNING,
-  problem: CONDITION_PROBLEM
+  [OK]: CONDITION_OK,
+  [WARNING]: CONDITION_WARNING,
+  [PROBLEM]: CONDITION_PROBLEM
 } as const
 
 export type Condition = typeof CONDITIONS[keyof typeof CONDITIONS]
