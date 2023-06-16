@@ -34,14 +34,19 @@ export const tag = (t: string, content?: unknown, attrs?: TagAttributes) => {
 }
 export const dl = (
   data: ArrayLike<unknown> | { [s: string]: unknown },
-  attrs: { class: string }
+  attrs: { class: string },
+  dtAttrsCb?: (name: string, value: any) => TagAttributes | undefined
 ) =>
   tag(
     'dl',
     Object.entries(data).map(([name, value]) =>
       tag(
         'div',
-        `${tag('dt', name)} ${tag('dd', value)}`,
+        `${tag('dt', name)} ${tag(
+          'dd',
+          value,
+          dtAttrsCb ? dtAttrsCb(name, value) : undefined
+        )}`,
         getFieldAttributes(name, value)
       )
     ),

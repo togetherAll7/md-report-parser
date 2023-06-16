@@ -1,4 +1,5 @@
-import { table, tag, ul } from '../html'
+import exp from 'constants'
+import { table, tag, ul, dl } from '../html'
 import { removeWhiteSpace } from './test.helpers'
 
 const clear = (s: string) => s.replace(/ /g, '').replace(/\n/g, '')
@@ -67,6 +68,40 @@ describe('html', () => {
 
     it('should rended a table', () => {
       expect(removeWhiteSpace(`${html}`)).toBe(removeWhiteSpace(expected))
+    })
+  })
+
+  describe('dl', () => {
+    const getClass = (name: any, value: any) => `${name}--${value}`
+    const attrsCb = (name: string, value: any) => {
+      return { class: getClass(name, value) }
+    }
+    const data = { a: 1, b: 2, c: 3 }
+    const html = dl(data, { class: 'test' }).replaceAll('  ', ' ')
+    it('should start with a dl tag', () => {
+      const startTag = '<dl'
+
+      expect(html.substring(0, startTag.length)).toBe(startTag)
+    })
+    it('should close a dl tag', () => {
+      const endTag = '</dl>'
+      expect(html.substring(html.length - endTag.length, html.length)).toBe(
+        endTag
+      )
+    })
+
+    it('should render every data element', () => {
+      for (let [key, value] of Object.entries(data)) {
+        expect(html.includes(`<dt data-value="${key}`)).toBe(true)
+        expect(html.includes(`<dd data-value="${value}`)).toBe(true)
+      }
+    })
+
+    it('should add elements attributtes', () => {
+      const html = dl(data, { class: 'test' }, attrsCb).replaceAll('  ', ' ')
+      for (let [key, value] of Object.entries(data)) {
+        expect(html.includes(`class="${getClass(key, value)}"`)).toBe(true)
+      }
     })
   })
 })
