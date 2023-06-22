@@ -19,7 +19,7 @@ import {
   getFindingResumeData,
   FINDING_RESUME_TITLES,
   FINDING_RESUME_FIELDS,
-  getFindingFieldValueAttributtes
+  getFindingFieldValueAttributes
 } from '../Findings'
 import { MdDoc, getDocMetadata } from '../mdModel'
 
@@ -53,7 +53,7 @@ export default {
       {
         class: 'finding-header'
       },
-      getFindingFieldValueAttributtes
+      getFindingFieldValueAttributes
     ),
 
   [FINDING_LIST]: (doc: MdDoc) => {
