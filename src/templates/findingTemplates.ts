@@ -18,7 +18,8 @@ import {
   FINDING_LIST_TITLES,
   getFindingResumeData,
   FINDING_RESUME_TITLES,
-  FINDING_RESUME_FIELDS
+  FINDING_RESUME_FIELDS,
+  getFindingFieldValueAttributtes
 } from '../Findings'
 import { MdDoc, getDocMetadata } from '../mdModel'
 
@@ -47,9 +48,13 @@ const renderReportHeader = (doc: MdDoc) => {
 
 export default {
   [FINDING_HEADER]: (data: ArrayLike<unknown> | { [s: string]: unknown }) =>
-    dl(filterObjectFields(data, findingRenderFields), {
-      class: 'finding-header'
-    }),
+    dl(
+      filterObjectFields(data, findingRenderFields),
+      {
+        class: 'finding-header'
+      },
+      getFindingFieldValueAttributtes
+    ),
 
   [FINDING_LIST]: (doc: MdDoc) => {
     const { id, title, risk, status } = FINDING_LIST_TITLES

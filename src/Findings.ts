@@ -390,3 +390,13 @@ export const createFindigsExampleMetadata = (): FindingMetadata[] => {
   })
   return findings
 }
+
+
+export const getFindingFieldValueAttributtes = (
+  name: string,
+  value: unknown
+) => {
+  const cssClass =
+    value && typeof value === 'string' ? `${name}-${value}` : `${name}`
+  return { class: cssClass }
+}

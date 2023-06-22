@@ -112,7 +112,7 @@ export const FINDING_STATUS = {
   [DEFERRED]: STATUS_DEFERRED
 } as const
 
-export type FindingStatus = typeof FINDING_STATUS[keyof typeof FINDING_STATUS]
+export type FindingStatus = (typeof FINDING_STATUS)[keyof typeof FINDING_STATUS]
 
 export const CONDITION_OK = '✓'
 export const CONDITION_WARNING = '⚠'
@@ -124,4 +124,4 @@ export const CONDITIONS = {
   [PROBLEM]: CONDITION_PROBLEM
 } as const
 
-export type Condition = typeof CONDITIONS[keyof typeof CONDITIONS]
+export type Condition = (typeof CONDITIONS)[keyof typeof CONDITIONS]
