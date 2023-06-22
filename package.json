@@ -8,7 +8,7 @@
     "test": "jest test/*.ts --verbose",
     "lint": "eslint src --ext ts",
     "clean": "rm -rf dist",
-    "build": "tsc --outDir dist",
+    "build": "tsc --outDir dist && cd dist && node exportConstants.js",
     "dev": "tsc --watch",
     "prepare": "npm run build",
     "check-format": "prettier --check src",
