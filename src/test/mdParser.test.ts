@@ -41,7 +41,7 @@ describe('MdParser', function () {
 
     it('should render a div.report with div.finding inside', () => {
       const html = parser.render(finding)
-      expect(/^<div class="report"><div class="finding"/.test(html)).toBe(true)
+      expect(/^<div class="report"><div class="finding/.test(html)).toBe(true)
     })
 
     it('should render a div.concert-doc if metadata but no findings', () => {

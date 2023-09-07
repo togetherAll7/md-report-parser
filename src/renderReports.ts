@@ -1,6 +1,6 @@
 import { renderTemplate } from './Templates'
 import Renderer from 'markdown-it/lib/renderer'
-import { isFindingType } from './Findings'
+import { isFindingType, getFindingFieldValue } from './Findings'
 import { FINDING_HEADER } from './constants'
 import { camelCaseToKebab } from './utils'
 
@@ -32,16 +32,23 @@ export function RenderReports({
     if (token.nesting === 1) {
       const metadata = token.meta || {}
       const className = getClassName(metadata)
-      const { risk, likelihood, impact, remediation, condition } = metadata
+      const { risk, likelihood, impact, remediation, condition, status } =
+        metadata
       if (className) {
         token.attrJoin('class', `${className}`)
       }
-
-      const fields: any = { risk, likelihood, impact, remediation, condition }
+      const fields: any = {
+        risk,
+        likelihood,
+        impact,
+        remediation,
+        condition,
+        status
+      }
       for (const field in fields) {
-        const value = fields[field]
+        const value = getFindingFieldValue(field, fields[field])
         if (value) {
-          token.attrJoin(`data-${camelCaseToKebab(field)}`, value)
+          token.attrJoin(`data-${camelCaseToKebab(field)}`, `${value}`)
         }
       }
     }

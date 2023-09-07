@@ -391,10 +391,7 @@ export const createFindigsExampleMetadata = (): FindingMetadata[] => {
   return findings
 }
 
-export const getFindingFieldValueAttributes = (
-  name: string,
-  value: unknown
-) => {
+export const getFindingFieldValue = (name: string, value: unknown): unknown => {
   if (name === STATUS) {
     value = flipObject(CONDITIONS)[`${value}`]
   }
@@ -402,7 +399,14 @@ export const getFindingFieldValueAttributes = (
   if (name === REMEDIATION) {
     value = flipObject(FINDING_STATUS)[`${value}`]
   }
+  return value
+}
 
+export const getFindingFieldValueAttributes = (
+  name: string,
+  value: unknown
+) => {
+  value = getFindingFieldValue(name, value)
   const cssClass =
     value && typeof value === 'string' ? `${name}-${value}` : `${name}`
   return { class: cssClass }
