@@ -114,9 +114,9 @@ export const FINDING_STATUS = {
 
 export type FindingStatus = (typeof FINDING_STATUS)[keyof typeof FINDING_STATUS]
 
-export const CONDITION_OK = '✓'
-export const CONDITION_WARNING = '⚠'
-export const CONDITION_PROBLEM = 'X'
+export const CONDITION_OK = OK
+export const CONDITION_WARNING = WARNING
+export const CONDITION_PROBLEM = PROBLEM
 
 export const CONDITIONS = {
   [OK]: CONDITION_OK,

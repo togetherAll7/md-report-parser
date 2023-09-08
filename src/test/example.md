@@ -26,7 +26,7 @@ likelihood: high
 impact: low
 risk: medium
 resolution: open
-status: ⚠
+status: warning
 location: /test/
 fixed: false
 
@@ -66,7 +66,7 @@ likelihood: low
 impact: low
 risk: low
 resolution: open
-status: ⚠
+status: warning
 location: test
 fixed: false
 
@@ -92,7 +92,7 @@ likelihood: low
 impact: low
 risk: low
 resolution: open
-status: ⚠
+status: warning
 location: test
 fixed: false
 

@@ -5,7 +5,7 @@ likelihood: low
 impact: low
 risk: low
 resolution: open
-status: ⚠
+status: warning
 location:
   - Location1
   - foo/bar/baz
