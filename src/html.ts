@@ -53,10 +53,19 @@ export const dl = (
     attrs
   )
 
+const getFieldLabel = (
+  fieldName: string,
+  value: unknown
+): string | undefined => {
+  const labels = FIELD_LABELS[fieldName] || {}
+  return value && labels ? labels[`${value}`] : undefined
+}
+
 const getFieldData = (data: any, fieldName: string) => {
   const value = `${data[fieldName]}`
   const attrs = getFieldAttributes(fieldName, value)
-  return { value, attrs }
+  const label = getFieldLabel(fieldName, data[fieldName])
+  return { value, attrs, label }
 }
 
 export const table = (

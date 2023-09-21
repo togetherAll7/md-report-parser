@@ -30,6 +30,10 @@ export const FIXED_PERCENT = 'fixedPercent'
 export const REPORTED = 'reported'
 export const RESOLUTION = 'resolution'
 
+export const ACTION_REQ = 'Action Required'
+export const NO_ACTION_REQ = 'No Action Required'
+export const ATTENTION_REQ = 'Attention Required'
+
 export const LIKELIHOOD_RATE = 'likelihoodRate'
 export const RISK_RATE = 'riskRate'
 export const FIXED = 'fixed'
@@ -123,5 +127,15 @@ export const CONDITIONS = {
   [WARNING]: CONDITION_WARNING,
   [PROBLEM]: CONDITION_PROBLEM
 } as const
+
+export const STATUS_LABELS: { [key: string]: string } = {
+  [OK]: NO_ACTION_REQ,
+  [WARNING]: ATTENTION_REQ,
+  [PROBLEM]: ACTION_REQ
+}
+
+export const FIELD_LABELS: { [key: string]: { [key: string]: string } } = {
+  [STATUS]: STATUS_LABELS
+}
 
 export type Condition = (typeof CONDITIONS)[keyof typeof CONDITIONS]
