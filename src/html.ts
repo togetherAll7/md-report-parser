@@ -1,3 +1,5 @@
+import { FIELD_LABELS } from './constants'
+
 const getFieldAttributes = (name: string, value: unknown) => {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   return { class: `field-${name}` }
@@ -7,7 +9,12 @@ type TagAttributes = ArrayLike<unknown> | { [s: string]: unknown } | undefined
 
 const isAutoClosedTag = (tag: string) => ['img', 'input'].includes(tag)
 
-export const tag = (t: string, content?: unknown, attrs?: TagAttributes) => {
+export const tag = (
+  t: string,
+  content?: unknown,
+  attrs?: TagAttributes,
+  label?: string | undefined
+) => {
   if (Array.isArray(content)) {
     content = content.join('\n')
   }
@@ -30,7 +37,9 @@ export const tag = (t: string, content?: unknown, attrs?: TagAttributes) => {
   if (content && content.trim().split(' ').length === 1) {
     a += ` data-value="${content.trim()}"`
   }
-  return `<${t} ${a} ` + (isAutoClosedTag(t) ? '/>' : `>${content}</${t}>`)
+  return (
+    `<${t} ${a} ` + (isAutoClosedTag(t) ? '/>' : `>${label || content}</${t}>`)
+  )
 }
 export const dl = (
   data: ArrayLike<unknown> | { [s: string]: unknown },
@@ -39,17 +48,19 @@ export const dl = (
 ) =>
   tag(
     'dl',
-    Object.entries(data).map(([name, value]) =>
-      tag(
+    Object.entries(data).map(([name, value]) => {
+      const label = getFieldLabel(name, value)
+      return tag(
         'div',
         `${tag('dt', name)} ${tag(
           'dd',
           value,
-          dtAttrsCb ? dtAttrsCb(name, value) : undefined
+          dtAttrsCb ? dtAttrsCb(name, value) : undefined,
+          label
         )}`,
         getFieldAttributes(name, value)
       )
-    ),
+    }),
     attrs
   )
 
@@ -91,8 +102,8 @@ export const table = (
       tag(
         'tr',
         fieldNames.map((fieldName) => {
-          const { value, attrs } = getFieldData(d, fieldName)
-          return tag('td', value, attrs)
+          const { value, attrs, label } = getFieldData(d, fieldName)
+          return tag('td', value, attrs, label)
         }),
         rowAttrs ? rowAttrs[i] : undefined
       )
