@@ -15,8 +15,10 @@ import {
   FINDING_MODEL,
   sortFindingFields,
   isAllowedInfoImpact,
-  createFindigsExampleMetadata
+  createFindigsExampleMetadata,
+  calculateCondition
 } from '../Findings'
+
 import {
   ALLOWED_INFO_IMPACT,
   FINDING,
@@ -36,7 +38,9 @@ import {
   FINDING_STATUS,
   CONDITION,
   CONDITIONS,
-  IMPACT
+  IMPACT,
+  RISK,
+  FindingStatus
 } from '../constants'
 import { createMdBlock, isMdBlock, MdBlock, MdDoc, mdDocToMd } from '../mdModel'
 import { arrayUnique } from '../utils'
@@ -442,4 +446,68 @@ describe('findings', () => {
       expect(findings.length).toBe(total)
     })
   })
+
+  describe('calculateCondition', () => {
+    // console.table(getFindingStatusTable()) // show state table
+
+    const rules: { [key: string]: any } = {
+      [INFO]: {
+        [FINDING_STATUS.open]: CONDITIONS.warning,
+        [FINDING_STATUS.fixed]: CONDITIONS.ok,
+        [FINDING_STATUS.partiallyFixed]: CONDITIONS.ok,
+        [FINDING_STATUS.acknowledged]: CONDITIONS.ok,
+        [FINDING_STATUS.deferred]: CONDITIONS.ok
+      },
+      [LOW]: {
+        [FINDING_STATUS.open]: CONDITIONS.warning,
+        [FINDING_STATUS.fixed]: CONDITIONS.ok,
+        [FINDING_STATUS.partiallyFixed]: CONDITIONS.warning,
+        [FINDING_STATUS.acknowledged]: CONDITIONS.warning,
+        [FINDING_STATUS.deferred]: CONDITIONS.warning
+      },
+      [MEDIUM]: {
+        [FINDING_STATUS.open]: CONDITIONS.problem,
+        [FINDING_STATUS.fixed]: CONDITIONS.ok,
+        [FINDING_STATUS.partiallyFixed]: CONDITIONS.warning,
+        [FINDING_STATUS.acknowledged]: CONDITIONS.warning,
+        [FINDING_STATUS.deferred]: CONDITIONS.warning
+      },
+      [HIGH]: {
+        [FINDING_STATUS.open]: CONDITIONS.problem,
+        [FINDING_STATUS.fixed]: CONDITIONS.ok,
+        [FINDING_STATUS.partiallyFixed]: CONDITIONS.warning,
+        [FINDING_STATUS.acknowledged]: CONDITIONS.warning,
+        [FINDING_STATUS.deferred]: CONDITIONS.warning
+      }
+    }
+
+    for (const risk in rules) {
+      for (const status in rules[risk]) {
+        const x = rules[risk][status]
+        it(`[${risk} - ${status}] should be [${x}]`, () => {
+          expect(calculateCondition(status as FindingStatus, risk)).toBe(x)
+        })
+      }
+    }
+  })
 })
+
+function getFindingStatusTable() {
+  const state = Object.values(RISK).reduce<{ [key: string]: any }>(
+    (v, risk, i) => {
+      v[risk] = Object.values(FINDING_STATUS).reduce<{ [key: string]: any }>(
+        (v, remediation, i) => {
+          v[remediation] = calculateCondition(
+            remediation as FindingStatus,
+            risk
+          )
+          return v
+        },
+        {}
+      )
+      return v
+    },
+    {}
+  )
+  return state
+}
