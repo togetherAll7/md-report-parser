@@ -1,11 +1,11 @@
 --- finding
 id: xxx-1
 title: Untitled finding
+status: warning
+resolution: open
+risk: low
 likelihood: low
 impact: low
-risk: low
-resolution: open
-status: warning
 location:
   - Location1
   - foo/bar/baz

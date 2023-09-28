@@ -89,11 +89,11 @@ const PROBLEM = 'problem'
 export const SORTED_FINDING_FIELDS: string[] = [
   ID,
   TITLE,
+  STATUS,
+  REMEDIATION,
+  TOTAL_RISK,
   LIKELIHOOD_KEY,
   IMPACT_KEY,
-  TOTAL_RISK,
-  REMEDIATION,
-  STATUS,
   LOCATION
 ]
 

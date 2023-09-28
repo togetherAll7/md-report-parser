@@ -22,11 +22,11 @@ reportType: Smart contract audit
 --- finding
 id: xxx-2
 title: Finding title
+status: warning
+resolution: open
+risk: medium
 likelihood: high
 impact: low
-risk: medium
-resolution: open
-status: warning
 location: /test/
 fixed: false
 
@@ -62,11 +62,11 @@ Finding Status
 
 id: xxx-001
 title: Untitled finding
+status: warning
+resolution: open
+risk: low
 likelihood: low
 impact: low
-risk: low
-resolution: open
-status: warning
 location: test
 fixed: false
 
@@ -88,11 +88,11 @@ fixed: false
 
 id: xxx-009
 title: Untitled finding
+status: warning
+resolution: open
+risk: low
 likelihood: low
 impact: low
-risk: low
-resolution: open
-status: warning
 location: test
 fixed: false
 
