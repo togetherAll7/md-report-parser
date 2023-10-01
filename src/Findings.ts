@@ -163,10 +163,7 @@ export const calculateCondition = (
       : CONDITIONS.ok
   }
 
-  if (totalRisk === LOW && remediation === FINDING_STATUS.partiallyFixed) {
-    return CONDITIONS.warning
-  }
-  if (totalRisk === HIGH || totalRisk === MEDIUM) {
+  if (totalRisk !== INFO) {
     if (remediation === FINDING_STATUS.open) {
       return CONDITIONS.problem
     }

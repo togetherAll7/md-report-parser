@@ -459,7 +459,7 @@ describe('findings', () => {
         [FINDING_STATUS.deferred]: CONDITIONS.ok
       },
       [LOW]: {
-        [FINDING_STATUS.open]: CONDITIONS.warning,
+        [FINDING_STATUS.open]: CONDITIONS.problem,
         [FINDING_STATUS.fixed]: CONDITIONS.ok,
         [FINDING_STATUS.partiallyFixed]: CONDITIONS.warning,
         [FINDING_STATUS.acknowledged]: CONDITIONS.warning,
