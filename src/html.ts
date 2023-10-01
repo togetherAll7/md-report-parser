@@ -83,7 +83,8 @@ export const table = (
   data: any[],
   fields: { [key: string]: string },
   attrs?: { class: string },
-  rowAttrs?: any[]
+  rowAttrs?: any[],
+  valueCb?: (value: any, fieldName: string, d?: any) => any
 ) => {
   if (!data.length) {
     return
@@ -102,7 +103,8 @@ export const table = (
       tag(
         'tr',
         fieldNames.map((fieldName) => {
-          const { value, attrs, label } = getFieldData(d, fieldName)
+          let { value, attrs, label } = getFieldData(d, fieldName)
+          value = valueCb ? valueCb(value, fieldName, d) : value
           return tag('td', value, attrs, label)
         }),
         rowAttrs ? rowAttrs[i] : undefined
