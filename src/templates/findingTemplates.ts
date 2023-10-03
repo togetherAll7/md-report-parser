@@ -22,10 +22,14 @@ import {
   getFindingFieldValueAttributes
 } from '../Findings'
 import { MdDoc, getDocMetadata } from '../mdModel'
+import { link } from '../html'
 
 const findingRenderFields = findingFields.filter(
   (f) => !['title', 'id'].includes(f)
 )
+
+const linkFindingTitle = (value: any, fieldName: string, data: any) =>
+  fieldName === 'title' ? link(value, `#${data.id}`) : value
 
 const renderReportHeader = (doc: MdDoc) => {
   const metadata = getDocMetadata(doc)
@@ -58,7 +62,13 @@ export default {
 
   [FINDING_LIST]: (doc: MdDoc) => {
     const { id, title, risk, status } = FINDING_LIST_TITLES
-    return table(getFindings(doc), { id, title, risk, status })
+    return table(
+      getFindings(doc),
+      { id, title, risk, status },
+      undefined,
+      undefined,
+      linkFindingTitle
+    )
   },
 
   [FINDING_RESUME]: (doc: MdDoc) => {
