@@ -1,5 +1,5 @@
 import exp from 'constants'
-import { table, tag, ul, dl } from '../html'
+import { table, tag, ul, dl, link } from '../html'
 import { removeWhiteSpace } from './test.helpers'
 
 const clear = (s: string) => s.replace(/ /g, '').replace(/\n/g, '')
@@ -102,6 +102,28 @@ describe('html', () => {
       for (let [key, value] of Object.entries(data)) {
         expect(html.includes(`class="${getClass(key, value)}"`)).toBe(true)
       }
+    })
+  })
+
+  describe('link', () => {
+    const content = 'test'
+    const dest = 'http://test.com'
+    const attrs = { class: 'test-class' }
+    const label = 'test-label'
+
+    it('should render a link', () => {
+      const expected = `<a href="${dest}" data-value="${content}" >${content}</a>`
+      expect(link(content, dest)).toBe(expected)
+    })
+
+    it('should render a link with label', () => {
+      const expected = `<a href="${dest}" data-value="${content}" >${label}</a>`
+      expect(link(content, dest, undefined, label)).toBe(expected)
+    })
+
+    it('should render a link with attributes', () => {
+      const expected = `<a class="${attrs.class}" href="${dest}" data-value="${content}" >${content}</a>`
+      expect(link(content, dest, attrs)).toBe(expected)
     })
   })
 })

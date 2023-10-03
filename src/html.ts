@@ -41,6 +41,18 @@ export const tag = (
     `<${t} ${a} ` + (isAutoClosedTag(t) ? '/>' : `>${label || content}</${t}>`)
   )
 }
+
+export const link = (
+  content: unknown,
+  destination: string,
+  attrs?: { [s: string]: unknown },
+  label?: string | undefined
+) => {
+  attrs = attrs || {}
+  attrs['href'] = destination
+  return tag('a', content, attrs, label)
+}
+
 export const dl = (
   data: ArrayLike<unknown> | { [s: string]: unknown },
   attrs: { class: string },
