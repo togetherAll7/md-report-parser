@@ -19,7 +19,8 @@ import {
   getFindingResumeData,
   FINDING_RESUME_TITLES,
   FINDING_RESUME_FIELDS,
-  getFindingFieldValueAttributes
+  getFindingFieldValueAttributes,
+  getFindingWrapperId
 } from '../Findings'
 import { MdDoc, getDocMetadata } from '../mdModel'
 import { link } from '../html'
@@ -29,7 +30,9 @@ const findingRenderFields = findingFields.filter(
 )
 
 const linkFindingTitle = (value: any, fieldName: string, data: any) =>
-  fieldName === 'title' ? link(value, `#${data.id}`) : value
+  fieldName === 'title'
+    ? link(value, `#${getFindingWrapperId(data.id)}`)
+    : value
 
 const renderReportHeader = (doc: MdDoc) => {
   const metadata = getDocMetadata(doc)
