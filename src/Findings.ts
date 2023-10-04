@@ -420,3 +420,6 @@ export const getFindingFieldValueAttributes = (
     value && typeof value === 'string' ? `${name}-${value}` : `${name}`
   return { class: cssClass }
 }
+
+export const getFindingWrapperId = (id: string) =>
+  `${FINDING}${FINDING_ID_SEPARATOR}${id}`

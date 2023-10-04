@@ -7,6 +7,7 @@ export const ZERO = 'zero'
 export const NONE = '_'
 export const FINDING = 'finding'
 export const FINDING_ID_SEPARATOR = '-'
+export const TITLE_SEPARATOR = '-'
 export const FINDING_ID_PREFIX_MIN_LENGTH = 3
 export const FINDING_ID_DEFAULT_PREFIX = 'ISSUE'
 export const FINDING_ID_ZERO_PADDING = 3

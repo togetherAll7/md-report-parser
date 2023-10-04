@@ -1,7 +1,10 @@
 import { renderTemplate } from './Templates'
 import Renderer from 'markdown-it/lib/renderer'
-import { isFindingType, getFindingFieldValue } from './Findings'
-import { FINDING_HEADER } from './constants'
+import {
+  isFindingType,
+  getFindingFieldValue,
+} from './Findings'
+import { FINDING_HEADER, TITLE_SEPARATOR } from './constants'
 import { camelCaseToKebab } from './utils'
 
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -55,10 +58,15 @@ export function RenderReports({
     return self.renderToken(tokens, idx, _options)
   }
 
+  const getFindingTitle = (id: string, title: string): string =>
+    `${id} ${TITLE_SEPARATOR} ${title}`
+
   const titleCb = (metadata: { [x: string]: any; title?: any; id?: any }) => {
     let { title, id } = metadata
     title = title || ''
-    return isFindingType(getClassName(metadata)) ? `${id} - ${title}` : title
+    return isFindingType(getClassName(metadata))
+      ? getFindingTitle(id, title)
+      : title
   }
 
   return { render, metadataRenderer, titleCb }
