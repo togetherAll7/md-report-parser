@@ -6,7 +6,8 @@ describe('render a full sample html', () => {
 
   it('should generate an exact html', async () => {
     const md = getFile('full-example.md')
-    // console.log(parser.render(md))
+    /*     console.log(parser.render(md))
+    process.exit() */
     const html = removeWhiteSpace(removeNewLines(parser.render(md)))
     const expected = removeWhiteSpace(
       removeNewLines(await getFile('full-example.html'))

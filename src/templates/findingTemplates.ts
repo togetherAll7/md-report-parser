@@ -24,6 +24,7 @@ import {
 } from '../Findings'
 import { MdDoc, getDocMetadata } from '../mdModel'
 import { link } from '../html'
+import { statusChart } from './icons'
 
 const findingRenderFields = findingFields.filter(
   (f) => !['title', 'id'].includes(f)
@@ -54,15 +55,17 @@ const renderReportHeader = (doc: MdDoc) => {
 }
 
 export default {
-  [FINDING_HEADER]: (data: ArrayLike<unknown> | { [s: string]: unknown }) =>
-    dl(
+  [FINDING_HEADER]: (data: ArrayLike<unknown> | { [s: string]: unknown }) => {
+    const header = dl(
       filterObjectFields(data, findingRenderFields),
       {
-        class: 'finding-header'
+        class: 'finding-header-data'
       },
       getFindingFieldValueAttributes
-    ),
-
+    )
+    const chart = tag('div', statusChart, { class: 'finding-header-chart' })
+    return tag('div', `${header}${chart}`, { class: 'finding-header' })
+  },
   [FINDING_LIST]: (doc: MdDoc) => {
     const { id, title, risk, status } = FINDING_LIST_TITLES
     return table(

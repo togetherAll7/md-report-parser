@@ -29,32 +29,87 @@
     <div class="finding" id="finding-ISSUE-001" data-risk="high" data-likelihood="high" data-impact="high"
         data-status="problem">
         <h3 id="ISSUE-001" tabindex="-1">ISSUE-001 - Untitled Finding</h3>
-        <dl class="finding-header">
-            <div class="field-status">
-                <dt data-value="status">status</dt>
-                <dd class="status-problem" data-value="problem">Action Required</dd>
-            </div>
-            <div class="field-resolution">
-                <dt data-value="resolution">resolution</dt>
-                <dd class="resolution-open" data-value="Open">Open</dd>
-            </div>
-            <div class="field-risk">
-                <dt data-value="risk">risk</dt>
-                <dd class="risk-high" data-value="high">high</dd>
-            </div>
-            <div class="field-likelihood">
-                <dt data-value="likelihood">likelihood</dt>
-                <dd class="likelihood-high" data-value="high">high</dd>
-            </div>
-            <div class="field-impact">
-                <dt data-value="impact">impact</dt>
-                <dd class="impact-high" data-value="high">high</dd>
-            </div>
-            <div class="field-location">
-                <dt data-value="location">location</dt>
-                <dd class="location"></dd>
-            </div>
-        </dl>
+        <div class="finding-header">
+            <dl class="finding-header-data">
+                <div class="field-status">
+                    <dt data-value="status">status</dt>
+                    <dd class="status-problem" data-value="problem">Action Required</dd>
+                </div>
+                <div class="field-resolution">
+                    <dt data-value="resolution">resolution</dt>
+                    <dd class="resolution-open" data-value="Open">Open</dd>
+                </div>
+                <div class="field-risk">
+                    <dt data-value="risk">risk</dt>
+                    <dd class="risk-high" data-value="high">high</dd>
+                </div>
+                <div class="field-likelihood">
+                    <dt data-value="likelihood">likelihood</dt>
+                    <dd class="likelihood-high" data-value="high">high</dd>
+                </div>
+                <div class="field-impact">
+                    <dt data-value="impact">impact</dt>
+                    <dd class="impact-high" data-value="high">high</dd>
+                </div>
+                <div class="field-location">
+                    <dt data-value="location">location</dt>
+                    <dd class="location"></dd>
+                </div>
+            </dl>
+            <div class="finding-header-chart"><svg id="status_chart" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 1456.44 480.21">
+                    <g id="txt-closed">
+                        <text id="closed" transform="translate(366.57 50.87)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Closed</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-ok">
+                        <path id="check"
+                            d="m592.99,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-open">
+                        <text id="open" transform="translate(1269.78 61.37)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Open</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-problem">
+                        <path id="x"
+                            d="m1454.24,432.71h0l-73.29-73.29,73.29-73.29h0c.79-.79,1.36-1.71,1.73-2.69,1-2.69.43-5.82-1.73-7.98l-34.62-34.62c-2.16-2.16-5.3-2.73-7.98-1.73-.98.36-1.9.94-2.69,1.72h0l-73.29,73.29-73.29-73.29h0c-.79-.79-1.71-1.36-2.69-1.72-2.69-1-5.82-.43-7.98,1.73l-34.62,34.62c-2.16,2.16-2.73,5.3-1.73,7.98.37.98.94,1.9,1.73,2.69h0l73.29,73.29-73.29,73.29h0c-.79.79-1.36,1.71-1.73,2.69-1,2.68-.43,5.82,1.73,7.98l34.62,34.62c2.16,2.16,5.3,2.73,7.98,1.73.98-.37,1.9-.94,2.69-1.73h0l73.29-73.29,73.29,73.29h0c.79.79,1.71,1.36,2.69,1.73,2.69,1,5.82.43,7.98-1.73l34.62-34.62c2.16-2.16,2.73-5.3,1.73-7.98-.37-.98-.94-1.9-1.73-2.69Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-wip">
+                        <text id="wip" transform="translate(840.86 59.2)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">WIP</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-warning">
+                        <path id="warn"
+                            d="m1044.57,462.91l-140.59-215.42c-3.05-4.68-9.91-4.68-12.97,0l-140.59,215.42c-3.36,5.15.33,11.97,6.48,11.97h281.18c6.15,0,9.84-6.82,6.48-11.97Zm-128.01-16.56c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-28.77c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v28.77Zm0-61.75c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-77.15c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v77.15Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-high">
+                        <rect id="vu" y="61.37" width="198.52" height="198.52"
+                            transform="translate(-61.37 259.89) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-medium">
+                        <rect id="vu-2" data-name="vu" x="39.7" y="239.26" width="119.11" height="198.52"
+                            transform="translate(-239.26 437.78) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-low">
+                        <rect id="icon" x="69.48" y="347.66" width="59.56" height="198.52"
+                            transform="translate(-347.66 546.18) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="icon-info-ok">
+                        <path id="check-2" data-name="check"
+                            d="m1062.77,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                </svg></div>
+        </div>
         <h4 id="description" tabindex="-1">Description</h4>
         <p>[...]</p>
         <h4 id="recommendation" tabindex="-1">Recommendation</h4>
@@ -65,32 +120,87 @@
     <div class="finding" id="finding-ISSUE-002" data-risk="high" data-likelihood="high" data-impact="high"
         data-status="ok">
         <h3 id="ISSUE-002" tabindex="-1">ISSUE-002 - Untitled Finding</h3>
-        <dl class="finding-header">
-            <div class="field-status">
-                <dt data-value="status">status</dt>
-                <dd class="status-ok" data-value="ok">No Action Required</dd>
-            </div>
-            <div class="field-resolution">
-                <dt data-value="resolution">resolution</dt>
-                <dd class="resolution-fixed" data-value="Fixed">Fixed</dd>
-            </div>
-            <div class="field-risk">
-                <dt data-value="risk">risk</dt>
-                <dd class="risk-high" data-value="high">high</dd>
-            </div>
-            <div class="field-likelihood">
-                <dt data-value="likelihood">likelihood</dt>
-                <dd class="likelihood-high" data-value="high">high</dd>
-            </div>
-            <div class="field-impact">
-                <dt data-value="impact">impact</dt>
-                <dd class="impact-high" data-value="high">high</dd>
-            </div>
-            <div class="field-location">
-                <dt data-value="location">location</dt>
-                <dd class="location"></dd>
-            </div>
-        </dl>
+        <div class="finding-header">
+            <dl class="finding-header-data">
+                <div class="field-status">
+                    <dt data-value="status">status</dt>
+                    <dd class="status-ok" data-value="ok">No Action Required</dd>
+                </div>
+                <div class="field-resolution">
+                    <dt data-value="resolution">resolution</dt>
+                    <dd class="resolution-fixed" data-value="Fixed">Fixed</dd>
+                </div>
+                <div class="field-risk">
+                    <dt data-value="risk">risk</dt>
+                    <dd class="risk-high" data-value="high">high</dd>
+                </div>
+                <div class="field-likelihood">
+                    <dt data-value="likelihood">likelihood</dt>
+                    <dd class="likelihood-high" data-value="high">high</dd>
+                </div>
+                <div class="field-impact">
+                    <dt data-value="impact">impact</dt>
+                    <dd class="impact-high" data-value="high">high</dd>
+                </div>
+                <div class="field-location">
+                    <dt data-value="location">location</dt>
+                    <dd class="location"></dd>
+                </div>
+            </dl>
+            <div class="finding-header-chart"><svg id="status_chart" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 1456.44 480.21">
+                    <g id="txt-closed">
+                        <text id="closed" transform="translate(366.57 50.87)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Closed</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-ok">
+                        <path id="check"
+                            d="m592.99,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-open">
+                        <text id="open" transform="translate(1269.78 61.37)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Open</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-problem">
+                        <path id="x"
+                            d="m1454.24,432.71h0l-73.29-73.29,73.29-73.29h0c.79-.79,1.36-1.71,1.73-2.69,1-2.69.43-5.82-1.73-7.98l-34.62-34.62c-2.16-2.16-5.3-2.73-7.98-1.73-.98.36-1.9.94-2.69,1.72h0l-73.29,73.29-73.29-73.29h0c-.79-.79-1.71-1.36-2.69-1.72-2.69-1-5.82-.43-7.98,1.73l-34.62,34.62c-2.16,2.16-2.73,5.3-1.73,7.98.37.98.94,1.9,1.73,2.69h0l73.29,73.29-73.29,73.29h0c-.79.79-1.36,1.71-1.73,2.69-1,2.68-.43,5.82,1.73,7.98l34.62,34.62c2.16,2.16,5.3,2.73,7.98,1.73.98-.37,1.9-.94,2.69-1.73h0l73.29-73.29,73.29,73.29h0c.79.79,1.71,1.36,2.69,1.73,2.69,1,5.82.43,7.98-1.73l34.62-34.62c2.16-2.16,2.73-5.3,1.73-7.98-.37-.98-.94-1.9-1.73-2.69Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-wip">
+                        <text id="wip" transform="translate(840.86 59.2)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">WIP</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-warning">
+                        <path id="warn"
+                            d="m1044.57,462.91l-140.59-215.42c-3.05-4.68-9.91-4.68-12.97,0l-140.59,215.42c-3.36,5.15.33,11.97,6.48,11.97h281.18c6.15,0,9.84-6.82,6.48-11.97Zm-128.01-16.56c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-28.77c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v28.77Zm0-61.75c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-77.15c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v77.15Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-high">
+                        <rect id="vu" y="61.37" width="198.52" height="198.52"
+                            transform="translate(-61.37 259.89) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-medium">
+                        <rect id="vu-2" data-name="vu" x="39.7" y="239.26" width="119.11" height="198.52"
+                            transform="translate(-239.26 437.78) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-low">
+                        <rect id="icon" x="69.48" y="347.66" width="59.56" height="198.52"
+                            transform="translate(-347.66 546.18) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="icon-info-ok">
+                        <path id="check-2" data-name="check"
+                            d="m1062.77,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                </svg></div>
+        </div>
         <h4 id="description-1" tabindex="-1">Description</h4>
         <p>[...]</p>
         <h4 id="recommendation-1" tabindex="-1">Recommendation</h4>
@@ -101,32 +211,87 @@
     <div class="finding" id="finding-ISSUE-003" data-risk="high" data-likelihood="high" data-impact="high"
         data-status="warning">
         <h3 id="ISSUE-003" tabindex="-1">ISSUE-003 - Untitled Finding</h3>
-        <dl class="finding-header">
-            <div class="field-status">
-                <dt data-value="status">status</dt>
-                <dd class="status-warning" data-value="warning">Attention Required</dd>
-            </div>
-            <div class="field-resolution">
-                <dt data-value="resolution">resolution</dt>
-                <dd class="resolution-partiallyFixed">Partially Fixed</dd>
-            </div>
-            <div class="field-risk">
-                <dt data-value="risk">risk</dt>
-                <dd class="risk-high" data-value="high">high</dd>
-            </div>
-            <div class="field-likelihood">
-                <dt data-value="likelihood">likelihood</dt>
-                <dd class="likelihood-high" data-value="high">high</dd>
-            </div>
-            <div class="field-impact">
-                <dt data-value="impact">impact</dt>
-                <dd class="impact-high" data-value="high">high</dd>
-            </div>
-            <div class="field-location">
-                <dt data-value="location">location</dt>
-                <dd class="location"></dd>
-            </div>
-        </dl>
+        <div class="finding-header">
+            <dl class="finding-header-data">
+                <div class="field-status">
+                    <dt data-value="status">status</dt>
+                    <dd class="status-warning" data-value="warning">Attention Required</dd>
+                </div>
+                <div class="field-resolution">
+                    <dt data-value="resolution">resolution</dt>
+                    <dd class="resolution-partiallyFixed">Partially Fixed</dd>
+                </div>
+                <div class="field-risk">
+                    <dt data-value="risk">risk</dt>
+                    <dd class="risk-high" data-value="high">high</dd>
+                </div>
+                <div class="field-likelihood">
+                    <dt data-value="likelihood">likelihood</dt>
+                    <dd class="likelihood-high" data-value="high">high</dd>
+                </div>
+                <div class="field-impact">
+                    <dt data-value="impact">impact</dt>
+                    <dd class="impact-high" data-value="high">high</dd>
+                </div>
+                <div class="field-location">
+                    <dt data-value="location">location</dt>
+                    <dd class="location"></dd>
+                </div>
+            </dl>
+            <div class="finding-header-chart"><svg id="status_chart" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 1456.44 480.21">
+                    <g id="txt-closed">
+                        <text id="closed" transform="translate(366.57 50.87)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Closed</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-ok">
+                        <path id="check"
+                            d="m592.99,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-open">
+                        <text id="open" transform="translate(1269.78 61.37)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Open</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-problem">
+                        <path id="x"
+                            d="m1454.24,432.71h0l-73.29-73.29,73.29-73.29h0c.79-.79,1.36-1.71,1.73-2.69,1-2.69.43-5.82-1.73-7.98l-34.62-34.62c-2.16-2.16-5.3-2.73-7.98-1.73-.98.36-1.9.94-2.69,1.72h0l-73.29,73.29-73.29-73.29h0c-.79-.79-1.71-1.36-2.69-1.72-2.69-1-5.82-.43-7.98,1.73l-34.62,34.62c-2.16,2.16-2.73,5.3-1.73,7.98.37.98.94,1.9,1.73,2.69h0l73.29,73.29-73.29,73.29h0c-.79.79-1.36,1.71-1.73,2.69-1,2.68-.43,5.82,1.73,7.98l34.62,34.62c2.16,2.16,5.3,2.73,7.98,1.73.98-.37,1.9-.94,2.69-1.73h0l73.29-73.29,73.29,73.29h0c.79.79,1.71,1.36,2.69,1.73,2.69,1,5.82.43,7.98-1.73l34.62-34.62c2.16-2.16,2.73-5.3,1.73-7.98-.37-.98-.94-1.9-1.73-2.69Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-wip">
+                        <text id="wip" transform="translate(840.86 59.2)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">WIP</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-warning">
+                        <path id="warn"
+                            d="m1044.57,462.91l-140.59-215.42c-3.05-4.68-9.91-4.68-12.97,0l-140.59,215.42c-3.36,5.15.33,11.97,6.48,11.97h281.18c6.15,0,9.84-6.82,6.48-11.97Zm-128.01-16.56c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-28.77c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v28.77Zm0-61.75c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-77.15c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v77.15Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-high">
+                        <rect id="vu" y="61.37" width="198.52" height="198.52"
+                            transform="translate(-61.37 259.89) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-medium">
+                        <rect id="vu-2" data-name="vu" x="39.7" y="239.26" width="119.11" height="198.52"
+                            transform="translate(-239.26 437.78) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-low">
+                        <rect id="icon" x="69.48" y="347.66" width="59.56" height="198.52"
+                            transform="translate(-347.66 546.18) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="icon-info-ok">
+                        <path id="check-2" data-name="check"
+                            d="m1062.77,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                </svg></div>
+        </div>
         <h4 id="description-2" tabindex="-1">Description</h4>
         <p>[...]</p>
         <h4 id="recommendation-2" tabindex="-1">Recommendation</h4>
@@ -137,32 +302,87 @@
     <div class="finding" id="finding-ISSUE-004" data-risk="high" data-likelihood="high" data-impact="high"
         data-status="warning">
         <h3 id="ISSUE-004" tabindex="-1">ISSUE-004 - Untitled Finding</h3>
-        <dl class="finding-header">
-            <div class="field-status">
-                <dt data-value="status">status</dt>
-                <dd class="status-warning" data-value="warning">Attention Required</dd>
-            </div>
-            <div class="field-resolution">
-                <dt data-value="resolution">resolution</dt>
-                <dd class="resolution-acknowledged" data-value="Acknowledged">Acknowledged</dd>
-            </div>
-            <div class="field-risk">
-                <dt data-value="risk">risk</dt>
-                <dd class="risk-high" data-value="high">high</dd>
-            </div>
-            <div class="field-likelihood">
-                <dt data-value="likelihood">likelihood</dt>
-                <dd class="likelihood-high" data-value="high">high</dd>
-            </div>
-            <div class="field-impact">
-                <dt data-value="impact">impact</dt>
-                <dd class="impact-high" data-value="high">high</dd>
-            </div>
-            <div class="field-location">
-                <dt data-value="location">location</dt>
-                <dd class="location"></dd>
-            </div>
-        </dl>
+        <div class="finding-header">
+            <dl class="finding-header-data">
+                <div class="field-status">
+                    <dt data-value="status">status</dt>
+                    <dd class="status-warning" data-value="warning">Attention Required</dd>
+                </div>
+                <div class="field-resolution">
+                    <dt data-value="resolution">resolution</dt>
+                    <dd class="resolution-acknowledged" data-value="Acknowledged">Acknowledged</dd>
+                </div>
+                <div class="field-risk">
+                    <dt data-value="risk">risk</dt>
+                    <dd class="risk-high" data-value="high">high</dd>
+                </div>
+                <div class="field-likelihood">
+                    <dt data-value="likelihood">likelihood</dt>
+                    <dd class="likelihood-high" data-value="high">high</dd>
+                </div>
+                <div class="field-impact">
+                    <dt data-value="impact">impact</dt>
+                    <dd class="impact-high" data-value="high">high</dd>
+                </div>
+                <div class="field-location">
+                    <dt data-value="location">location</dt>
+                    <dd class="location"></dd>
+                </div>
+            </dl>
+            <div class="finding-header-chart"><svg id="status_chart" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 1456.44 480.21">
+                    <g id="txt-closed">
+                        <text id="closed" transform="translate(366.57 50.87)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Closed</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-ok">
+                        <path id="check"
+                            d="m592.99,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-open">
+                        <text id="open" transform="translate(1269.78 61.37)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Open</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-problem">
+                        <path id="x"
+                            d="m1454.24,432.71h0l-73.29-73.29,73.29-73.29h0c.79-.79,1.36-1.71,1.73-2.69,1-2.69.43-5.82-1.73-7.98l-34.62-34.62c-2.16-2.16-5.3-2.73-7.98-1.73-.98.36-1.9.94-2.69,1.72h0l-73.29,73.29-73.29-73.29h0c-.79-.79-1.71-1.36-2.69-1.72-2.69-1-5.82-.43-7.98,1.73l-34.62,34.62c-2.16,2.16-2.73,5.3-1.73,7.98.37.98.94,1.9,1.73,2.69h0l73.29,73.29-73.29,73.29h0c-.79.79-1.36,1.71-1.73,2.69-1,2.68-.43,5.82,1.73,7.98l34.62,34.62c2.16,2.16,5.3,2.73,7.98,1.73.98-.37,1.9-.94,2.69-1.73h0l73.29-73.29,73.29,73.29h0c.79.79,1.71,1.36,2.69,1.73,2.69,1,5.82.43,7.98-1.73l34.62-34.62c2.16-2.16,2.73-5.3,1.73-7.98-.37-.98-.94-1.9-1.73-2.69Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-wip">
+                        <text id="wip" transform="translate(840.86 59.2)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">WIP</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-warning">
+                        <path id="warn"
+                            d="m1044.57,462.91l-140.59-215.42c-3.05-4.68-9.91-4.68-12.97,0l-140.59,215.42c-3.36,5.15.33,11.97,6.48,11.97h281.18c6.15,0,9.84-6.82,6.48-11.97Zm-128.01-16.56c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-28.77c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v28.77Zm0-61.75c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-77.15c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v77.15Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-high">
+                        <rect id="vu" y="61.37" width="198.52" height="198.52"
+                            transform="translate(-61.37 259.89) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-medium">
+                        <rect id="vu-2" data-name="vu" x="39.7" y="239.26" width="119.11" height="198.52"
+                            transform="translate(-239.26 437.78) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-low">
+                        <rect id="icon" x="69.48" y="347.66" width="59.56" height="198.52"
+                            transform="translate(-347.66 546.18) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="icon-info-ok">
+                        <path id="check-2" data-name="check"
+                            d="m1062.77,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                </svg></div>
+        </div>
         <h4 id="description-3" tabindex="-1">Description</h4>
         <p>[...]</p>
         <h4 id="recommendation-3" tabindex="-1">Recommendation</h4>
@@ -173,32 +393,87 @@
     <div class="finding" id="finding-ISSUE-005" data-risk="high" data-likelihood="high" data-impact="high"
         data-status="warning">
         <h3 id="ISSUE-005" tabindex="-1">ISSUE-005 - Untitled Finding</h3>
-        <dl class="finding-header">
-            <div class="field-status">
-                <dt data-value="status">status</dt>
-                <dd class="status-warning" data-value="warning">Attention Required</dd>
-            </div>
-            <div class="field-resolution">
-                <dt data-value="resolution">resolution</dt>
-                <dd class="resolution-deferred" data-value="Deferred">Deferred</dd>
-            </div>
-            <div class="field-risk">
-                <dt data-value="risk">risk</dt>
-                <dd class="risk-high" data-value="high">high</dd>
-            </div>
-            <div class="field-likelihood">
-                <dt data-value="likelihood">likelihood</dt>
-                <dd class="likelihood-high" data-value="high">high</dd>
-            </div>
-            <div class="field-impact">
-                <dt data-value="impact">impact</dt>
-                <dd class="impact-high" data-value="high">high</dd>
-            </div>
-            <div class="field-location">
-                <dt data-value="location">location</dt>
-                <dd class="location"></dd>
-            </div>
-        </dl>
+        <div class="finding-header">
+            <dl class="finding-header-data">
+                <div class="field-status">
+                    <dt data-value="status">status</dt>
+                    <dd class="status-warning" data-value="warning">Attention Required</dd>
+                </div>
+                <div class="field-resolution">
+                    <dt data-value="resolution">resolution</dt>
+                    <dd class="resolution-deferred" data-value="Deferred">Deferred</dd>
+                </div>
+                <div class="field-risk">
+                    <dt data-value="risk">risk</dt>
+                    <dd class="risk-high" data-value="high">high</dd>
+                </div>
+                <div class="field-likelihood">
+                    <dt data-value="likelihood">likelihood</dt>
+                    <dd class="likelihood-high" data-value="high">high</dd>
+                </div>
+                <div class="field-impact">
+                    <dt data-value="impact">impact</dt>
+                    <dd class="impact-high" data-value="high">high</dd>
+                </div>
+                <div class="field-location">
+                    <dt data-value="location">location</dt>
+                    <dd class="location"></dd>
+                </div>
+            </dl>
+            <div class="finding-header-chart"><svg id="status_chart" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 1456.44 480.21">
+                    <g id="txt-closed">
+                        <text id="closed" transform="translate(366.57 50.87)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Closed</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-ok">
+                        <path id="check"
+                            d="m592.99,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-open">
+                        <text id="open" transform="translate(1269.78 61.37)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Open</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-problem">
+                        <path id="x"
+                            d="m1454.24,432.71h0l-73.29-73.29,73.29-73.29h0c.79-.79,1.36-1.71,1.73-2.69,1-2.69.43-5.82-1.73-7.98l-34.62-34.62c-2.16-2.16-5.3-2.73-7.98-1.73-.98.36-1.9.94-2.69,1.72h0l-73.29,73.29-73.29-73.29h0c-.79-.79-1.71-1.36-2.69-1.72-2.69-1-5.82-.43-7.98,1.73l-34.62,34.62c-2.16,2.16-2.73,5.3-1.73,7.98.37.98.94,1.9,1.73,2.69h0l73.29,73.29-73.29,73.29h0c-.79.79-1.36,1.71-1.73,2.69-1,2.68-.43,5.82,1.73,7.98l34.62,34.62c2.16,2.16,5.3,2.73,7.98,1.73.98-.37,1.9-.94,2.69-1.73h0l73.29-73.29,73.29,73.29h0c.79.79,1.71,1.36,2.69,1.73,2.69,1,5.82.43,7.98-1.73l34.62-34.62c2.16-2.16,2.73-5.3,1.73-7.98-.37-.98-.94-1.9-1.73-2.69Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-wip">
+                        <text id="wip" transform="translate(840.86 59.2)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">WIP</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-warning">
+                        <path id="warn"
+                            d="m1044.57,462.91l-140.59-215.42c-3.05-4.68-9.91-4.68-12.97,0l-140.59,215.42c-3.36,5.15.33,11.97,6.48,11.97h281.18c6.15,0,9.84-6.82,6.48-11.97Zm-128.01-16.56c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-28.77c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v28.77Zm0-61.75c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-77.15c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v77.15Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-high">
+                        <rect id="vu" y="61.37" width="198.52" height="198.52"
+                            transform="translate(-61.37 259.89) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-medium">
+                        <rect id="vu-2" data-name="vu" x="39.7" y="239.26" width="119.11" height="198.52"
+                            transform="translate(-239.26 437.78) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-low">
+                        <rect id="icon" x="69.48" y="347.66" width="59.56" height="198.52"
+                            transform="translate(-347.66 546.18) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="icon-info-ok">
+                        <path id="check-2" data-name="check"
+                            d="m1062.77,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                </svg></div>
+        </div>
         <h4 id="description-4" tabindex="-1">Description</h4>
         <p>[...]</p>
         <h4 id="recommendation-4" tabindex="-1">Recommendation</h4>
@@ -209,32 +484,87 @@
     <div class="finding" id="finding-ISSUE-006" data-risk="medium" data-likelihood="low" data-impact="high"
         data-status="problem">
         <h3 id="ISSUE-006" tabindex="-1">ISSUE-006 - Untitled Finding</h3>
-        <dl class="finding-header">
-            <div class="field-status">
-                <dt data-value="status">status</dt>
-                <dd class="status-problem" data-value="problem">Action Required</dd>
-            </div>
-            <div class="field-resolution">
-                <dt data-value="resolution">resolution</dt>
-                <dd class="resolution-open" data-value="Open">Open</dd>
-            </div>
-            <div class="field-risk">
-                <dt data-value="risk">risk</dt>
-                <dd class="risk-medium" data-value="medium">medium</dd>
-            </div>
-            <div class="field-likelihood">
-                <dt data-value="likelihood">likelihood</dt>
-                <dd class="likelihood-low" data-value="low">low</dd>
-            </div>
-            <div class="field-impact">
-                <dt data-value="impact">impact</dt>
-                <dd class="impact-high" data-value="high">high</dd>
-            </div>
-            <div class="field-location">
-                <dt data-value="location">location</dt>
-                <dd class="location"></dd>
-            </div>
-        </dl>
+        <div class="finding-header">
+            <dl class="finding-header-data">
+                <div class="field-status">
+                    <dt data-value="status">status</dt>
+                    <dd class="status-problem" data-value="problem">Action Required</dd>
+                </div>
+                <div class="field-resolution">
+                    <dt data-value="resolution">resolution</dt>
+                    <dd class="resolution-open" data-value="Open">Open</dd>
+                </div>
+                <div class="field-risk">
+                    <dt data-value="risk">risk</dt>
+                    <dd class="risk-medium" data-value="medium">medium</dd>
+                </div>
+                <div class="field-likelihood">
+                    <dt data-value="likelihood">likelihood</dt>
+                    <dd class="likelihood-low" data-value="low">low</dd>
+                </div>
+                <div class="field-impact">
+                    <dt data-value="impact">impact</dt>
+                    <dd class="impact-high" data-value="high">high</dd>
+                </div>
+                <div class="field-location">
+                    <dt data-value="location">location</dt>
+                    <dd class="location"></dd>
+                </div>
+            </dl>
+            <div class="finding-header-chart"><svg id="status_chart" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 1456.44 480.21">
+                    <g id="txt-closed">
+                        <text id="closed" transform="translate(366.57 50.87)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Closed</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-ok">
+                        <path id="check"
+                            d="m592.99,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-open">
+                        <text id="open" transform="translate(1269.78 61.37)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Open</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-problem">
+                        <path id="x"
+                            d="m1454.24,432.71h0l-73.29-73.29,73.29-73.29h0c.79-.79,1.36-1.71,1.73-2.69,1-2.69.43-5.82-1.73-7.98l-34.62-34.62c-2.16-2.16-5.3-2.73-7.98-1.73-.98.36-1.9.94-2.69,1.72h0l-73.29,73.29-73.29-73.29h0c-.79-.79-1.71-1.36-2.69-1.72-2.69-1-5.82-.43-7.98,1.73l-34.62,34.62c-2.16,2.16-2.73,5.3-1.73,7.98.37.98.94,1.9,1.73,2.69h0l73.29,73.29-73.29,73.29h0c-.79.79-1.36,1.71-1.73,2.69-1,2.68-.43,5.82,1.73,7.98l34.62,34.62c2.16,2.16,5.3,2.73,7.98,1.73.98-.37,1.9-.94,2.69-1.73h0l73.29-73.29,73.29,73.29h0c.79.79,1.71,1.36,2.69,1.73,2.69,1,5.82.43,7.98-1.73l34.62-34.62c2.16-2.16,2.73-5.3,1.73-7.98-.37-.98-.94-1.9-1.73-2.69Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-wip">
+                        <text id="wip" transform="translate(840.86 59.2)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">WIP</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-warning">
+                        <path id="warn"
+                            d="m1044.57,462.91l-140.59-215.42c-3.05-4.68-9.91-4.68-12.97,0l-140.59,215.42c-3.36,5.15.33,11.97,6.48,11.97h281.18c6.15,0,9.84-6.82,6.48-11.97Zm-128.01-16.56c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-28.77c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v28.77Zm0-61.75c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-77.15c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v77.15Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-high">
+                        <rect id="vu" y="61.37" width="198.52" height="198.52"
+                            transform="translate(-61.37 259.89) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-medium">
+                        <rect id="vu-2" data-name="vu" x="39.7" y="239.26" width="119.11" height="198.52"
+                            transform="translate(-239.26 437.78) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-low">
+                        <rect id="icon" x="69.48" y="347.66" width="59.56" height="198.52"
+                            transform="translate(-347.66 546.18) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="icon-info-ok">
+                        <path id="check-2" data-name="check"
+                            d="m1062.77,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                </svg></div>
+        </div>
         <h4 id="description-5" tabindex="-1">Description</h4>
         <p>[...]</p>
         <h4 id="recommendation-5" tabindex="-1">Recommendation</h4>
@@ -245,32 +575,87 @@
     <div class="finding" id="finding-ISSUE-007" data-risk="medium" data-likelihood="medium" data-impact="medium"
         data-status="ok">
         <h3 id="ISSUE-007" tabindex="-1">ISSUE-007 - Untitled Finding</h3>
-        <dl class="finding-header">
-            <div class="field-status">
-                <dt data-value="status">status</dt>
-                <dd class="status-ok" data-value="ok">No Action Required</dd>
-            </div>
-            <div class="field-resolution">
-                <dt data-value="resolution">resolution</dt>
-                <dd class="resolution-fixed" data-value="Fixed">Fixed</dd>
-            </div>
-            <div class="field-risk">
-                <dt data-value="risk">risk</dt>
-                <dd class="risk-medium" data-value="medium">medium</dd>
-            </div>
-            <div class="field-likelihood">
-                <dt data-value="likelihood">likelihood</dt>
-                <dd class="likelihood-medium" data-value="medium">medium</dd>
-            </div>
-            <div class="field-impact">
-                <dt data-value="impact">impact</dt>
-                <dd class="impact-medium" data-value="medium">medium</dd>
-            </div>
-            <div class="field-location">
-                <dt data-value="location">location</dt>
-                <dd class="location"></dd>
-            </div>
-        </dl>
+        <div class="finding-header">
+            <dl class="finding-header-data">
+                <div class="field-status">
+                    <dt data-value="status">status</dt>
+                    <dd class="status-ok" data-value="ok">No Action Required</dd>
+                </div>
+                <div class="field-resolution">
+                    <dt data-value="resolution">resolution</dt>
+                    <dd class="resolution-fixed" data-value="Fixed">Fixed</dd>
+                </div>
+                <div class="field-risk">
+                    <dt data-value="risk">risk</dt>
+                    <dd class="risk-medium" data-value="medium">medium</dd>
+                </div>
+                <div class="field-likelihood">
+                    <dt data-value="likelihood">likelihood</dt>
+                    <dd class="likelihood-medium" data-value="medium">medium</dd>
+                </div>
+                <div class="field-impact">
+                    <dt data-value="impact">impact</dt>
+                    <dd class="impact-medium" data-value="medium">medium</dd>
+                </div>
+                <div class="field-location">
+                    <dt data-value="location">location</dt>
+                    <dd class="location"></dd>
+                </div>
+            </dl>
+            <div class="finding-header-chart"><svg id="status_chart" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 1456.44 480.21">
+                    <g id="txt-closed">
+                        <text id="closed" transform="translate(366.57 50.87)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Closed</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-ok">
+                        <path id="check"
+                            d="m592.99,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-open">
+                        <text id="open" transform="translate(1269.78 61.37)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Open</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-problem">
+                        <path id="x"
+                            d="m1454.24,432.71h0l-73.29-73.29,73.29-73.29h0c.79-.79,1.36-1.71,1.73-2.69,1-2.69.43-5.82-1.73-7.98l-34.62-34.62c-2.16-2.16-5.3-2.73-7.98-1.73-.98.36-1.9.94-2.69,1.72h0l-73.29,73.29-73.29-73.29h0c-.79-.79-1.71-1.36-2.69-1.72-2.69-1-5.82-.43-7.98,1.73l-34.62,34.62c-2.16,2.16-2.73,5.3-1.73,7.98.37.98.94,1.9,1.73,2.69h0l73.29,73.29-73.29,73.29h0c-.79.79-1.36,1.71-1.73,2.69-1,2.68-.43,5.82,1.73,7.98l34.62,34.62c2.16,2.16,5.3,2.73,7.98,1.73.98-.37,1.9-.94,2.69-1.73h0l73.29-73.29,73.29,73.29h0c.79.79,1.71,1.36,2.69,1.73,2.69,1,5.82.43,7.98-1.73l34.62-34.62c2.16-2.16,2.73-5.3,1.73-7.98-.37-.98-.94-1.9-1.73-2.69Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-wip">
+                        <text id="wip" transform="translate(840.86 59.2)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">WIP</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-warning">
+                        <path id="warn"
+                            d="m1044.57,462.91l-140.59-215.42c-3.05-4.68-9.91-4.68-12.97,0l-140.59,215.42c-3.36,5.15.33,11.97,6.48,11.97h281.18c6.15,0,9.84-6.82,6.48-11.97Zm-128.01-16.56c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-28.77c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v28.77Zm0-61.75c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-77.15c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v77.15Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-high">
+                        <rect id="vu" y="61.37" width="198.52" height="198.52"
+                            transform="translate(-61.37 259.89) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-medium">
+                        <rect id="vu-2" data-name="vu" x="39.7" y="239.26" width="119.11" height="198.52"
+                            transform="translate(-239.26 437.78) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-low">
+                        <rect id="icon" x="69.48" y="347.66" width="59.56" height="198.52"
+                            transform="translate(-347.66 546.18) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="icon-info-ok">
+                        <path id="check-2" data-name="check"
+                            d="m1062.77,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                </svg></div>
+        </div>
         <h4 id="description-6" tabindex="-1">Description</h4>
         <p>[...]</p>
         <h4 id="recommendation-6" tabindex="-1">Recommendation</h4>
@@ -281,32 +666,87 @@
     <div class="finding" id="finding-ISSUE-008" data-risk="low" data-likelihood="low" data-impact="low"
         data-status="warning">
         <h3 id="ISSUE-008" tabindex="-1">ISSUE-008 - Untitled Finding</h3>
-        <dl class="finding-header">
-            <div class="field-status">
-                <dt data-value="status">status</dt>
-                <dd class="status-warning" data-value="warning">Attention Required</dd>
-            </div>
-            <div class="field-resolution">
-                <dt data-value="resolution">resolution</dt>
-                <dd class="resolution-partiallyFixed">Partially Fixed</dd>
-            </div>
-            <div class="field-risk">
-                <dt data-value="risk">risk</dt>
-                <dd class="risk-low" data-value="low">low</dd>
-            </div>
-            <div class="field-likelihood">
-                <dt data-value="likelihood">likelihood</dt>
-                <dd class="likelihood-low" data-value="low">low</dd>
-            </div>
-            <div class="field-impact">
-                <dt data-value="impact">impact</dt>
-                <dd class="impact-low" data-value="low">low</dd>
-            </div>
-            <div class="field-location">
-                <dt data-value="location">location</dt>
-                <dd class="location"></dd>
-            </div>
-        </dl>
+        <div class="finding-header">
+            <dl class="finding-header-data">
+                <div class="field-status">
+                    <dt data-value="status">status</dt>
+                    <dd class="status-warning" data-value="warning">Attention Required</dd>
+                </div>
+                <div class="field-resolution">
+                    <dt data-value="resolution">resolution</dt>
+                    <dd class="resolution-partiallyFixed">Partially Fixed</dd>
+                </div>
+                <div class="field-risk">
+                    <dt data-value="risk">risk</dt>
+                    <dd class="risk-low" data-value="low">low</dd>
+                </div>
+                <div class="field-likelihood">
+                    <dt data-value="likelihood">likelihood</dt>
+                    <dd class="likelihood-low" data-value="low">low</dd>
+                </div>
+                <div class="field-impact">
+                    <dt data-value="impact">impact</dt>
+                    <dd class="impact-low" data-value="low">low</dd>
+                </div>
+                <div class="field-location">
+                    <dt data-value="location">location</dt>
+                    <dd class="location"></dd>
+                </div>
+            </dl>
+            <div class="finding-header-chart"><svg id="status_chart" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 1456.44 480.21">
+                    <g id="txt-closed">
+                        <text id="closed" transform="translate(366.57 50.87)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Closed</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-ok">
+                        <path id="check"
+                            d="m592.99,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-open">
+                        <text id="open" transform="translate(1269.78 61.37)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Open</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-problem">
+                        <path id="x"
+                            d="m1454.24,432.71h0l-73.29-73.29,73.29-73.29h0c.79-.79,1.36-1.71,1.73-2.69,1-2.69.43-5.82-1.73-7.98l-34.62-34.62c-2.16-2.16-5.3-2.73-7.98-1.73-.98.36-1.9.94-2.69,1.72h0l-73.29,73.29-73.29-73.29h0c-.79-.79-1.71-1.36-2.69-1.72-2.69-1-5.82-.43-7.98,1.73l-34.62,34.62c-2.16,2.16-2.73,5.3-1.73,7.98.37.98.94,1.9,1.73,2.69h0l73.29,73.29-73.29,73.29h0c-.79.79-1.36,1.71-1.73,2.69-1,2.68-.43,5.82,1.73,7.98l34.62,34.62c2.16,2.16,5.3,2.73,7.98,1.73.98-.37,1.9-.94,2.69-1.73h0l73.29-73.29,73.29,73.29h0c.79.79,1.71,1.36,2.69,1.73,2.69,1,5.82.43,7.98-1.73l34.62-34.62c2.16-2.16,2.73-5.3,1.73-7.98-.37-.98-.94-1.9-1.73-2.69Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-wip">
+                        <text id="wip" transform="translate(840.86 59.2)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">WIP</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-warning">
+                        <path id="warn"
+                            d="m1044.57,462.91l-140.59-215.42c-3.05-4.68-9.91-4.68-12.97,0l-140.59,215.42c-3.36,5.15.33,11.97,6.48,11.97h281.18c6.15,0,9.84-6.82,6.48-11.97Zm-128.01-16.56c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-28.77c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v28.77Zm0-61.75c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-77.15c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v77.15Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-high">
+                        <rect id="vu" y="61.37" width="198.52" height="198.52"
+                            transform="translate(-61.37 259.89) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-medium">
+                        <rect id="vu-2" data-name="vu" x="39.7" y="239.26" width="119.11" height="198.52"
+                            transform="translate(-239.26 437.78) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-low">
+                        <rect id="icon" x="69.48" y="347.66" width="59.56" height="198.52"
+                            transform="translate(-347.66 546.18) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="icon-info-ok">
+                        <path id="check-2" data-name="check"
+                            d="m1062.77,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                </svg></div>
+        </div>
         <h4 id="description-7" tabindex="-1">Description</h4>
         <p>[...]</p>
         <h4 id="recommendation-7" tabindex="-1">Recommendation</h4>
@@ -317,32 +757,87 @@
     <div class="finding" id="finding-ISSUE-009" data-risk="low" data-likelihood="medium" data-impact="low"
         data-status="warning">
         <h3 id="ISSUE-009" tabindex="-1">ISSUE-009 - Untitled Finding</h3>
-        <dl class="finding-header">
-            <div class="field-status">
-                <dt data-value="status">status</dt>
-                <dd class="status-warning" data-value="warning">Attention Required</dd>
-            </div>
-            <div class="field-resolution">
-                <dt data-value="resolution">resolution</dt>
-                <dd class="resolution-acknowledged" data-value="Acknowledged">Acknowledged</dd>
-            </div>
-            <div class="field-risk">
-                <dt data-value="risk">risk</dt>
-                <dd class="risk-low" data-value="low">low</dd>
-            </div>
-            <div class="field-likelihood">
-                <dt data-value="likelihood">likelihood</dt>
-                <dd class="likelihood-medium" data-value="medium">medium</dd>
-            </div>
-            <div class="field-impact">
-                <dt data-value="impact">impact</dt>
-                <dd class="impact-low" data-value="low">low</dd>
-            </div>
-            <div class="field-location">
-                <dt data-value="location">location</dt>
-                <dd class="location"></dd>
-            </div>
-        </dl>
+        <div class="finding-header">
+            <dl class="finding-header-data">
+                <div class="field-status">
+                    <dt data-value="status">status</dt>
+                    <dd class="status-warning" data-value="warning">Attention Required</dd>
+                </div>
+                <div class="field-resolution">
+                    <dt data-value="resolution">resolution</dt>
+                    <dd class="resolution-acknowledged" data-value="Acknowledged">Acknowledged</dd>
+                </div>
+                <div class="field-risk">
+                    <dt data-value="risk">risk</dt>
+                    <dd class="risk-low" data-value="low">low</dd>
+                </div>
+                <div class="field-likelihood">
+                    <dt data-value="likelihood">likelihood</dt>
+                    <dd class="likelihood-medium" data-value="medium">medium</dd>
+                </div>
+                <div class="field-impact">
+                    <dt data-value="impact">impact</dt>
+                    <dd class="impact-low" data-value="low">low</dd>
+                </div>
+                <div class="field-location">
+                    <dt data-value="location">location</dt>
+                    <dd class="location"></dd>
+                </div>
+            </dl>
+            <div class="finding-header-chart"><svg id="status_chart" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 1456.44 480.21">
+                    <g id="txt-closed">
+                        <text id="closed" transform="translate(366.57 50.87)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Closed</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-ok">
+                        <path id="check"
+                            d="m592.99,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-open">
+                        <text id="open" transform="translate(1269.78 61.37)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Open</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-problem">
+                        <path id="x"
+                            d="m1454.24,432.71h0l-73.29-73.29,73.29-73.29h0c.79-.79,1.36-1.71,1.73-2.69,1-2.69.43-5.82-1.73-7.98l-34.62-34.62c-2.16-2.16-5.3-2.73-7.98-1.73-.98.36-1.9.94-2.69,1.72h0l-73.29,73.29-73.29-73.29h0c-.79-.79-1.71-1.36-2.69-1.72-2.69-1-5.82-.43-7.98,1.73l-34.62,34.62c-2.16,2.16-2.73,5.3-1.73,7.98.37.98.94,1.9,1.73,2.69h0l73.29,73.29-73.29,73.29h0c-.79.79-1.36,1.71-1.73,2.69-1,2.68-.43,5.82,1.73,7.98l34.62,34.62c2.16,2.16,5.3,2.73,7.98,1.73.98-.37,1.9-.94,2.69-1.73h0l73.29-73.29,73.29,73.29h0c.79.79,1.71,1.36,2.69,1.73,2.69,1,5.82.43,7.98-1.73l34.62-34.62c2.16-2.16,2.73-5.3,1.73-7.98-.37-.98-.94-1.9-1.73-2.69Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-wip">
+                        <text id="wip" transform="translate(840.86 59.2)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">WIP</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-warning">
+                        <path id="warn"
+                            d="m1044.57,462.91l-140.59-215.42c-3.05-4.68-9.91-4.68-12.97,0l-140.59,215.42c-3.36,5.15.33,11.97,6.48,11.97h281.18c6.15,0,9.84-6.82,6.48-11.97Zm-128.01-16.56c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-28.77c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v28.77Zm0-61.75c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-77.15c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v77.15Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-high">
+                        <rect id="vu" y="61.37" width="198.52" height="198.52"
+                            transform="translate(-61.37 259.89) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-medium">
+                        <rect id="vu-2" data-name="vu" x="39.7" y="239.26" width="119.11" height="198.52"
+                            transform="translate(-239.26 437.78) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-low">
+                        <rect id="icon" x="69.48" y="347.66" width="59.56" height="198.52"
+                            transform="translate(-347.66 546.18) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="icon-info-ok">
+                        <path id="check-2" data-name="check"
+                            d="m1062.77,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                </svg></div>
+        </div>
         <h4 id="description-8" tabindex="-1">Description</h4>
         <p>[...]</p>
         <h4 id="recommendation-8" tabindex="-1">Recommendation</h4>
@@ -353,32 +848,87 @@
     <div class="finding" id="finding-ISSUE-010" data-risk="low" data-likelihood="low" data-impact="low"
         data-status="warning">
         <h3 id="ISSUE-010" tabindex="-1">ISSUE-010 - Untitled Finding</h3>
-        <dl class="finding-header">
-            <div class="field-status">
-                <dt data-value="status">status</dt>
-                <dd class="status-warning" data-value="warning">Attention Required</dd>
-            </div>
-            <div class="field-resolution">
-                <dt data-value="resolution">resolution</dt>
-                <dd class="resolution-deferred" data-value="Deferred">Deferred</dd>
-            </div>
-            <div class="field-risk">
-                <dt data-value="risk">risk</dt>
-                <dd class="risk-low" data-value="low">low</dd>
-            </div>
-            <div class="field-likelihood">
-                <dt data-value="likelihood">likelihood</dt>
-                <dd class="likelihood-low" data-value="low">low</dd>
-            </div>
-            <div class="field-impact">
-                <dt data-value="impact">impact</dt>
-                <dd class="impact-low" data-value="low">low</dd>
-            </div>
-            <div class="field-location">
-                <dt data-value="location">location</dt>
-                <dd class="location"></dd>
-            </div>
-        </dl>
+        <div class="finding-header">
+            <dl class="finding-header-data">
+                <div class="field-status">
+                    <dt data-value="status">status</dt>
+                    <dd class="status-warning" data-value="warning">Attention Required</dd>
+                </div>
+                <div class="field-resolution">
+                    <dt data-value="resolution">resolution</dt>
+                    <dd class="resolution-deferred" data-value="Deferred">Deferred</dd>
+                </div>
+                <div class="field-risk">
+                    <dt data-value="risk">risk</dt>
+                    <dd class="risk-low" data-value="low">low</dd>
+                </div>
+                <div class="field-likelihood">
+                    <dt data-value="likelihood">likelihood</dt>
+                    <dd class="likelihood-low" data-value="low">low</dd>
+                </div>
+                <div class="field-impact">
+                    <dt data-value="impact">impact</dt>
+                    <dd class="impact-low" data-value="low">low</dd>
+                </div>
+                <div class="field-location">
+                    <dt data-value="location">location</dt>
+                    <dd class="location"></dd>
+                </div>
+            </dl>
+            <div class="finding-header-chart"><svg id="status_chart" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 1456.44 480.21">
+                    <g id="txt-closed">
+                        <text id="closed" transform="translate(366.57 50.87)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Closed</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-ok">
+                        <path id="check"
+                            d="m592.99,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-open">
+                        <text id="open" transform="translate(1269.78 61.37)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">Open</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-problem">
+                        <path id="x"
+                            d="m1454.24,432.71h0l-73.29-73.29,73.29-73.29h0c.79-.79,1.36-1.71,1.73-2.69,1-2.69.43-5.82-1.73-7.98l-34.62-34.62c-2.16-2.16-5.3-2.73-7.98-1.73-.98.36-1.9.94-2.69,1.72h0l-73.29,73.29-73.29-73.29h0c-.79-.79-1.71-1.36-2.69-1.72-2.69-1-5.82-.43-7.98,1.73l-34.62,34.62c-2.16,2.16-2.73,5.3-1.73,7.98.37.98.94,1.9,1.73,2.69h0l73.29,73.29-73.29,73.29h0c-.79.79-1.36,1.71-1.73,2.69-1,2.68-.43,5.82,1.73,7.98l34.62,34.62c2.16,2.16,5.3,2.73,7.98,1.73.98-.37,1.9-.94,2.69-1.73h0l73.29-73.29,73.29,73.29h0c.79.79,1.71,1.36,2.69,1.73,2.69,1,5.82.43,7.98-1.73l34.62-34.62c2.16-2.16,2.73-5.3,1.73-7.98-.37-.98-.94-1.9-1.73-2.69Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="txt-wip">
+                        <text id="wip" transform="translate(840.86 59.2)" font-family="Nunito-Regular, Nunito"
+                            font-size="59.68">
+                            <tspan x="0" y="0">WIP</tspan>
+                        </text>
+                    </g>
+                    <g id="icon-warning">
+                        <path id="warn"
+                            d="m1044.57,462.91l-140.59-215.42c-3.05-4.68-9.91-4.68-12.97,0l-140.59,215.42c-3.36,5.15.33,11.97,6.48,11.97h281.18c6.15,0,9.84-6.82,6.48-11.97Zm-128.01-16.56c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-28.77c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v28.77Zm0-61.75c0,2.58-2.09,4.68-4.68,4.68h-28.77c-2.58,0-4.68-2.09-4.68-4.68v-77.15c0-2.58,2.09-4.68,4.68-4.68h28.77c2.58,0,4.68,2.09,4.68,4.68v77.15Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-high">
+                        <rect id="vu" y="61.37" width="198.52" height="198.52"
+                            transform="translate(-61.37 259.89) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-medium">
+                        <rect id="vu-2" data-name="vu" x="39.7" y="239.26" width="119.11" height="198.52"
+                            transform="translate(-239.26 437.78) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="vu-risk-low">
+                        <rect id="icon" x="69.48" y="347.66" width="59.56" height="198.52"
+                            transform="translate(-347.66 546.18) rotate(-90)" fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                    <g id="icon-info-ok">
+                        <path id="check-2" data-name="check"
+                            d="m1062.77,291.92l-177.51,176.86c-2.85,2.84-7.46,2.84-10.31,0l-15.85-15.79-15.85-15.79-72.9-72.64c-2.85-2.84-2.85-7.43,0-10.27l31.7-31.58c2.85-2.84,7.46-2.84,10.31,0l67.75,67.5,140.66-140.14c2.85-2.84,7.46-2.84,10.31,0l31.7,31.58c2.85,2.84,2.85,7.43,0,10.27Z"
+                            fill="#e2e2e2" stroke-width="0" />
+                    </g>
+                </svg></div>
+        </div>
         <h4 id="description-9" tabindex="-1">Description</h4>
         <p>[...]</p>
         <h4 id="recommendation-9" tabindex="-1">Recommendation</h4>
