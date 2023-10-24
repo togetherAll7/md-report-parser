@@ -68,7 +68,9 @@ export const mdBlockToMd = (block: MdBlock): string => {
   if (isHeadingType(blockType)) {
     const markup = '#'.repeat(parseInt(blockType.replace('h', '')))
     const title = metadata.title || ''
-    resultMd = [`${markup} ${title}`, '', ...resultMd]
+    resultMd = !metadata.hideMdTitle
+      ? [`${markup} ${title}`, '', ...resultMd]
+      : resultMd
   } else {
     delete metadata.type
     resultMd = [

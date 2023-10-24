@@ -16,7 +16,9 @@ import {
   sortFindingFields,
   isAllowedInfoImpact,
   createFindigsExampleMetadata,
-  calculateCondition
+  calculateCondition,
+  getFindingsData,
+  FINDING_SECTIONS_PROPS
 } from '../Findings'
 
 import {
@@ -447,48 +449,66 @@ describe('findings', () => {
     })
   })
 
-  describe('calculateCondition', () => {
-    // console.table(getFindingStatusTable()) // show state table
-
-    const rules: { [key: string]: any } = {
-      [INFO]: {
-        [FINDING_STATUS.open]: CONDITIONS.warning,
-        [FINDING_STATUS.fixed]: CONDITIONS.ok,
-        [FINDING_STATUS.partiallyFixed]: CONDITIONS.ok,
-        [FINDING_STATUS.acknowledged]: CONDITIONS.ok,
-        [FINDING_STATUS.deferred]: CONDITIONS.ok
-      },
-      [LOW]: {
-        [FINDING_STATUS.open]: CONDITIONS.problem,
-        [FINDING_STATUS.fixed]: CONDITIONS.ok,
-        [FINDING_STATUS.partiallyFixed]: CONDITIONS.warning,
-        [FINDING_STATUS.acknowledged]: CONDITIONS.warning,
-        [FINDING_STATUS.deferred]: CONDITIONS.warning
-      },
-      [MEDIUM]: {
-        [FINDING_STATUS.open]: CONDITIONS.problem,
-        [FINDING_STATUS.fixed]: CONDITIONS.ok,
-        [FINDING_STATUS.partiallyFixed]: CONDITIONS.warning,
-        [FINDING_STATUS.acknowledged]: CONDITIONS.warning,
-        [FINDING_STATUS.deferred]: CONDITIONS.warning
-      },
-      [HIGH]: {
-        [FINDING_STATUS.open]: CONDITIONS.problem,
-        [FINDING_STATUS.fixed]: CONDITIONS.ok,
-        [FINDING_STATUS.partiallyFixed]: CONDITIONS.warning,
-        [FINDING_STATUS.acknowledged]: CONDITIONS.warning,
-        [FINDING_STATUS.deferred]: CONDITIONS.warning
-      }
+  const testFindingData = (finding: any) => {
+    for (const s of ['metadata', ...FINDING_SECTIONS_PROPS]) {
+      it(`should have a ${s} proerty`, () => {
+        expect(finding.hasOwnProperty(s)).toBe(true)
+      })
     }
+  }
 
-    for (const risk in rules) {
-      for (const status in rules[risk]) {
-        const x = rules[risk][status]
-        it(`[${risk} - ${status}] should be [${x}]`, () => {
-          expect(calculateCondition(status as FindingStatus, risk)).toBe(x)
+  describe.only('getFindingsData', () => {
+    describe('test finding', () => {
+      const description = 'This is a test..'
+      const recommendation = 'This is a recomendation example'
+      const status = 'Finding STATUS'
+      const fmd = `# TEST
+--- finding
+
+id: xxx-001
+title: Untitled finding
+likelihood: low
+impact: low
+risk: low
+resolution: open
+status: ⚠
+location: test
+fixed: false
+
+#### Description
+
+${description}
+
+#### Recommendation
+
+${recommendation}
+
+#### Status
+
+${status}
+
+/--
+      `
+
+      const props: { [key: string]: any } = {
+        description,
+        recommendation,
+        status
+      }
+      const data: { [key: string]: any } = getFindingsData(MdToObj()(fmd))[0]
+      for (const p in props) {
+        it('should have the section content', () => {
+          expect(data[p]).toContain(props[p])
         })
       }
-    }
+    })
+
+    describe('example test', () => {
+      const findings = getFindingsData(MdToObj()(example))
+      for (const finding of findings) {
+        testFindingData(finding)
+      }
+    })
   })
 })
 

@@ -42,7 +42,9 @@ import {
   MdBlock,
   MdDoc,
   sortBlocks,
-  iterateBlocks
+  iterateBlocks,
+  mdBlockToMd,
+  mdDocToMd
 } from './mdModel'
 import {
   flipObject,
@@ -51,6 +53,10 @@ import {
   containsHtml,
   camelCaseToKebab
 } from './utils'
+
+export const FINDING_SECTIONS_PROPS = FINDING_SECTIONS.map((x) =>
+  x.toLowerCase()
+)
 
 export type FindingMetadata = {
   id?: string
@@ -286,10 +292,36 @@ export const reindexFindings = (doc: MdDoc): MdDoc => {
   return doc
 }
 
-export const getFindings = (doc: MdDoc) => {
+const getFindingsArray = (doc: MdDoc) => {
   const findings: any[] = []
   iterateFindings(doc, (f: any) => findings.push(f))
+  return findings
+}
+
+export const getFindings = (doc: MdDoc) => {
+  const findings = getFindingsArray(doc)
   return findings.map(({ metadata }) => metadata)
+}
+
+export const getFindingsData = (doc: MdDoc) => {
+  const findings = getFindingsArray(doc)
+  return findings.map(({ metadata, children }) => {
+    const data = FINDING_SECTIONS_PROPS.reduce(
+      (v: { [key: string]: any }, a) => {
+        v[a] = ''
+        const ch = children.filter(
+          (c: any) => a === c.metadata.title.toLowerCase()
+        )
+        if (ch.length) {
+          ch[0].metadata.hideMdTitle = true
+          v[a] = mdDocToMd(ch)
+        }
+        return v
+      },
+      {}
+    )
+    return { metadata, ...data }
+  })
 }
 
 export const findingListFieds = [ID, TITLE, TOTAL_RISK, FIXED]
