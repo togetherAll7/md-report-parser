@@ -98,11 +98,12 @@ fixed: false
 
 #### Description
 
-[...]
+This is a short description with a [link](http://test.com).
+
 
 #### Recommendation
 
-[...]
+This is a short link <http://test.com>
 
 #### Status
 
