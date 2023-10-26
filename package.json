@@ -1,6 +1,6 @@
 {
   "name": "md-report-parser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Markdown parser for security reports",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
