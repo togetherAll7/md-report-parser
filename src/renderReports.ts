@@ -7,6 +7,7 @@ import {
 } from './Findings'
 import { FINDING_HEADER, TITLE_SEPARATOR } from './constants'
 import { camelCaseToKebab } from './utils'
+import StateBlock from 'markdown-it/lib/rules_block/state_block'
 
 /* eslint-disable @typescript-eslint/naming-convention */
 export function RenderReports({
@@ -72,7 +73,34 @@ export function RenderReports({
       : title
   }
 
-  return { render, metadataRenderer, titleCb }
+  const createTitle = (
+    {
+      state,
+      title,
+      titleLevel
+    }: {
+      state: StateBlock
+      title: string
+      titleLevel: number
+    },
+    metadata: { [key: string]: any }
+  ) => {
+    const isFinding = isFindingType(getClassName(metadata))
+    let token = state.push('heading_open', `h${titleLevel}`, 1)
+    token.markup = '#'.repeat(titleLevel)
+    const { id } = metadata as any
+    if (id) {
+      token.attrSet('id', id)
+    }
+    token = state.push('inline', '', 0)
+    token.content = isFinding ? getFindingTitle(id, title) : `${title}`
+    token.children = []
+
+    token = state.push('heading_close', `h${titleLevel}`, -1)
+    token.markup = '#'.repeat(titleLevel)
+  }
+  // Remove createTitle here to use deafult markdown-it-data-block function
+  return { render, metadataRenderer, createTitle }
 }
 
 export default RenderReports

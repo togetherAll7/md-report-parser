@@ -11,7 +11,7 @@ describe('renderReports', () => {
       expect(Object.keys(renderReports)).toStrictEqual([
         'render',
         'metadataRenderer',
-        'titleCb'
+        'createTitle'
       ])
     })
   })
