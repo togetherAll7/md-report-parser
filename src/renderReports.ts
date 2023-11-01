@@ -85,6 +85,20 @@ export function RenderReports({
     },
     metadata: { [key: string]: any }
   ) => {
+    const { Token } = state
+
+    const tagToken = (text: string, attrs?: { [key: string]: string }) => {
+      const textToken = new Token('text', '', 1)
+      textToken.content = text
+      const openToken = new Token('span_open', 'span', 1)
+      if (attrs) {
+        Object.entries(attrs).forEach(([name, value]) => {
+          openToken.attrPush([name, value])
+        })
+      }
+      const closeToken = new Token('span_close', 'span', -1)
+      return [openToken, textToken, closeToken]
+    }
     const isFinding = isFindingType(getClassName(metadata))
     let token = state.push('heading_open', `h${titleLevel}`, 1)
     token.markup = '#'.repeat(titleLevel)
@@ -93,8 +107,15 @@ export function RenderReports({
       token.attrSet('id', id)
     }
     token = state.push('inline', '', 0)
-    token.content = isFinding ? getFindingTitle(id, title) : `${title}`
-    token.children = []
+    if (isFinding) {
+      token.content = ''
+      token.children = tagToken(id, { class: 'title-id' })
+        .concat(tagToken(` ${TITLE_SEPARATOR} `, { class: 'title-separator' }))
+        .concat(tagToken(title, { class: 'title-content' }))
+    } else {
+      token.content = `${title}`
+      token.children = []
+    }
 
     token = state.push('heading_close', `h${titleLevel}`, -1)
     token.markup = '#'.repeat(titleLevel)
