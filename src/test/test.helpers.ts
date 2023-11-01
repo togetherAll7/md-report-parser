@@ -18,3 +18,6 @@ export const removeNewLines = (str: string) =>
   str.replace(/\r?\n|\r/g, '').trim()
 
 export const removeWhiteSpace = (str: string) => str.replace(/\s/g, '')
+
+export const saveFile = (filePath: string, data: string) =>
+  fs.writeFileSync(filePath, data)
