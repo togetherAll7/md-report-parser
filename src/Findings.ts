@@ -348,7 +348,7 @@ const groupByRemediation = (findings: any[]) => {
 export const getFindingResumeData = (findings: any[]) => {
   const data = getFindingResume(findings)
   if (!data) {
-    return []
+    return {}
   }
 
   const resume = FINDING_RESUME_FIELDS.reduce(
