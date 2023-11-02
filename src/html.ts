@@ -53,29 +53,6 @@ export const link = (
   return tag('a', content, attrs, label)
 }
 
-export const dl = (
-  data: ArrayLike<unknown> | { [s: string]: unknown },
-  attrs: { class: string },
-  dtAttrsCb?: (name: string, value: any) => TagAttributes | undefined
-) =>
-  tag(
-    'dl',
-    Object.entries(data).map(([name, value]) => {
-      const label = getFieldLabel(name, value)
-      return tag(
-        'div',
-        `${tag('dt', name)} ${tag(
-          'dd',
-          value,
-          dtAttrsCb ? dtAttrsCb(name, value) : undefined,
-          label
-        )}`,
-        getFieldAttributes(name, value)
-      )
-    }),
-    attrs
-  )
-
 const getFieldLabel = (
   fieldName: string,
   value: unknown
@@ -90,6 +67,30 @@ const getFieldData = (data: any, fieldName: string) => {
   const label = getFieldLabel(fieldName, data[fieldName])
   return { value, attrs, label }
 }
+
+export const getDlContent = (
+  data: ArrayLike<unknown> | { [s: string]: unknown },
+  dtAttrsCb?: (name: string, value: any) => TagAttributes | undefined
+) =>
+  Object.entries(data).map(([name, value]) => {
+    const label = getFieldLabel(name, value)
+    return tag(
+      'div',
+      `${tag('dt', name)} ${tag(
+        'dd',
+        value,
+        dtAttrsCb ? dtAttrsCb(name, value) : undefined,
+        label
+      )}`,
+      getFieldAttributes(name, value)
+    )
+  })
+
+export const dl = (
+  data: ArrayLike<unknown> | { [s: string]: unknown },
+  attrs: { class: string },
+  dtAttrsCb?: (name: string, value: any) => TagAttributes | undefined
+) => tag('dl', getDlContent(data, dtAttrsCb), attrs)
 
 export const table = (
   data: any[],

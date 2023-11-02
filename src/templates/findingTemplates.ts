@@ -10,8 +10,8 @@ import {
   REPORT_VERSION
 } from '../constants'
 import { logo } from '../templates/logo'
-import { dl, table, tag, ul } from '../html'
-import { filterObjectFields } from '../utils'
+import { table, tag, ul, getDlContent } from '../html'
+import { filterObjectFields, toCamelCase } from '../utils'
 import {
   findingFields,
   getFindings,
@@ -24,7 +24,10 @@ import {
 } from '../Findings'
 import { MdDoc, getDocMetadata } from '../mdModel'
 import { link } from '../html'
-import { statusChart } from './icons'
+import pug from 'pug'
+import * as svg from './svg'
+
+const compileFindingHeader = pug.compile('findingTemplate')
 
 const findingRenderFields = findingFields.filter(
   (f) => !['title', 'id'].includes(f)
@@ -56,15 +59,20 @@ const renderReportHeader = (doc: MdDoc) => {
 
 export default {
   [FINDING_HEADER]: (data: ArrayLike<unknown> | { [s: string]: unknown }) => {
-    const header = dl(
+    const findingRenderedFields = getDlContent(
       filterObjectFields(data, findingRenderFields),
-      {
-        class: 'finding-header-data'
-      },
       getFindingFieldValueAttributes
     )
-    const chart = tag('div', statusChart, { class: 'finding-header-chart' })
-    return tag('div', `${header}${chart}`, { class: 'finding-header' })
+    const { riskChart } = svg
+    const { status } = data as any
+    const statusIconName = toCamelCase(`status ${status}`)
+    const statusIcon = (svg as { [key: string]: string })[statusIconName]
+    return compileFindingHeader({
+      data,
+      findingRenderFields,
+      riskChart,
+      statusIcon
+    })
   },
   [FINDING_LIST]: (doc: MdDoc) => {
     const { id, title, risk, status } = FINDING_LIST_TITLES
