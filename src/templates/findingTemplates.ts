@@ -67,10 +67,10 @@ export default {
     const statusIconName = toCamelCase(`status ${status}`)
 
     const statusIcon = div((svg as { [key: string]: string })[statusIconName], {
-      class: 'col status-icon'
+      class: 'header-col status-icon'
     })
-    const headerRiskChart = div(svg.riskChart, { class: 'col risk-chart' })
-    const headerId = div(id, { class: 'col header-id' })
+    const headerRiskChart = div(svg.riskChart, { class: 'header-col risk-chart' })
+    const headerId = div(id, { class: 'header-col header-id' })
     const headerTitle = tag(`h${FINDING_TITLE_LEVEL}`, title)
 
     return div(
