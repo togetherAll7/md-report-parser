@@ -1,29 +1,4 @@
-export const riskChart = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 334.49 102.96">
-    <g id="risk-high-mark">
-        <path d="m317.53.5c-6.81,6.81-13.62,13.62-20.42,20.42-6.81-6.81-13.62-13.62-20.42-20.42h40.85Z" fill="#494949" stroke="#fff" stroke-miterlimit="10"/>
-    </g>
-    <g id="risk-high-square">
-        <rect x="259.73" y="27.87" width="74.76" height="74.76" fill="#d8cece" stroke-width="0"/>
-    </g>
-    <g id="risk-medium-mark">
-        <path d="m230.95.5c-6.81,6.81-13.62,13.62-20.42,20.42-6.81-6.81-13.62-13.62-20.42-20.42h40.85Z" fill="#494949" stroke="#fff" stroke-miterlimit="10"/>
-    </g>
-    <g id="risk-medium-square">
-        <rect x="173.15" y="27.87" width="74.76" height="74.76" fill="#d8cece" stroke-width="0"/>
-    </g>
-    <g id="risk-low-mark">
-        <path d="m144.38.84c-6.81,6.81-13.62,13.62-20.42,20.42-6.81-6.81-13.62-13.62-20.42-20.42h40.85Z" fill="#494949" stroke="#fff" stroke-miterlimit="10"/>
-    </g>
-    <g id="risk-low-square">
-        <rect x="86.58" y="28.2" width="74.76" height="74.76" fill="#d8cece" stroke-width="0"/>
-    </g>
-    <g id="risk-info-mark">
-        <path d="m57.8.5c-6.81,6.81-13.62,13.62-20.42,20.42C30.57,14.12,23.76,7.31,16.96.5h40.85Z" fill="#494949" stroke="#fff" stroke-miterlimit="10"/>
-    </g>
-    <g id="risk-info-square">
-        <rect y="27.87" width="74.76" height="74.76" fill="#d8cece" stroke-width="0"/>
-    </g>
-</svg>`
+export const riskChart = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 334.49 102.96"><g id="mark-high"><path d="m317.53.5c-6.81,6.81-13.62,13.62-20.42,20.42-6.81-6.81-13.62-13.62-20.42-20.42h40.85Z" fill="#494949" stroke="#fff" stroke-miterlimit="10"/></g><g id="icon-high"><rect x="259.73" y="27.87" width="74.76" height="74.76" fill="#d8cece" stroke-width="0"/></g><g id="mark-medium"><path d="m230.95.5c-6.81,6.81-13.62,13.62-20.42,20.42-6.81-6.81-13.62-13.62-20.42-20.42h40.85Z" fill="#494949" stroke="#fff" stroke-miterlimit="10"/></g><g id="icon-medium"><rect x="173.15" y="27.87" width="74.76" height="74.76" fill="#d8cece" stroke-width="0"/></g><g id="mark-low"><path d="m144.38.84c-6.81,6.81-13.62,13.62-20.42,20.42-6.81-6.81-13.62-13.62-20.42-20.42h40.85Z" fill="#494949" stroke="#fff" stroke-miterlimit="10"/></g><g id="icon-low"><rect x="86.58" y="28.2" width="74.76" height="74.76" fill="#d8cece" stroke-width="0"/></g><g id="mark-info"><path d="m57.8.5c-6.81,6.81-13.62,13.62-20.42,20.42C30.57,14.12,23.76,7.31,16.96.5h40.85Z" fill="#494949" stroke="#fff" stroke-miterlimit="10"/></g><g id="icon-info"><rect y="27.87" width="74.76" height="74.76" fill="#d8cece" stroke-width="0"/></g></svg>`
 
 export const statusOk = `<svg version="1.1" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 	 x="0px" y="0px" width="2000px" height="2000px" viewBox="0 0 2000 2000" overflow="visible" xml:space="preserve">
