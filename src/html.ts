@@ -42,6 +42,12 @@ export const tag = (
   )
 }
 
+export const div = (
+  content?: unknown,
+  attrs?: TagAttributes,
+  label?: string | undefined
+) => tag('div', content, attrs, label)
+
 export const link = (
   content: unknown,
   destination: string,

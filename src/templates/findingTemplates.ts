@@ -10,7 +10,7 @@ import {
   REPORT_VERSION
 } from '../constants'
 import { logo } from '../templates/logo'
-import { table, tag, ul, getDlContent } from '../html'
+import { table, tag, ul, dl, div } from '../html'
 import { filterObjectFields, toCamelCase } from '../utils'
 import {
   findingFields,
@@ -24,10 +24,7 @@ import {
 } from '../Findings'
 import { MdDoc, getDocMetadata } from '../mdModel'
 import { link } from '../html'
-import pug from 'pug'
 import * as svg from './svg'
-
-const compileFindingHeader = pug.compile('findingTemplate')
 
 const findingRenderFields = findingFields.filter(
   (f) => !['title', 'id'].includes(f)
@@ -59,20 +56,27 @@ const renderReportHeader = (doc: MdDoc) => {
 
 export default {
   [FINDING_HEADER]: (data: ArrayLike<unknown> | { [s: string]: unknown }) => {
-    const findingRenderedFields = getDlContent(
+    const fieldList = dl(
       filterObjectFields(data, findingRenderFields),
+      { class: 'finding-header-data' },
       getFindingFieldValueAttributes
     )
-    const { riskChart } = svg
-    const { status } = data as any
+
+    const { status, id } = data as any
     const statusIconName = toCamelCase(`status ${status}`)
-    const statusIcon = (svg as { [key: string]: string })[statusIconName]
-    return compileFindingHeader({
-      data,
-      findingRenderFields,
-      riskChart,
-      statusIcon
+
+    const statusIcon = div((svg as { [key: string]: string })[statusIconName], {
+      class: 'col status-icon'
     })
+    const headerRiskChart = div(svg.riskChart, { class: 'col risk-chart' })
+    const headerId = div(id, { class: 'col header-id' })
+
+    return div(
+      div(`${headerId} ${headerRiskChart} ${statusIcon}`, {
+        class: 'header-decoration'
+      }) + fieldList,
+      { class: 'finding-header' }
+    )
   },
   [FINDING_LIST]: (doc: MdDoc) => {
     const { id, title, risk, status } = FINDING_LIST_TITLES
