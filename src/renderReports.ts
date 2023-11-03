@@ -102,6 +102,7 @@ export function RenderReports({
     const isFinding = isFindingType(getClassName(metadata))
     let token = state.push('heading_open', `h${titleLevel}`, 1)
     token.markup = '#'.repeat(titleLevel)
+    token.attrSet('class', 'finding-title')
     const { id } = metadata as any
     if (id) {
       token.attrSet('id', id)
