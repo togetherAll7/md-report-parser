@@ -7,7 +7,8 @@ import {
   REPORT_DATE,
   REPORT_HEADER,
   REPORT_TYPE,
-  REPORT_VERSION
+  REPORT_VERSION,
+  FINDING_TITLE_LEVEL
 } from '../constants'
 import { logo } from '../templates/logo'
 import { table, tag, ul, dl, div } from '../html'
@@ -62,7 +63,7 @@ export default {
       getFindingFieldValueAttributes
     )
 
-    const { status, id } = data as any
+    const { status, id, title } = data as any
     const statusIconName = toCamelCase(`status ${status}`)
 
     const statusIcon = div((svg as { [key: string]: string })[statusIconName], {
@@ -70,11 +71,14 @@ export default {
     })
     const headerRiskChart = div(svg.riskChart, { class: 'col risk-chart' })
     const headerId = div(id, { class: 'col header-id' })
+    const headerTitle = tag(`h${FINDING_TITLE_LEVEL}`, title)
 
     return div(
       div(`${headerId} ${headerRiskChart} ${statusIcon}`, {
         class: 'header-decoration'
-      }) + fieldList,
+      }) +
+        div(headerTitle, { class: 'header-title' }) +
+        fieldList,
       { class: 'finding-header' }
     )
   },
