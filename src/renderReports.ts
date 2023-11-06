@@ -9,6 +9,12 @@ import { FINDING_HEADER, TITLE_SEPARATOR } from './constants'
 import { camelCaseToKebab } from './utils'
 import StateBlock from 'markdown-it/lib/rules_block/state_block'
 
+export const getFindingTitleElements = (metadata: any) => {
+  const { id, title } = metadata
+  const separator = ` ${TITLE_SEPARATOR} `
+  return { id, separator, title }
+}
+
 /* eslint-disable @typescript-eslint/naming-convention */
 export function RenderReports({
   metadataBlockTypeName
@@ -110,9 +116,10 @@ export function RenderReports({
     token = state.push('inline', '', 0)
     if (isFinding) {
       token.content = ''
-      token.children = tagToken(id, { class: 'title-id' })
-        .concat(tagToken(` ${TITLE_SEPARATOR} `, { class: 'title-separator' }))
-        .concat(tagToken(title, { class: 'title-content' }))
+      const childs = getFindingTitleElements(metadata)
+      token.children = Object.entries(childs)
+        .map(([key, value]) => tagToken(value, { class: `title-${key}` }))
+        .flat(1)
     } else {
       token.content = `${title}`
       token.children = []
