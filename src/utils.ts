@@ -48,3 +48,17 @@ export const getReportDate = (d?: Date) => {
   d = d || new Date()
   return `${getMonthName(d)} ${d.getFullYear()}`
 }
+
+export const escapeHtml = (str: string): string => {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
+export const containsHtml = (str: string): boolean => {
+  const htmlRegExp = /<[^>]*>/g // Matches any character between '<' and '>'
+  return htmlRegExp.test(str)
+}
