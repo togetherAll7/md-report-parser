@@ -70,11 +70,9 @@ export default {
       getFindingFieldValueAttributes
     )
     const statusIconName = toCamelCase(`status ${status}`)
-    const riskChart = div(svg.riskChart, { class: 'risk-chart' })
+    const riskChart = svg.riskChart
 
-    const statusIcon = div((svg as { [key: string]: string })[statusIconName], {
-      class: 'status-icon'
-    })
+    const statusIcon = (svg as { [key: string]: string })[statusIconName]
 
     const colA = dl(
       { status, statusIcon, resolution },
