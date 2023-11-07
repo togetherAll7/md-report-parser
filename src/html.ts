@@ -1,8 +1,9 @@
 import { FIELD_LABELS } from './constants'
+import { camelCaseToKebab } from './utils'
 
 const getFieldAttributes = (name: string, value: unknown) => {
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  return { class: `field-${name}` }
+  return { class: `field-${camelCaseToKebab(name)}` }
 }
 
 type TagAttributes = ArrayLike<unknown> | { [s: string]: unknown } | undefined
