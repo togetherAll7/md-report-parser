@@ -44,7 +44,13 @@ import {
   sortBlocks,
   iterateBlocks
 } from './mdModel'
-import { flipObject, camelCaseToText, toCamelCase, containsHtml } from './utils'
+import {
+  flipObject,
+  camelCaseToText,
+  toCamelCase,
+  containsHtml,
+  camelCaseToKebab
+} from './utils'
 
 export type FindingMetadata = {
   id?: string
@@ -420,7 +426,7 @@ export const getFindingFieldValueAttributes = (
   const isHtml = isString && containsHtml(`${value}`)
   value = isHtml ? value : getFindingFieldValue(name, value)
   const cssClass = value && isString && !isHtml ? `${name}-${value}` : `${name}`
-  return { class: cssClass }
+  return { class: camelCaseToKebab(cssClass) }
 }
 
 export const getFindingWrapperId = (id: string) =>
