@@ -140,3 +140,6 @@ export const FIELD_LABELS: { [key: string]: { [key: string]: string } } = {
 }
 
 export type Condition = (typeof CONDITIONS)[keyof typeof CONDITIONS]
+
+export const FH_ROW = 'fh-row'
+export const FH_COL = 'fh-col'

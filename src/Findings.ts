@@ -419,7 +419,6 @@ export const getFindingFieldValueAttributes = (
   const isString = typeof value === 'string'
   const isHtml = isString && containsHtml(`${value}`)
   value = isHtml ? value : getFindingFieldValue(name, value)
-  console.log({ value, isHtml })
   const cssClass = value && isString && !isHtml ? `${name}-${value}` : `${name}`
   return { class: cssClass }
 }

@@ -8,7 +8,8 @@ import {
   REPORT_HEADER,
   REPORT_TYPE,
   REPORT_VERSION,
-  FINDING_TITLE_LEVEL
+  FH_COL,
+  FH_ROW
 } from '../constants'
 import { logo } from '../templates/logo'
 import { table, tag, ul, dl, div } from '../html'
@@ -57,29 +58,51 @@ const renderReportHeader = (doc: MdDoc) => {
 
 export default {
   [FINDING_HEADER]: (data: ArrayLike<unknown> | { [s: string]: unknown }) => {
-    const fieldList = dl(
-      filterObjectFields(data, findingRenderFields),
-      { class: 'finding-header-data' },
+    const dlAttrs = { class: 'finding-header-data' }
+    const colAttrs = { class: FH_COL }
+    const rowAttrs = { class: FH_ROW }
+
+    const { status, id, title, impact, likelihood, risk, resolution } =
+      data as any
+    const riskData = dl(
+      { impact, likelihood },
+      { class: 'small' },
+      getFindingFieldValueAttributes
+    )
+    const statusIconName = toCamelCase(`status ${status}`)
+    const riskChart = div(svg.riskChart, { class: 'risk-chart' })
+
+    const statusIcon = div((svg as { [key: string]: string })[statusIconName], {
+      class: 'status-icon'
+    })
+
+    const colA = dl(
+      { status, statusIcon, resolution },
+      dlAttrs,
       getFindingFieldValueAttributes
     )
 
-    const { status, id, title } = data as any
-    const statusIconName = toCamelCase(`status ${status}`)
+    const colB = dl(
+      { risk, riskChart, riskData },
+      dlAttrs,
+      getFindingFieldValueAttributes
+    )
 
-    const statusIcon = div((svg as { [key: string]: string })[statusIconName], {
-      class: 'header-col status-icon'
-    })
-    const headerRiskChart = div(svg.riskChart, { class: 'header-col risk-chart' })
-    const headerId = div(id, { class: 'header-col header-id' })
-    const headerTitle = tag(`h${FINDING_TITLE_LEVEL}`, title)
+    const locationContent = div(
+      dl(
+        filterObjectFields(data, ['location']),
+        dlAttrs,
+        getFindingFieldValueAttributes
+      ),
+      rowAttrs
+    )
 
     return div(
-      div(`${headerId} ${headerRiskChart} ${statusIcon}`, {
-        class: 'header-decoration'
-      }) +
-        div(headerTitle, { class: 'header-title' }) +
-        fieldList,
-      { class: 'finding-header' }
+      div(div(colA, colAttrs) + div(colB, colAttrs), rowAttrs) +
+        locationContent,
+      {
+        class: FINDING_HEADER
+      }
     )
   },
   [FINDING_LIST]: (doc: MdDoc) => {
