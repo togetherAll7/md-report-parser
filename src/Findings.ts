@@ -44,7 +44,7 @@ import {
   sortBlocks,
   iterateBlocks
 } from './mdModel'
-import { flipObject, camelCaseToText, toCamelCase } from './utils'
+import { flipObject, camelCaseToText, toCamelCase, containsHtml } from './utils'
 
 export type FindingMetadata = {
   id?: string
@@ -57,6 +57,7 @@ export type FindingMetadata = {
   status?: string
   location?: string
   resolution?: FindingStatus
+  title?: string
 }
 
 interface ArraySortCallback<TypeOne> {
@@ -415,9 +416,11 @@ export const getFindingFieldValueAttributes = (
   name: string,
   value: unknown
 ) => {
-  value = getFindingFieldValue(name, value)
-  const cssClass =
-    value && typeof value === 'string' ? `${name}-${value}` : `${name}`
+  const isString = typeof value === 'string'
+  const isHtml = isString && containsHtml(`${value}`)
+  value = isHtml ? value : getFindingFieldValue(name, value)
+  console.log({ value, isHtml })
+  const cssClass = value && isString && !isHtml ? `${name}-${value}` : `${name}`
   return { class: cssClass }
 }
 
