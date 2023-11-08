@@ -59,14 +59,13 @@ const renderReportHeader = (doc: MdDoc) => {
 export default {
   [FINDING_HEADER]: (data: ArrayLike<unknown> | { [s: string]: unknown }) => {
     const dlAttrs = { class: 'finding-header-data' }
-    const colAttrs = { class: FH_COL }
     const rowAttrs = { class: FH_ROW }
 
     const { status, id, title, impact, likelihood, risk, resolution } =
       data as any
     const riskData = dl(
       { impact, likelihood },
-      { class: 'small' },
+      { class: 'risk-data-list small' },
       getFindingFieldValueAttributes
     )
     const statusIconName = toCamelCase(`status ${status}`)
@@ -96,8 +95,11 @@ export default {
     )
 
     return div(
-      div(div(colA, colAttrs) + div(colB, colAttrs), rowAttrs) +
-        locationContent,
+      div(
+        div(colA, { class: `${FH_COL} status-panel` }) +
+          div(colB, { class: `${FH_COL} risk-panel` }),
+        rowAttrs
+      ) + locationContent,
       {
         class: FINDING_HEADER
       }
