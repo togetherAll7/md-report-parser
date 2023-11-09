@@ -33,7 +33,8 @@ import {
   FINDING_RESUME_TITLES,
   FINDING_RESUME_FIELDS,
   getFindingFieldValueAttributes,
-  getFindingWrapperId
+  getFindingWrapperId,
+  getRiskKey
 } from '../Findings'
 import { MdDoc, getDocMetadata } from '../mdModel'
 import { link } from '../html'
@@ -75,6 +76,12 @@ const filterDataByStatus = (data: any[], status?: string) => {
   return data.filter((item) => (item as any).status === status)
 }
 
+export const sortDataByRisk = (data: any[]) => {
+  return sortData(data, ['riskKey'], (d: any, field: string) =>
+    getRiskKey(d.risk)
+  )
+}
+
 const renderFindingTable = (
   doc: MdDoc,
   fields?: string[] | undefined,
@@ -90,7 +97,7 @@ const renderFindingTable = (
     : {}
   let data = filterDataByStatus(getFindings(doc), filterStatus)
   if (sort) {
-    data = sortData(data, sort)
+    data = sortData(data, sort, sortCb)
   }
   return table(data, tableFields, undefined, undefined, linkFindingTitle)
 }
@@ -100,7 +107,8 @@ const renderFindingStatusTable = (doc: MdDoc, status?: string) =>
     doc,
     FINDING_TABLE_STATUS_FIELDS,
     FINDING_TABLE_STATUS_SORT,
-    status
+    status,
+    sortDataByRisk
   )
 
 export default {

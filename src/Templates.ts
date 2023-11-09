@@ -27,18 +27,24 @@ export const parseTemplateName = (templateName: string): TemplateParts => {
   return { name, fields, sort }
 }
 
-export const sortData = (data: any, sort: string[]) => {
+export const sortData = (data: any, sort: string[], valueCb?: Function) => {
   let [field] = sort
   let sortOrder = 1
   if (field[0] === REVERSE_FIELDS) {
     sortOrder = -1
     field = field.slice(1)
   }
+
+  const getFieldValue = (d: any, field: string) => {
+    return typeof valueCb === 'function' ? valueCb(d, field) : d[field]
+  }
   return data.sort((a: { [key: string]: any }, b: { [key: string]: any }) => {
     let result = 0
-    if (a[field] < b[field]) {
+    const aValue = getFieldValue(a, field)
+    const bValue = getFieldValue(b, field)
+    if (aValue < bValue) {
       result = -1
-    } else if (a[field] > b[field]) {
+    } else if (aValue > bValue) {
       result = 1
     }
     return result * sortOrder
