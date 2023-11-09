@@ -79,7 +79,8 @@ const renderFindingTable = (
   doc: MdDoc,
   fields?: string[] | undefined,
   sort?: string[] | undefined,
-  filterStatus?: string
+  filterStatus?: string,
+  sortCb?: Function
 ) => {
   const tableFields = fields
     ? fields.reduce((v: any, a) => {
@@ -87,9 +88,9 @@ const renderFindingTable = (
         return v
       }, {})
     : {}
-  const data = filterDataByStatus(getFindings(doc), filterStatus)
+  let data = filterDataByStatus(getFindings(doc), filterStatus)
   if (sort) {
-    sortData(data, sort)
+    data = sortData(data, sort)
   }
   return table(data, tableFields, undefined, undefined, linkFindingTitle)
 }
