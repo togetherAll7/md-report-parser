@@ -11,7 +11,16 @@ import {
   FH_COL,
   FH_ROW,
   FINDING_TABLE,
-  FIELD_LABELS
+  FIELD_LABELS,
+  FINDING_TABLE_STATUS_OK,
+  FINDING_TABLE_STATUS_FIELDS,
+  FINDING_TABLE_STATUS_SORT,
+  STATUS_FIXED,
+  CONDITION_OK,
+  FINDING_TABLE_STATUS_WARNING,
+  FINDING_TABLE_STATUS_PROBLEM,
+  CONDITION_PROBLEM,
+  CONDITION_WARNING
 } from '../constants'
 import { logo } from '../templates/logo'
 import { table, tag, ul, dl, div } from '../html'
@@ -59,10 +68,18 @@ const renderReportHeader = (doc: MdDoc) => {
   )
 }
 
+const filterDataByStatus = (data: any[], status?: string) => {
+  if (!status) {
+    return data
+  }
+  return data.filter((item) => (item as any).status === status)
+}
+
 const renderFindingTable = (
   doc: MdDoc,
   fields?: string[] | undefined,
-  sort?: string[] | undefined
+  sort?: string[] | undefined,
+  filterStatus?: string
 ) => {
   const tableFields = fields
     ? fields.reduce((v: any, a) => {
@@ -70,12 +87,20 @@ const renderFindingTable = (
         return v
       }, {})
     : {}
-  const data = getFindings(doc)
+  const data = filterDataByStatus(getFindings(doc), filterStatus)
   if (sort) {
     sortData(data, sort)
   }
   return table(data, tableFields, undefined, undefined, linkFindingTitle)
 }
+
+const renderFindingStatusTable = (doc: MdDoc, status?: string) =>
+  renderFindingTable(
+    doc,
+    FINDING_TABLE_STATUS_FIELDS,
+    FINDING_TABLE_STATUS_SORT,
+    status
+  )
 
 export default {
   [FINDING_HEADER]: (
@@ -175,5 +200,21 @@ export default {
     doc: MdDoc,
     fields?: string[] | undefined,
     sort?: string[] | undefined
-  ) => renderFindingTable(doc, fields, sort)
+  ) => renderFindingTable(doc, fields, sort),
+
+  [FINDING_TABLE_STATUS_OK]: (
+    doc: MdDoc,
+    fields?: string[] | undefined,
+    sort?: string[] | undefined
+  ) => renderFindingStatusTable(doc, CONDITION_OK),
+  [FINDING_TABLE_STATUS_WARNING]: (
+    doc: MdDoc,
+    fields?: string[] | undefined,
+    sort?: string[] | undefined
+  ) => renderFindingStatusTable(doc, CONDITION_WARNING),
+  [FINDING_TABLE_STATUS_PROBLEM]: (
+    doc: MdDoc,
+    fields?: string[] | undefined,
+    sort?: string[] | undefined
+  ) => renderFindingStatusTable(doc, CONDITION_PROBLEM)
 }
