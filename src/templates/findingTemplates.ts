@@ -9,7 +9,9 @@ import {
   REPORT_TYPE,
   REPORT_VERSION,
   FH_COL,
-  FH_ROW
+  FH_ROW,
+  FINDING_TABLE,
+  FIELD_LABELS
 } from '../constants'
 import { logo } from '../templates/logo'
 import { table, tag, ul, dl, div } from '../html'
@@ -27,6 +29,7 @@ import {
 import { MdDoc, getDocMetadata } from '../mdModel'
 import { link } from '../html'
 import * as svg from './svg'
+import { sortData } from '../Templates'
 
 const findingRenderFields = findingFields.filter(
   (f) => !['title', 'id'].includes(f)
@@ -56,8 +59,29 @@ const renderReportHeader = (doc: MdDoc) => {
   )
 }
 
+const renderFindingTable = (
+  doc: MdDoc,
+  fields?: string[] | undefined,
+  sort?: string[] | undefined
+) => {
+  const tableFields = fields
+    ? fields.reduce((v: any, a) => {
+        v[a] = FINDING_LIST_TITLES[a]
+        return v
+      }, {})
+    : {}
+  const data = getFindings(doc)
+  if (sort) {
+    sortData(data, sort)
+  }
+  return table(data, tableFields, undefined, undefined, linkFindingTitle)
+}
+
 export default {
-  [FINDING_HEADER]: (data: ArrayLike<unknown> | { [s: string]: unknown }) => {
+  [FINDING_HEADER]: (
+    data: ArrayLike<unknown> | { [s: string]: unknown },
+    fieds?: string[] | undefined
+  ) => {
     const dlAttrs = { class: 'finding-header-data' }
     const rowAttrs = { class: FH_ROW }
 
@@ -105,7 +129,7 @@ export default {
       }
     )
   },
-  [FINDING_LIST]: (doc: MdDoc) => {
+  [FINDING_LIST]: (doc: MdDoc, fieds?: string[] | undefined) => {
     const { id, title, risk, status } = FINDING_LIST_TITLES
     return table(
       getFindings(doc),
@@ -116,7 +140,7 @@ export default {
     )
   },
 
-  [FINDING_RESUME]: (doc: MdDoc) => {
+  [FINDING_RESUME]: (doc: MdDoc, fieds?: string[] | undefined) => {
     const titles = FINDING_RESUME_TITLES
     const data = Object.entries(getFindingResumeData(getFindings(doc))).reduce(
       (v: any[], [status, d]) => {
@@ -144,5 +168,12 @@ export default {
     )
   },
 
-  [REPORT_HEADER]: (doc: MdDoc) => renderReportHeader(doc)
+  [REPORT_HEADER]: (doc: MdDoc, fieds?: string[] | undefined) =>
+    renderReportHeader(doc),
+
+  [FINDING_TABLE]: (
+    doc: MdDoc,
+    fields?: string[] | undefined,
+    sort?: string[] | undefined
+  ) => renderFindingTable(doc, fields, sort)
 }

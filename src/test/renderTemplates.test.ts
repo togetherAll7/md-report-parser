@@ -1,8 +1,16 @@
 import templates from '../templates/'
 import { JSDOM } from 'jsdom'
 import { parseFinding } from '../Findings'
-import { FINDING_HEADER, HIGH, LOW, FH_COL, FH_ROW } from '../constants'
-import exp from 'constants'
+import {
+  FINDING_HEADER,
+  HIGH,
+  LOW,
+  FH_COL,
+  FH_ROW,
+  FINDING_TABLE
+} from '../constants'
+import { MdToObj } from '../MdToObj'
+import { getFile } from './test.helpers'
 
 describe('FINDING_HEADER', () => {
   const id = 'FXC-001'
@@ -41,5 +49,18 @@ describe('FINDING_HEADER', () => {
     const rowB = rows?.item(1).querySelectorAll('dl')
     expect(rowB).not.toBeUndefined()
     expect(rowB?.length).toBe(1)
+  })
+})
+
+describe('FINDINGS_TABLE', () => {
+  const parse = MdToObj()
+  const example = getFile('example.md')
+  const doc = parse(example)
+
+  const html = templates[FINDING_TABLE](doc, ['id', 'risk', 'title'])
+  const dom = new JSDOM(html)
+  const body = dom.window.document.body
+  it('dummy', () => {
+    expect(typeof html).toBe('string')
   })
 })
