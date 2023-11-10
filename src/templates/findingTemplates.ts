@@ -82,6 +82,15 @@ export const sortDataByRisk = (data: any[]) => {
   )
 }
 
+const getTableFields = (fields: string[] | undefined) => {
+  return fields
+    ? fields.reduce((v: any, a) => {
+        v[a] = FINDING_LIST_TITLES[a]
+        return v
+      }, {})
+    : {}
+}
+
 const renderFindingTable = (
   doc: MdDoc,
   fields?: string[] | undefined,
@@ -89,16 +98,15 @@ const renderFindingTable = (
   filterStatus?: string,
   sortCb?: Function
 ) => {
-  const tableFields = fields
-    ? fields.reduce((v: any, a) => {
-        v[a] = FINDING_LIST_TITLES[a]
-        return v
-      }, {})
-    : {}
+  const tableFields = getTableFields(fields)
   let data = filterDataByStatus(getFindings(doc), filterStatus)
-  if (sort) {
+  if (sort && !sortCb) {
     data = sortData(data, sort, sortCb)
   }
+  if (sortCb) {
+    data = sortCb(data)
+  }
+
   return table(data, tableFields, undefined, undefined, linkFindingTitle)
 }
 
