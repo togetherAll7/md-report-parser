@@ -5,7 +5,13 @@ import {
   TXT_PLACEHOLDER,
   REPORT_HEADER,
   CODE_MARK,
-  TECH_BITS
+  TECH_BITS,
+  FINDING_TABLE_STATUS_PROBLEM,
+  FINDING_TABLE_STATUS_WARNING,
+  FINDING_TABLE_STATUS_OK,
+  FINDING_STATUS_PROBLEM_TITLE,
+  FINDING_STATUS_WARNING_TITLE,
+  FINDING_STATUS_OK_TITLE
 } from '../constants'
 import { metadataToMd } from '../metadata'
 import { wrapBlock, mdBlockToMd } from '../mdModel'
@@ -41,9 +47,17 @@ ${metadataBlock}
 
 [[toc]]
 
-## Summary of Findings
+## ${FINDING_STATUS_PROBLEM_TITLE}
 
-[[${FINDING_LIST}]]
+[[${FINDING_TABLE_STATUS_PROBLEM}]]
+
+## ${FINDING_STATUS_WARNING_TITLE}
+
+[[${FINDING_TABLE_STATUS_WARNING}]]
+
+## ${FINDING_STATUS_OK_TITLE}
+
+[[${FINDING_TABLE_STATUS_OK}]]
 
 ## Executive Summary
  

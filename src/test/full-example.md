@@ -244,9 +244,17 @@ location: ""
 
 /--
 
-## Summary of Findings
+## Action required findings
 
-[[finding-list]]
+[[finding-table-status-problem]]
+
+## Attention required findings
+
+[[finding-table-status-warning]]
+
+## No action required findings
+
+[[finding-table-status-ok]]
 
 ## Executive Summary
 
