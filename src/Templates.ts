@@ -35,6 +35,9 @@ export const sortData = (data: any, sort: string[], valueCb?: Function) => {
     field = field.slice(1)
   }
 
+  if (!data.sort) {
+    return data
+  }
   const getFieldValue = (d: any, field: string) => {
     return typeof valueCb === 'function' ? valueCb(d, field) : d[field]
   }
