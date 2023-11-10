@@ -457,7 +457,7 @@ describe('findings', () => {
     }
   }
 
-  describe.only('getFindingsData', () => {
+  describe('getFindingsData', () => {
     describe('test finding', () => {
       const description = 'This is a test..'
       const recommendation = 'This is a recomendation example'
