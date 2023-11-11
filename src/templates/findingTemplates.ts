@@ -174,7 +174,7 @@ export default {
   [FINDING_LIST]: (doc: MdDoc, fieds?: string[] | undefined) => {
     const { id, title, risk } = FINDING_LIST_TITLES
     return table(
-      getFindings(doc),
+      sortDataByRisk(getFindings(doc)),
       { id, title, risk },
       undefined,
       undefined,

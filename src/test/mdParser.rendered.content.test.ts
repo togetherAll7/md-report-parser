@@ -20,7 +20,7 @@ import { removeNewLines, getFile } from './test.helpers'
 import { MdParser } from '../MdParser'
 import { metadataToMd } from '../metadata'
 import { wrapBlock } from '../mdModel'
-import { getFindings, parseFinding } from '../Findings'
+import { getFindings, getRiskKey, parseFinding } from '../Findings'
 import { JSDOM } from 'jsdom'
 import { getFindingTitleElements } from '../renderReports'
 import {
@@ -29,6 +29,7 @@ import {
   createNewReport
 } from '../templates/mdTemplates'
 import { STATUS_CODES } from 'http'
+import exp from 'constants'
 
 const parser = MdParser()
 
@@ -56,33 +57,51 @@ describe('mdParser replace content', () => {
   })
 })
 
-const tesTable = (container: HTMLElement, divClassName: string) => {
+const tesTable = (
+  container: HTMLElement,
+  divClassName: string,
+  checkRiskOrder?: boolean
+) => {
   const div = container.querySelector(`div.${divClassName}`)
   it(`should render a DIV with class ${divClassName}`, () => {
     expect(div).not.toBeNull()
     expect(div?.tagName).toBe('DIV')
   })
   const table = div?.children.item(0)
+
   it('should render a table inside the DIV', () => {
     expect(table).not.toBeNull()
     expect(table?.tagName).toBe('TABLE')
   })
+
+  if (checkRiskOrder) {
+    it('The table rows should be ordered by risk', () => {
+      const cells = table?.querySelectorAll('td.field-risk')
+      expect(cells).not.toBeUndefined()
+      const risks = [...new Set([...(cells as any)].map((e) => e.textContent))]
+      expect(risks.length > 0).toBe(true)
+      const riskLevels = risks.map((r) => getRiskKey(r))
+      expect(
+        [...riskLevels].sort((a, b) => parseInt(a) - parseInt(b))
+      ).toStrictEqual(riskLevels)
+    })
+  }
 
   return { div, table }
 }
 
 describe('Example', () => {
   const { container } = getExampleDom(getFile('example.md'))
-  tesTable(container, FINDING_LIST)
+  tesTable(container, FINDING_LIST, true)
   tesTable(container, FINDING_RESUME)
 })
 
 describe('Example createExampleReport()', () => {
   const { container } = getExampleDom(createExampleReport())
   tesTable(container, FINDING_RESUME)
-  tesTable(container, FINDING_TABLE_STATUS_OK)
-  tesTable(container, FINDING_TABLE_STATUS_WARNING)
-  tesTable(container, FINDING_TABLE_STATUS_PROBLEM)
+  tesTable(container, FINDING_TABLE_STATUS_OK, true)
+  tesTable(container, FINDING_TABLE_STATUS_WARNING, true)
+  tesTable(container, FINDING_TABLE_STATUS_PROBLEM, true)
 })
 
 describe('Example createNewReport()', () => {
@@ -95,9 +114,9 @@ describe('Example createNewReport()', () => {
   ])
   const { container } = getExampleDom(createNewReport(findings))
   tesTable(container, FINDING_RESUME)
-  tesTable(container, FINDING_TABLE_STATUS_OK)
-  tesTable(container, FINDING_TABLE_STATUS_WARNING)
-  tesTable(container, FINDING_TABLE_STATUS_PROBLEM)
+  tesTable(container, FINDING_TABLE_STATUS_OK, true)
+  tesTable(container, FINDING_TABLE_STATUS_WARNING, true)
+  tesTable(container, FINDING_TABLE_STATUS_PROBLEM, true)
 })
 
 describe('mdParser report header, doc metadata', () => {
