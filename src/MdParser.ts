@@ -15,7 +15,8 @@ import {
   TOC_INCLUDED_LEVELS,
   CONCERT_GENERIC_DOCUMENT,
   REPORT,
-  METADATA
+  METADATA,
+  TECH_BITS
 } from './constants'
 import Token from 'markdown-it/lib/token'
 import { default as markdown_it_replace_link } from 'markdown-it-replace-link'
@@ -77,7 +78,14 @@ const cssCb = (tokens: Token[]) => {
 export function setupMarkdownIt(md: MarkdownIt, options: MdParserOptions = {}) {
   return md
     .use(data_blocks, getDataBlocksPluginOptions(options))
-    .use(markdown_it_highlightjs, { register: { solidity } })
+    .use(markdown_it_highlightjs, {
+      register: {
+        solidity,
+        [TECH_BITS]: (hljs: any) => {
+          return { contains: [] }
+        }
+      }
+    })
     .use(markdown_it_anchor)
     .use(markdown_it_table_of_contents, { includeLevel: TOC_INCLUDED_LEVELS })
     .use(markdown_it_wrap_document, { cssCb })
