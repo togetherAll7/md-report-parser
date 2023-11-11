@@ -1,4 +1,5 @@
 import MarkdownIt from 'markdown-it'
+/* eslint-disable @typescript-eslint/naming-convention */
 import markdown_it_wrap_document from '../markdown-it-document-wrapper'
 
 const md = '# Test'

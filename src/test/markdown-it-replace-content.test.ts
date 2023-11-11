@@ -1,4 +1,5 @@
 import MarkdownIt from 'markdown-it'
+/* eslint-disable @typescript-eslint/naming-convention */
 import {
   default as markdown_it_render_lists,
   getListName

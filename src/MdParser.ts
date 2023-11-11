@@ -1,4 +1,5 @@
 import MarkdownIt from 'markdown-it'
+/* eslint-disable @typescript-eslint/naming-convention */
 import markdown_it_highlightjs from 'markdown-it-highlightjs'
 import markdown_it_anchor from 'markdown-it-anchor'
 import markdown_it_table_of_contents from 'markdown-it-table-of-contents'

@@ -1,4 +1,5 @@
 import MarkdownIt from 'markdown-it'
+/* eslint-disable @typescript-eslint/naming-convention */
 import {
   default as data_blocks,
   NAME as DATA_BLOCKS
