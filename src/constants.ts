@@ -154,6 +154,6 @@ export const FINDING_TABLE_STATUS_PROBLEM = 'finding-table-status-problem'
 export const FINDING_TABLE_STATUS_FIELDS = ['id', 'title', 'risk']
 export const FINDING_TABLE_STATUS_SORT = ['risk']
 
-export const FINDING_STATUS_OK_TITLE = 'Attention required findings'
+export const FINDING_STATUS_OK_TITLE = 'No action required findings'
 export const FINDING_STATUS_WARNING_TITLE = 'Attention required findings'
-export const FINDING_STATUS_PROBLEM_TITLE = 'No action required findings'
+export const FINDING_STATUS_PROBLEM_TITLE = 'Action required findings'
