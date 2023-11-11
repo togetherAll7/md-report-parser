@@ -172,10 +172,10 @@ export default {
     )
   },
   [FINDING_LIST]: (doc: MdDoc, fieds?: string[] | undefined) => {
-    const { id, title, risk, status } = FINDING_LIST_TITLES
+    const { id, title, risk } = FINDING_LIST_TITLES
     return table(
       getFindings(doc),
-      { id, title, risk, status },
+      { id, title, risk },
       undefined,
       undefined,
       linkFindingTitle

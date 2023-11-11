@@ -3,16 +3,32 @@ import {
   FINDING_RESUME,
   FINDING_TITLE_LEVEL,
   REPORT_HEADER,
-  TITLE_SEPARATOR
+  FINDING_TABLE_STATUS_OK,
+  FINDING_TABLE_STATUS_WARNING,
+  FINDING_TABLE_STATUS_PROBLEM,
+  LOW,
+  HIGH,
+  MEDIUM,
+  RESOLUTION,
+  STATUS,
+  STATUS_OPEN,
+  STATUS_FIXED,
+  INFO
 } from '../constants'
 import { getRenderedLists } from '../renderedLists'
 import { removeNewLines, getFile } from './test.helpers'
 import { MdParser } from '../MdParser'
 import { metadataToMd } from '../metadata'
 import { wrapBlock } from '../mdModel'
-import { getFindings } from '../Findings'
+import { getFindings, parseFinding } from '../Findings'
 import { JSDOM } from 'jsdom'
 import { getFindingTitleElements } from '../renderReports'
+import {
+  createExampleFindings,
+  createExampleReport,
+  createNewReport
+} from '../templates/mdTemplates'
+import { STATUS_CODES } from 'http'
 
 const parser = MdParser()
 
@@ -26,18 +42,62 @@ const getHtml = (key: string) =>
   `<div class="${key}">${getRenderedLists(doc, key)}</div>`
 const html = getHtml(FINDING_LIST) + getHtml(FINDING_RESUME)
 
+const getExampleDom = (md: string) => {
+  const html = parser.render(md)
+  const dom = new JSDOM(html)
+  const container = dom.window.document.body
+  return { md, html, dom, container }
+}
+
 describe('mdParser replace content', () => {
   it('should replace content', () => {
     const res = parser.render(md)
     expect(removeNewLines(res)).toContain(html)
   })
+})
 
-  it('example', async () => {
-    const md = await getFile('example.md')
-    const html = removeNewLines(parser.render(md))
-    expect(html).toContain(`div class="${FINDING_LIST}"><table`)
-    expect(html).toContain(`div class="${FINDING_RESUME}"><table`)
+const tesTable = (container: HTMLElement, divClassName: string) => {
+  const div = container.querySelector(`div.${divClassName}`)
+  it(`should render a DIV with class ${divClassName}`, () => {
+    expect(div).not.toBeNull()
+    expect(div?.tagName).toBe('DIV')
   })
+  const table = div?.children.item(0)
+  it('should render a table inside the DIV', () => {
+    expect(table).not.toBeNull()
+    expect(table?.tagName).toBe('TABLE')
+  })
+
+  return { div, table }
+}
+
+describe('Example', () => {
+  const { container } = getExampleDom(getFile('example.md'))
+  tesTable(container, FINDING_LIST)
+  tesTable(container, FINDING_RESUME)
+})
+
+describe('Example createExampleReport()', () => {
+  const { container } = getExampleDom(createExampleReport())
+  tesTable(container, FINDING_RESUME)
+  tesTable(container, FINDING_TABLE_STATUS_OK)
+  tesTable(container, FINDING_TABLE_STATUS_WARNING)
+  tesTable(container, FINDING_TABLE_STATUS_PROBLEM)
+})
+
+describe('Example createNewReport()', () => {
+  const findings = createExampleFindings([
+    { impact: LOW, likelihood: LOW, resolution: STATUS_OPEN },
+    { impact: LOW, likelihood: MEDIUM },
+    { impact: INFO, likelihood: INFO },
+    { impact: HIGH, likelihood: HIGH },
+    { impact: HIGH, likelihood: HIGH, resolution: STATUS_FIXED }
+  ])
+  const { container } = getExampleDom(createNewReport(findings))
+  tesTable(container, FINDING_RESUME)
+  tesTable(container, FINDING_TABLE_STATUS_OK)
+  tesTable(container, FINDING_TABLE_STATUS_WARNING)
+  tesTable(container, FINDING_TABLE_STATUS_PROBLEM)
 })
 
 describe('mdParser report header, doc metadata', () => {
@@ -60,11 +120,8 @@ ${wrapBlock('metadata', metadataToMd(metadata))}
 })
 
 describe('Render findings title', () => {
-  it('should render finding titles', async () => {
-    const md = await getFile('example.md')
-    const html = parser.render(md)
-    const dom = new JSDOM(html)
-    const container = dom.window.document.body
+  it('should render finding titles', () => {
+    const { md, container } = getExampleDom(getFile('example.md'))
     const findings = getFindings(parser.parse(md))
     for (const finding of findings) {
       const { id } = finding
