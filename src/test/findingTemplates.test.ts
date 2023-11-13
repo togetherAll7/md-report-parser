@@ -23,9 +23,17 @@ describe('sortDataByRisk', () => {
     return { likelihood, impact, resolution }
   })
   const findings = data.map((f: any) => parseFinding(f))
+  const expected = [INFO, LOW, MEDIUM, HIGH]
+
   it('should sort findings by risk', () => {
+    const sorted = sortDataByRisk(findings, true)
+    const risks = [...new Set(sorted.map((x: any) => x.risk))]
+    expect(risks).toStrictEqual(expected)
+  })
+
+  it('should sort findings by risk in reverse order', () => {
     const sorted = sortDataByRisk(findings)
     const risks = [...new Set(sorted.map((x: any) => x.risk))]
-    expect(risks).toStrictEqual([INFO, LOW, MEDIUM, HIGH])
+    expect(risks).toStrictEqual(expected.reverse())
   })
 })

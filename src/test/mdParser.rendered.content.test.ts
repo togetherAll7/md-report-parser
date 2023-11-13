@@ -82,7 +82,7 @@ const tesTable = (
       expect(risks.length > 0).toBe(true)
       const riskLevels = risks.map((r) => getRiskKey(r))
       expect(
-        [...riskLevels].sort((a, b) => parseInt(a) - parseInt(b))
+        [...riskLevels].sort((a, b) => parseInt(a) - parseInt(b)).reverse()
       ).toStrictEqual(riskLevels)
     })
   }

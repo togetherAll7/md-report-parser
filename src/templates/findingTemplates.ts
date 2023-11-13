@@ -76,9 +76,11 @@ const filterDataByStatus = (data: any[], status?: string) => {
   return data.filter((item) => (item as any).status === status)
 }
 
-export const sortDataByRisk = (data: any[]) => {
-  return sortData(data, ['riskKey'], (d: any, field: string) =>
-    getRiskKey(d.risk)
+export const sortDataByRisk = (data: any[], asc?: boolean) => {
+  return sortData(
+    data,
+    asc ? ['riskKey'] : ['-riskKey'],
+    (d: any, field: string) => getRiskKey(d.risk)
   )
 }
 
