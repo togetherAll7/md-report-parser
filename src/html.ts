@@ -1,5 +1,5 @@
-import { FIELD_LABELS } from './constants'
-import { camelCaseToKebab } from './utils'
+import { FIELD_LABELS, CLASS_NAMES } from './constants'
+import { camelCaseToKebab, filterObjectFields } from './utils'
 
 const getFieldAttributes = (name: string, value: unknown) => {
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -138,7 +138,11 @@ interface ObjData {
   [key: string]: string
 }
 
-export const ul = (data: ObjData | string[], attrs?: TagAttributes) => {
+export const ul = (
+  data: ObjData | string[] | string,
+  attrs?: TagAttributes
+) => {
+  data = typeof data === 'string' ? [data] : data
   const isArray = Array.isArray(data)
   const values = Object.entries(data).map(([field, value]) => {
     // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -151,4 +155,16 @@ export const ul = (data: ObjData | string[], attrs?: TagAttributes) => {
     values.map(({ value, att }) => tag('li', value, att)),
     attrs
   )
+}
+
+export const divLabel = (title: string) =>
+  div(title, { class: `${CLASS_NAMES.label}` })
+
+export const ulField = (
+  data: { [key: string]: any },
+  fieldName: string
+): string => {
+  const value = data[fieldName]
+  const attrs = getFieldAttributes(fieldName, value)
+  return value ? div(`${divLabel(fieldName)}${ul(value)}`, attrs) : ''
 }

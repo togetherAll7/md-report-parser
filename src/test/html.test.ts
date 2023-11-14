@@ -1,6 +1,14 @@
-import exp from 'constants'
-import { table, tag, ul, dl, link } from '../html'
+import { CLASS_NAMES } from '../constants'
+import { table, tag, ul, dl, link, divLabel, ulField } from '../html'
+import { camelCaseToKebab } from '../utils'
 import { removeWhiteSpace } from './test.helpers'
+import { JSDOM } from 'jsdom'
+
+const getDom = (html: string) => {
+  const dom = new JSDOM(html)
+  const body = dom.window.document.body
+  return { dom, body }
+}
 
 const clear = (s: string) => s.replace(/ /g, '').replace(/\n/g, '')
 
@@ -125,5 +133,71 @@ describe('html', () => {
       const expected = `<a class="${attrs.class}" href="${dest}" data-value="${content}" >${content}</a>`
       expect(link(content, dest, attrs)).toBe(expected)
     })
+  })
+
+  const testLabel = (theDiv: HTMLElement | undefined, title: string) => {
+    if (!theDiv) {
+      throw new Error('theDiv is undefined')
+    }
+
+    it('the div should contains the title', () => {
+      expect(theDiv.textContent).toBe(title)
+    })
+    it(`The div should have the class: ${CLASS_NAMES.label}`, () => {
+      expect(theDiv.getAttribute('class')).toBe(CLASS_NAMES.label)
+    })
+  }
+
+  describe('divLabel', () => {
+    const title = 'test title'
+    const html = divLabel(title)
+    const { body } = getDom(html)
+    const divs = body.querySelectorAll('div')
+    it('should render only one div', () => {
+      expect(divs).not.toBeUndefined()
+      expect(divs.length).toBe(1)
+    })
+    const theDiv = divs.item(0)
+    testLabel(theDiv, title)
+  })
+
+  const testUlField = (myFieldData: string | string[]) => {
+    const fieldName = 'myField'
+    const data = { [fieldName]: myFieldData }
+    const html = ulField(data, 'myField')
+    const { body } = getDom(html)
+    const className = `field-${camelCaseToKebab(fieldName)}`
+    const fieldDiv = body.querySelector(`.${className}`)
+    it(`should render a div with class ${className}`, () => {
+      expect(fieldDiv).not.toBeUndefined()
+      expect(fieldDiv?.tagName).toBe('DIV')
+    })
+    const theUl = fieldDiv?.querySelector('ul')
+    it('the container div should have a UL', () => {
+      expect(theUl).not.toBeUndefined()
+    })
+
+    const labelDiv = fieldDiv?.querySelectorAll('div')
+    expect(labelDiv).not.toBeUndefined()
+    testLabel(labelDiv?.item(0), fieldName)
+    const values = Array.isArray(myFieldData) ? myFieldData : [myFieldData]
+    it('the  UL should cointain all value elements', () => {
+      const liS = theUl?.querySelectorAll('li')
+      expect(liS).not.toBeUndefined()
+      expect(liS?.length).toBe(values.length)
+
+      for (const k in values) {
+        const l = liS?.item(parseInt(k))
+        expect(l?.textContent).toBe(values[k])
+      }
+    })
+  }
+
+  describe('ulField from array', () => {
+    testUlField(['foo', 'bar', 'baz'])
+  })
+
+  describe('ulField from string', () => {
+    testUlField('testvalue')
   })
 })
