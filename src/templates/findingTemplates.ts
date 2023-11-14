@@ -11,11 +11,9 @@ import {
   FH_COL,
   FH_ROW,
   FINDING_TABLE,
-  FIELD_LABELS,
   FINDING_TABLE_STATUS_OK,
   FINDING_TABLE_STATUS_FIELDS,
   FINDING_TABLE_STATUS_SORT,
-  STATUS_FIXED,
   CONDITION_OK,
   FINDING_TABLE_STATUS_WARNING,
   FINDING_TABLE_STATUS_PROBLEM,
@@ -23,8 +21,8 @@ import {
   CONDITION_WARNING
 } from '../constants'
 import { logo } from '../templates/logo'
-import { table, tag, ul, dl, div } from '../html'
-import { filterObjectFields, toCamelCase } from '../utils'
+import { table, tag, ul, dl, div, ulField } from '../html'
+import { toCamelCase } from '../utils'
 import {
   findingFields,
   getFindings,
@@ -153,14 +151,7 @@ export default {
       getFindingFieldValueAttributes
     )
 
-    const locationContent = div(
-      dl(
-        filterObjectFields(data, ['location']),
-        dlAttrs,
-        getFindingFieldValueAttributes
-      ),
-      rowAttrs
-    )
+    const locationContent = div(ulField(data, 'location'), rowAttrs)
 
     return div(
       div(
