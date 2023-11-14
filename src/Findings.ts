@@ -66,7 +66,7 @@ export type FindingMetadata = {
   likelihoodRate?: number
   riskRate?: number
   status?: string
-  location?: string
+  location?: string | string[]
   resolution?: FindingStatus
   title?: string
 }
