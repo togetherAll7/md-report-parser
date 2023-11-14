@@ -11,7 +11,7 @@ export const flipObject = (obj: {
 export const filterObjectFields = (
   data: { [s: string]: any },
   fields: string | string[]
-) =>
+): any =>
   Object.entries(data)
     .filter(([field]) => fields.includes(field))
     .reduce((v: { [k: string]: string }, [field, value]) => {
