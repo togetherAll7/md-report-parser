@@ -353,6 +353,7 @@ export const FINDING_RESUME_TITLES = FINDING_RESUME_RISKS.reduce(
 )
 
 export const FINDING_RESUME_STATUS_RISK = Object.values(RISK)
+  .reverse()
   .map((s) => s.toString())
   .concat([TOTAL])
 export const FINDING_RESUME_STATUS_STATUS = Object.keys(STATUS_LABELS)
