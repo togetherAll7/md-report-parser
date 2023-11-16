@@ -71,6 +71,11 @@ const renderReportHeader = (doc: MdDoc) => {
   )
 }
 
+const getStatusIcon = (status: string) => {
+  const statusIconName = toCamelCase(`status ${status}`)
+  return (svg as { [key: string]: string })[statusIconName]
+}
+
 const filterDataByStatus = (data: any[], status?: string) => {
   if (!status) {
     return data
@@ -138,10 +143,10 @@ export default {
       { class: 'risk-data-list small' },
       getFindingFieldValueAttributes
     )
-    const statusIconName = toCamelCase(`status ${status}`)
+
     const riskChart = svg.riskChart
 
-    const statusIcon = (svg as { [key: string]: string })[statusIconName]
+    const statusIcon = getStatusIcon(status)
 
     const colA = dl(
       { status, statusIcon, resolution },
@@ -207,7 +212,15 @@ export default {
     )
   },
   [FINDING_RESUME_STATUS]: (doc: MdDoc) => {
-    const titles = FINDING_RESUME_STATUS_TITLES
+    const titles = Object.entries(FINDING_RESUME_STATUS_TITLES).reduce(
+      (v: { [key: string]: string }, [status, title]) => {
+        v[status] =
+          div(getStatusIcon(status), { class: 'status-icon' }) +
+          div(title, { class: 'table-title' })
+        return v
+      },
+      {}
+    )
     const data = Object.entries(
       getFindingResumeStatusData(getFindings(doc))
     ).reduce((v: any[], [status, d]) => {
