@@ -1,16 +1,32 @@
 import templates from '../templates/'
 import { JSDOM } from 'jsdom'
-import { parseFinding } from '../Findings'
+import {
+  parseFinding,
+  createFindigsExampleMetadata,
+  FINDING_RESUME_STATUS_RISK,
+  FINDING_RESUME_STATUS_STATUS
+} from '../Findings'
 import {
   FINDING_HEADER,
   HIGH,
   LOW,
   FH_COL,
   FH_ROW,
-  FINDING_TABLE
+  FINDING_TABLE,
+  FINDING_RESUME_STATUS
 } from '../constants'
 import { MdToObj } from '../MdToObj'
 import { getFile } from './test.helpers'
+import {
+  createExampleReport,
+  createExampleFindings
+} from '../templates/mdTemplates'
+
+const getDom = (html: string) => {
+  const dom = new JSDOM(html)
+  const body = dom.window.document.body
+  return { dom, body }
+}
 
 describe('FINDING_HEADER', () => {
   const id = 'FXC-001'
@@ -82,10 +98,72 @@ describe('FINDINGS_TABLE', () => {
   const example = getFile('example.md')
   const doc = parse(example)
 
-  const html = templates[FINDING_TABLE](doc, ['id', 'risk', 'title'])
-  const dom = new JSDOM(html)
-  const body = dom.window.document.body
-  it('dummy', () => {
+  it('dummy test', () => {
+    const html = templates[FINDING_TABLE](doc, ['id', 'risk', 'title'])
+    expect(html).not.toBeUndefined()
     expect(typeof html).toBe('string')
+    const { body } = getDom(`${html}`)
+    expect(body).not.toBeUndefined()
+  })
+})
+
+const testDiv = (container: HTMLElement, name: string) => {
+  it(`Cell should contain a div.${name}`, () => {
+    const div = container.querySelector('.label')
+    expect(div).not.toBeUndefined()
+    expect(div?.tagName).toBe('DIV')
+  })
+}
+
+const testResumeCell = (cell: HTMLElement) => {
+  testDiv(cell, 'label')
+  testDiv(cell, 'value')
+}
+
+describe('FINDING_RESUME_STATUS', () => {
+  const findings = createExampleFindings(createFindigsExampleMetadata())
+  const md = `${findings.join('\n')}\n[[${FINDING_RESUME_STATUS}]]`
+  const doc = MdToObj()(md)
+  const html = templates[FINDING_RESUME_STATUS](doc)
+  const { body } = getDom(`${html}`)
+  const dataRows = FINDING_RESUME_STATUS_RISK.length
+  const totalColumns = FINDING_RESUME_STATUS_STATUS.length
+  const totalRows = dataRows + 1
+  const totalCells = dataRows * totalColumns
+  const resume = body.querySelector('table')
+
+  it('the HTML should not contain undefined strings', () => {
+    expect(html?.indexOf('undefined')).toBe(-1)
+  })
+
+  it('should render a finding status resume', () => {
+    expect(html).not.toBeUndefined()
+    expect(typeof html).toBe('string')
+    expect(body).not.toBeUndefined()
+    const tables = body.querySelectorAll('table')
+    expect(tables).not.toBeUndefined()
+    expect(tables.length).toBe(1)
+
+    expect(resume?.tagName).toBe('TABLE')
+    const rows = resume?.querySelectorAll('tr')
+    expect(rows?.length).toBe(totalRows)
+  })
+
+  const ths = resume?.querySelectorAll('th')
+
+  it(`should render ${totalColumns} title cells`, () => {
+    expect(ths).not.toBeUndefined()
+    expect(ths?.length).toBe(totalColumns)
+  })
+
+  const cells = resume?.querySelectorAll('td')
+
+  it(`should render ${totalCells} cells`, () => {
+    expect(cells).not.toBeUndefined()
+    expect(cells?.length).toBe(totalCells)
+  })
+
+  describe('Test cells', () => {
+    cells?.forEach(testResumeCell)
   })
 })

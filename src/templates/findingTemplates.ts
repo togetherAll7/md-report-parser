@@ -18,7 +18,8 @@ import {
   FINDING_TABLE_STATUS_WARNING,
   FINDING_TABLE_STATUS_PROBLEM,
   CONDITION_PROBLEM,
-  CONDITION_WARNING
+  CONDITION_WARNING,
+  FINDING_RESUME_STATUS
 } from '../constants'
 import { logo } from '../templates/logo'
 import { table, tag, ul, dl, div, ulField } from '../html'
@@ -32,7 +33,10 @@ import {
   FINDING_RESUME_FIELDS,
   getFindingFieldValueAttributes,
   getFindingWrapperId,
-  getRiskKey
+  getRiskKey,
+  FINDING_RESUME_STATUS_TITLES,
+  getFindingResumeStatusData,
+  FINDING_RESUME_STATUS_RISK
 } from '../Findings'
 import { MdDoc, getDocMetadata } from '../mdModel'
 import { link } from '../html'
@@ -198,6 +202,33 @@ export default {
       titles,
       undefined,
       FINDING_RESUME_FIELDS.map((f) => {
+        return { class: f }
+      })
+    )
+  },
+  [FINDING_RESUME_STATUS]: (doc: MdDoc) => {
+    const titles = FINDING_RESUME_STATUS_TITLES
+    const data = Object.entries(
+      getFindingResumeStatusData(getFindings(doc))
+    ).reduce((v: any[], [status, d]) => {
+      const x = Object.entries(d).reduce(
+        (xv: { [key: string]: any }, [risk, value]) => {
+          xv[risk] =
+            tag('div', status, { class: 'label' }) +
+            tag('div', value, { class: 'value' })
+          return xv
+        },
+        {}
+      )
+      v.push(x)
+      return v
+    }, [])
+
+    return table(
+      data,
+      titles,
+      undefined,
+      FINDING_RESUME_STATUS_RISK.map((f) => {
         return { class: f }
       })
     )

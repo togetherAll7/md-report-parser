@@ -35,7 +35,8 @@ import {
   FindingStatus,
   Condition,
   FINDING_STATUS,
-  CONDITIONS
+  CONDITIONS,
+  STATUS_LABELS
 } from './constants'
 import {
   createMdBlock,
@@ -351,6 +352,12 @@ export const FINDING_RESUME_TITLES = FINDING_RESUME_RISKS.reduce(
   {}
 )
 
+export const FINDING_RESUME_STATUS_RISK = Object.values(RISK)
+  .map((s) => s.toString())
+  .concat([TOTAL])
+export const FINDING_RESUME_STATUS_STATUS = Object.keys(STATUS_LABELS)
+export const FINDING_RESUME_STATUS_TITLES = STATUS_LABELS
+
 export const getFindingResume = (findings: any[]) => {
   const resume: { [key: string]: any } = {}
   if (!findings.length) {
@@ -372,6 +379,23 @@ export const getFindingResume = (findings: any[]) => {
   return resume
 }
 
+export const getFindingResumeByStatus = (findings: any[]) => {
+  const resume: { [key: string]: any } = {}
+  if (!findings.length) {
+    return
+  }
+  for (const status of Object.values(CONDITIONS)) {
+    const perStatusFindings = findings.filter((f) => f.status === status)
+    const total = perStatusFindings.length
+    const grouped = groupByRisk(perStatusFindings)
+    resume[status] = {
+      ...grouped,
+      [TOTAL]: total
+    }
+  }
+  return resume
+}
+
 const groupByRemediation = (findings: any[]) => {
   return findings.reduce((v: { [key: string]: any }, f) => {
     const remediation = f[REMEDIATION]
@@ -379,6 +403,17 @@ const groupByRemediation = (findings: any[]) => {
       v[remediation] = 0
     }
     v[remediation] = v[remediation] + 1
+    return v
+  }, {})
+}
+
+const groupByRisk = (findings: any[]) => {
+  return findings.reduce((v: { [key: string]: any }, f) => {
+    const risk = f[RISK_KEY]
+    if (!v[risk]) {
+      v[risk] = 0
+    }
+    v[risk] = v[risk] + 1
     return v
   }, {})
 }
@@ -402,7 +437,6 @@ export const getFindingResumeData = (findings: any[]) => {
     },
     {}
   )
-
   Object.keys(resume).forEach((k) => {
     if (!MANDATORY_RESUME_FIELDS.includes(k)) {
       // If all risks are 0, remove the field
@@ -411,6 +445,29 @@ export const getFindingResumeData = (findings: any[]) => {
       }
     }
   })
+
+  return resume
+}
+
+export const getFindingResumeStatusData = (findings: any[]) => {
+  const data = getFindingResumeByStatus(findings)
+  if (!data) {
+    return {}
+  }
+
+  const resume = FINDING_RESUME_STATUS_RISK.reduce(
+    (v: { [key: string]: any }, field: string) => {
+      v[field] = FINDING_RESUME_STATUS_STATUS.reduce(
+        (v: { [key: string]: string }, risk) => {
+          v[risk] = data[risk][field] || 0
+          return v
+        },
+        {}
+      )
+      return v
+    },
+    {}
+  )
 
   return resume
 }

@@ -63,6 +63,7 @@ export const HEADINGS = [...Array(6)].map((x, i) => `h${i}`)
 export const FINDING_LIST = 'finding-list'
 export const FINDING_RESUME = 'finding-resume'
 export const FINDING_HEADER = 'finding-header'
+export const FINDING_RESUME_STATUS = 'finding-resume-status'
 
 export const CUSTOMER_NAME = 'customerName'
 export const REPORT_TYPE = 'reportType'
