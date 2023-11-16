@@ -1,6 +1,7 @@
 import {
   FINDING_LIST,
   FINDING_RESUME,
+  FINDING_RESUME_STATUS,
   FINDING_TITLE_LEVEL,
   REPORT_HEADER,
   FINDING_TABLE_STATUS_OK,
@@ -34,14 +35,16 @@ import exp from 'constants'
 const parser = MdParser()
 
 const title = 'test'
-const md = [`# ${title}`, `[[${FINDING_LIST}]]`, `[[${FINDING_RESUME}]]`].join(
-  '\n\n'
-)
+const md = [
+  `# ${title}`,
+  `[[${FINDING_LIST}]]`,
+  `[[${FINDING_RESUME_STATUS}]]`
+].join('\n\n')
 
 const doc = parser.parse(md)
 const getHtml = (key: string) =>
   `<div class="${key}">${getRenderedLists(doc, key)}</div>`
-const html = getHtml(FINDING_LIST) + getHtml(FINDING_RESUME)
+const html = getHtml(FINDING_LIST) + getHtml(FINDING_RESUME_STATUS)
 
 const getExampleDom = (md: string) => {
   const html = parser.render(md)
@@ -98,7 +101,7 @@ describe('Example', () => {
 
 describe('Example createExampleReport()', () => {
   const { container } = getExampleDom(createExampleReport())
-  tesTable(container, FINDING_RESUME)
+  tesTable(container, FINDING_RESUME_STATUS)
   tesTable(container, FINDING_TABLE_STATUS_OK, true)
   tesTable(container, FINDING_TABLE_STATUS_WARNING, true)
   tesTable(container, FINDING_TABLE_STATUS_PROBLEM, true)
@@ -113,7 +116,7 @@ describe('Example createNewReport()', () => {
     { impact: HIGH, likelihood: HIGH, resolution: STATUS_FIXED }
   ])
   const { container } = getExampleDom(createNewReport(findings))
-  tesTable(container, FINDING_RESUME)
+  tesTable(container, FINDING_RESUME_STATUS)
   tesTable(container, FINDING_TABLE_STATUS_OK, true)
   tesTable(container, FINDING_TABLE_STATUS_WARNING, true)
   tesTable(container, FINDING_TABLE_STATUS_PROBLEM, true)

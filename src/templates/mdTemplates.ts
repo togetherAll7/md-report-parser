@@ -11,7 +11,8 @@ import {
   FINDING_TABLE_STATUS_OK,
   FINDING_STATUS_PROBLEM_TITLE,
   FINDING_STATUS_WARNING_TITLE,
-  FINDING_STATUS_OK_TITLE
+  FINDING_STATUS_OK_TITLE,
+  FINDING_RESUME_STATUS
 } from '../constants'
 import { metadataToMd } from '../metadata'
 import { wrapBlock, mdBlockToMd } from '../mdModel'
@@ -61,7 +62,7 @@ ${metadataBlock}
 
 ## Executive Summary
  
-[[${FINDING_RESUME}]]
+[[${FINDING_RESUME_STATUS}]]
 
 ## Detailed Findings
 
