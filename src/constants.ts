@@ -31,9 +31,9 @@ export const FIXED_PERCENT = 'fixedPercent'
 export const REPORTED = 'reported'
 export const RESOLUTION = 'resolution'
 
-export const ACTION_REQ = 'Action Required'
-export const NO_ACTION_REQ = 'No Action Required'
-export const ATTENTION_REQ = 'Attention Required'
+export const STATUS_PROBLEM_LABEL = 'Resolution Pending'
+export const STATUS_WARNING_LABEL = 'Caution Advised'
+export const STATUS_OK_LABEL = 'Solved'
 
 export const LIKELIHOOD_RATE = 'likelihoodRate'
 export const RISK_RATE = 'riskRate'
@@ -131,9 +131,9 @@ export const CONDITIONS = {
 } as const
 
 export const STATUS_LABELS: { [key: string]: string } = {
-  [OK]: NO_ACTION_REQ,
-  [WARNING]: ATTENTION_REQ,
-  [PROBLEM]: ACTION_REQ
+  [OK]: STATUS_OK_LABEL,
+  [WARNING]: STATUS_WARNING_LABEL,
+  [PROBLEM]: STATUS_PROBLEM_LABEL
 }
 
 export const FIELD_LABELS: { [key: string]: { [key: string]: string } } = {
