@@ -1,9 +1,6 @@
 import MarkdownIt from 'markdown-it'
 /* eslint-disable @typescript-eslint/naming-convention */
-import {
-  default as markdown_it_render_lists,
-  getListName
-} from '../markdown-it-replace-content'
+import { default as markdown_it_render_lists } from '../markdown-it-replace-content'
 import { removeNewLines } from './test.helpers'
 
 const title = 'Title'
@@ -13,18 +10,6 @@ const createHtml = (md: string, key: string) =>
   `<span>${removeNewLines(md + key)}<span>`
 
 const renderListCb = (str: string, n: string) => createHtml(str, n)
-
-describe('getListName', () => {
-  it('should return the list key', () => {
-    expect(getListName(undefined)).toBe(undefined)
-    expect(getListName('')).toBe(undefined)
-    expect(getListName('[foo]')).toBe(undefined)
-    expect(getListName('[[ ]]')).toBe(undefined)
-    expect(getListName('[[my-list]]')).toBe('my-list')
-    expect(getListName('[[ my-list ]]')).toBe('my-list')
-    expect(getListName('[[ my-list foo ]]')).toBe('my-list foo')
-  })
-})
 
 describe('markdown_it_replace_content', () => {
   it('should render a list', () => {
