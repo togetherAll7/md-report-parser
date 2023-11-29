@@ -62,3 +62,7 @@ export const containsHtml = (str: string): boolean => {
   const htmlRegExp = /<[^>]*>/g // Matches any character between '<' and '>'
   return htmlRegExp.test(str)
 }
+
+export const escapeRegExp = (str: string) => {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
