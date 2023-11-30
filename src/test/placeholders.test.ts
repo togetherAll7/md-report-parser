@@ -56,7 +56,7 @@ describe('Placeholders', () => {
     it('should create a placeholder from object', () => {
       const ph = createPlaceHolder(obj)
       expect(typeof ph).toBe('string')
-      const parsed = parsePlaceholder(ph)
+      const parsed = parsePlaceholder('\n' + ph + '\n')
       expect(parsed).toStrictEqual(obj)
     })
   })

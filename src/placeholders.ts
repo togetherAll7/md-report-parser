@@ -12,6 +12,7 @@ export const wrapPh = (str: string) => `${phOpen}${str}${phClose}`
 
 export type PlaceholderObj = {
   name: string | undefined
+  [key: string]: any
 }
 
 export const isPlaceHolder = (str: string): boolean => {
@@ -24,6 +25,7 @@ export const unwrapPlaceholder = (str: string): string => {
 }
 
 export const parsePlaceholder = (str: string): PlaceholderObj => {
+  str = str.trimEnd().trimStart()
   let res: PlaceholderObj = { name: undefined }
   if (!isPlaceHolder(str)) {
     return res
