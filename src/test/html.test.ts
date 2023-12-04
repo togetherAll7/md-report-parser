@@ -2,13 +2,7 @@ import { CLASS_NAMES } from '../constants'
 import { table, tag, ul, dl, link, divLabel, ulField } from '../html'
 import { camelCaseToKebab } from '../utils'
 import { removeWhiteSpace } from './test.helpers'
-import { JSDOM } from 'jsdom'
-
-const getDom = (html: string) => {
-  const dom = new JSDOM(html)
-  const body = dom.window.document.body
-  return { dom, body }
-}
+import { getDom } from './test.helpers'
 
 const clear = (s: string) => s.replace(/ /g, '').replace(/\n/g, '')
 
