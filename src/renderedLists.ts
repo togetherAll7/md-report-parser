@@ -1,12 +1,13 @@
 import { MdDoc } from './mdModel'
+import { PlaceholderObj } from './placeholders'
 import { renderTemplate } from './Templates'
 
 export const getRenderedLists = (
   doc: MdDoc,
-  name: string
+  phData: PlaceholderObj
 ): string | undefined => {
   try {
-    const html = renderTemplate(name, doc)
+    const html = renderTemplate(phData, doc)
     return html
   } catch (err) {
     console.error(err)
@@ -15,5 +16,7 @@ export const getRenderedLists = (
 }
 
 export const parseRenderedLists = (parse: (md: string) => MdDoc) => {
-  return (md: string, name: string) => getRenderedLists(parse(md), name)
+  return (md: string, phData: PlaceholderObj) => {
+    return getRenderedLists(parse(md), phData)
+  }
 }

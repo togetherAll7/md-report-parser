@@ -32,7 +32,7 @@ export function RenderReports({
     const metadata = token.meta || {}
     const className = metadata[metadataBlockTypeName]
     return isFindingType(className)
-      ? renderTemplate(FINDING_HEADER, metadata)
+      ? renderTemplate({ name: FINDING_HEADER }, metadata)
       : ''
   }
 

@@ -42,8 +42,8 @@ const md = [
 ].join('\n\n')
 
 const doc = parser.parse(md)
-const getHtml = (key: string) =>
-  `<div class="${key}">${getRenderedLists(doc, key)}</div>`
+const getHtml = (name: string) =>
+  `<div class="${name}">${getRenderedLists(doc, { name })}</div>`
 const html = getHtml(FINDING_LIST) + getHtml(FINDING_RESUME_STATUS)
 
 const getExampleDom = (md: string) => {
