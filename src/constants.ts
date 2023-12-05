@@ -145,8 +145,6 @@ export type Condition = (typeof CONDITIONS)[keyof typeof CONDITIONS]
 export const FH_ROW = 'fh-row'
 export const FH_COL = 'fh-col'
 
-export const TEMPLATE_PARTS_SEPARATOR = ':'
-export const TEMPLATE_FIELDS_SEPARATOR = ','
 export const FINDING_TABLE = 'findings-table'
 export const REVERSE_FIELDS = '-'
 export const FINDING_TABLE_STATUS_OK = 'finding-table-status-ok'

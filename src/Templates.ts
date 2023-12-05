@@ -1,30 +1,11 @@
 import templates from './templates/index'
-import {
-  TEMPLATE_FIELDS_SEPARATOR,
-  TEMPLATE_PARTS_SEPARATOR,
-  REVERSE_FIELDS
-} from './constants'
+import { REVERSE_FIELDS } from './constants'
+import { PlaceholderObj } from './placeholders'
 
 export type TemplateParts = {
   name: string
   fields: string[] | undefined
   sort: string[] | undefined
-}
-
-const parseTemplateFields = (fields: string): string[] | undefined => {
-  if (!fields) {
-    return undefined
-  }
-  return fields.split(TEMPLATE_FIELDS_SEPARATOR)
-}
-
-export const parseTemplateName = (templateName: string): TemplateParts => {
-  const [name, unparsedFields, unparsedSort] = templateName.split(
-    TEMPLATE_PARTS_SEPARATOR
-  )
-  const fields = parseTemplateFields(unparsedFields)
-  const sort = parseTemplateFields(unparsedSort)
-  return { name, fields, sort }
 }
 
 export const sortData = (data: any, sort: string[], valueCb?: Function) => {
@@ -54,12 +35,11 @@ export const sortData = (data: any, sort: string[], valueCb?: Function) => {
   })
 }
 
-export const renderTemplate = (templateName: string, data: any) => {
-  const { name, fields, sort } = parseTemplateName(templateName)
+export const renderTemplate = (phData: PlaceholderObj, data: any) => {
+  const { name, sort, fields } = phData
   const template = templates[name as keyof typeof templates]
   if (!template) {
     throw new Error(`Unknown template: ${name}`)
   }
-
   return template(data, fields, sort) || ''
 }
