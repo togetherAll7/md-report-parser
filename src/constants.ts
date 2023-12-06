@@ -162,3 +162,10 @@ export const FINDING_STATUS_PROBLEM_TITLE = 'Findings with pending resolution'
 export const CLASS_NAMES = {
   label: 'label'
 }
+
+export const NO_RISK = 'no risk'
+
+export const RISK_SHORT_DESCRIPTIONS: { [key: string]: string } = {
+  [NONE]: NO_RISK,
+  [INFO]: NO_RISK
+}

@@ -19,7 +19,8 @@ import {
   FINDING_TABLE_STATUS_PROBLEM,
   CONDITION_PROBLEM,
   CONDITION_WARNING,
-  FINDING_RESUME_STATUS
+  FINDING_RESUME_STATUS,
+  RISK_SHORT_DESCRIPTIONS
 } from '../constants'
 import { logo } from '../templates/logo'
 import { table, tag, ul, dl, div, ulField } from '../html'
@@ -221,14 +222,17 @@ export default {
       },
       {}
     )
+
     const data = Object.entries(
       getFindingResumeStatusData(getFindings(doc))
-    ).reduce((v: any[], [status, d]) => {
+    ).reduce((v: any[], [risk, d]) => {
       const x = Object.entries(d).reduce(
-        (xv: { [key: string]: any }, [risk, value]) => {
-          xv[risk] =
-            tag('div', status, { class: 'label' }) +
-            tag('div', value, { class: 'value' })
+        (xv: { [key: string]: any }, [riskKey, value]) => {
+          const riskLabel = `${RISK_SHORT_DESCRIPTIONS[risk] || risk}`
+          xv[riskKey] =
+            tag('div', riskLabel, {
+              class: 'label'
+            }) + tag('div', value, { class: 'value' })
           return xv
         },
         {}
