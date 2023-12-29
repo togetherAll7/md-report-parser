@@ -4,9 +4,11 @@ import {
   parsePlaceholder,
   phClose,
   phOpen,
-  PlaceholderObj
+  PlaceholderObj,
+  PLACEHOLDER_KEYS
 } from './placeholders'
 import { escapeRegExp } from './utils'
+import Token from 'markdown-it/lib/token'
 
 const name = 'replace_content'
 const openName = `${name}_open`
@@ -18,6 +20,25 @@ const closeRegex = new RegExp(`${escapeRegExp(phClose)}\\s*$`)
 
 export interface RenderListCb {
   (md: string, placeHolderData: PlaceholderObj): string | undefined
+}
+
+const findPreviousHeading = (
+  tokens: Token[],
+  startIndex: number,
+  headingLevel?: any
+): number => {
+  headingLevel = parseInt(headingLevel)
+  headingLevel = isNaN(headingLevel) ? false : headingLevel
+  for (let i = startIndex; i >= 0; i--) {
+    const token = tokens[i]
+    if (
+      token.type === 'heading_open' &&
+      (!headingLevel || token.tag === `h${headingLevel}`)
+    ) {
+      return i
+    }
+  }
+  return -1
 }
 
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -66,17 +87,38 @@ export default function render_lists(
       }
 
       const html = renderListCb(state.src, placeholderData) || ''
-
       if (undefined === html || null === html) {
         return false
       }
 
-      let token = state.push(openName, tag, 1)
-      token.block = true
-      token.attrJoin('class', name)
-      token = state.push(contentName, tag, 1)
-      token.meta = { name, content: html }
-      token = state.push(closeName, tag, -1)
+      const removeUntil = placeholderData[PLACEHOLDER_KEYS.removeUntil]
+
+      // remove content
+      if (html === '' && removeUntil) {
+        const currentTokenIndex = state.tokens.length - 1
+        let sectionStartIndex = findPreviousHeading(
+          state.tokens,
+          currentTokenIndex,
+          removeUntil
+        )
+
+        // Remove tokens from the start of the placeholder to the end of the section
+        if (sectionStartIndex <= currentTokenIndex) {
+          state.tokens.splice(
+            sectionStartIndex - 1,
+            currentTokenIndex - sectionStartIndex + 1
+          )
+        }
+      }
+
+      if (html) {
+        let token = state.push(openName, tag, 1)
+        token.block = true
+        token.attrJoin('class', name)
+        token = state.push(contentName, tag, 1)
+        token.meta = { name, content: html }
+        token = state.push(closeName, tag, -1)
+      }
 
       state.line = phEndLine + 1
       return true

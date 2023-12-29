@@ -51,3 +51,7 @@ export const createPlaceHolder = (content: string | PlaceholderObj) => {
   }
   return wrapPh(content)
 }
+
+export const PLACEHOLDER_KEYS = {
+  removeUntil: 'removeUntil'
+}

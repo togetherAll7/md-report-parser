@@ -31,6 +31,7 @@ import {
 } from '../templates/mdTemplates'
 import { STATUS_CODES } from 'http'
 import exp from 'constants'
+import { PlaceholderObj } from '../placeholders'
 
 const parser = MdParser()
 
@@ -42,9 +43,6 @@ const md = [
 ].join('\n\n')
 
 const doc = parser.parse(md)
-const getHtml = (name: string) =>
-  `<div class="${name}">${getRenderedLists(doc, { name })}</div>`
-const html = getHtml(FINDING_LIST) + getHtml(FINDING_RESUME_STATUS)
 
 const getExampleDom = (md: string) => {
   const html = parser.render(md)
@@ -54,8 +52,13 @@ const getExampleDom = (md: string) => {
 }
 
 describe('mdParser replace content', () => {
+  const content = 'test'
+  const renderListCb = (md: string, { name }: PlaceholderObj) => name + content
+  const getHtml = (name: string) =>
+    `<div class="${name}">${renderListCb(md, { name })}</div>`
+  const html = getHtml(FINDING_LIST) + getHtml(FINDING_RESUME_STATUS)
   it('should replace content', () => {
-    const res = parser.render(md)
+    const res = MdParser({ renderListCb }).render(md)
     expect(removeNewLines(res)).toContain(html)
   })
 })
@@ -100,7 +103,7 @@ describe('Example', () => {
 })
 
 describe('Example createExampleReport()', () => {
-  const { container } = getExampleDom(createExampleReport())
+  const { container, html } = getExampleDom(createExampleReport())
   tesTable(container, FINDING_RESUME_STATUS)
   tesTable(container, FINDING_TABLE_STATUS_OK, true)
   tesTable(container, FINDING_TABLE_STATUS_WARNING, true)
