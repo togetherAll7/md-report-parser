@@ -1,6 +1,4 @@
-export const logo: { title: string; content: string } = {
-  title: 'coinspect logo',
-  content: `<svg version="1.1" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+<svg version="1.1" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   x="0px" y="0px" viewBox="0 0 546.91 121.41" overflow="visible" xml:space="preserve">
 <g>
  <path fill="#FFFFFF" d="M546.88,31.12c0,29.73-0.01,59.45,0.03,89.18c0,0.93-0.18,1.12-1.12,1.12
@@ -138,5 +136,3 @@ export const logo: { title: string; content: string } = {
      c-0.31,1.28-1.21,1.91-2.92,1.93c-2.96,0.03-5.92,0.01-8.88,0.01C408.59,44.93,407.32,44.93,406.04,44.93z"/>
 </g>
 </svg>
-`
-}

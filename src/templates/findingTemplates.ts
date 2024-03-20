@@ -22,7 +22,6 @@ import {
   FINDING_RESUME_STATUS,
   RISK_SHORT_DESCRIPTIONS
 } from '../constants'
-import { logo } from '../templates/logo'
 import { table, tag, ul, dl, div, ulField } from '../html'
 import { toCamelCase } from '../utils'
 import {
@@ -63,7 +62,7 @@ const renderReportHeader = (doc: MdDoc) => {
     {}
   )
   return (
-    tag('div', logo.content, {
+    tag('div', svg.logo, {
       class: 'logo'
     }) +
     tag('div', metadata[PRODUCT_NAME], { class: 'title' }) +
