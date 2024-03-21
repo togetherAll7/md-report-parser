@@ -27,6 +27,7 @@ import {
 } from './markdown-it-replace-content'
 import { parseRenderedLists } from './renderedLists'
 import { getDocMetadata } from './mdModel'
+import { type FindingTemplatesOptions } from './templates/findingTemplates'
 
 export type MdParserDef = {
   mdParse: Function
@@ -42,16 +43,17 @@ export type MdParserOptions = MarkdownIt.Options & {
   metadataCb?: Function | undefined
   replaceLink?: (link: string, env?: any) => string | undefined
   renderListCb?: RenderListCb
+  templatesOptions?: FindingTemplatesOptions
 }
 
 const { metadataBlockTypeName } = getOptions()
 const titleLevel = FINDING_TITLE_LEVEL
 
 export const getDataBlocksPluginOptions = (options: MdParserOptions) => {
-  const { debug, metadataCb } = options
+  const { debug, metadataCb, templatesOptions } = options
   const metadataParser = MetadataParser({ metadataCb })
   return {
-    ...RenderReports({ metadataBlockTypeName }),
+    ...RenderReports({ metadataBlockTypeName, templatesOptions }),
     metadataParser,
     debug,
     titleLevel
@@ -101,7 +103,7 @@ export function MdParser(options: MdParserOptions = {}): MdParserDef {
   const parse = MdToObj(options)
 
   if (!options.renderListCb) {
-    options.renderListCb = parseRenderedLists(parse)
+    options.renderListCb = parseRenderedLists(parse, options.templatesOptions)
   }
 
   const renderer = setupMarkdownIt(new MarkdownIt(options), options)

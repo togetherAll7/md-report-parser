@@ -1,4 +1,4 @@
-import templates from '../templates/'
+import { createFindingTemplates } from '../templates/findingTemplates'
 import { JSDOM } from 'jsdom'
 import {
   parseFinding,
@@ -21,6 +21,8 @@ import {
   createExampleReport,
   createExampleFindings
 } from '../templates/mdTemplates'
+
+const templates = createFindingTemplates()
 
 const getDom = (html: string) => {
   const dom = new JSDOM(html)

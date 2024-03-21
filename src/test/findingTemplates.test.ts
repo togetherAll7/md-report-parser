@@ -1,6 +1,19 @@
 import { INFO, LOW, MEDIUM, HIGH, FINDING_STATUS } from '../constants'
-import { sortDataByRisk } from '../templates/findingTemplates'
-import { parseFinding } from '../Findings'
+import { parseFinding, sortDataByRisk } from '../Findings'
+import { createFindingTemplates } from '../templates/findingTemplates'
+
+describe('templates', () => {
+  const templates = createFindingTemplates()
+  const values = it('templates should be an object', () => {
+    expect(typeof templates).toBe('object')
+  })
+
+  it('templates should contain functions', () => {
+    for (const x of Object.values(templates).map((v) => typeof v)) {
+      expect(x).toBe('function')
+    }
+  })
+})
 
 describe('sortDataByRisk', () => {
   const data = [

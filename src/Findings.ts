@@ -23,7 +23,6 @@ import {
   REPORTED,
   SORTED_FINDING_FIELDS,
   STATUS,
-  CONDITION,
   IMPACT_KEY,
   LIKELIHOOD_KEY,
   RISK_KEY,
@@ -54,6 +53,8 @@ import {
   containsHtml,
   camelCaseToKebab
 } from './utils'
+
+import { sortData } from './Templates'
 
 export const FINDING_SECTIONS_PROPS = FINDING_SECTIONS.map((x) =>
   x.toLowerCase()
@@ -522,3 +523,15 @@ export const getFindingWrapperId = (id: string) =>
   `${FINDING}${FINDING_ID_SEPARATOR}${id}`
 
 export const getRiskKey = (risk: string) => flipObject(RISK)[risk]
+
+export const sortDataByRisk = (data: any[], asc?: boolean) => {
+  return sortData(
+    data,
+    asc ? ['riskKey'] : ['-riskKey'],
+    (d: any, field: string) => getRiskKey(d.risk)
+  )
+}
+
+export const findingRenderFields = findingFields.filter(
+  (f) => !['title', 'id'].includes(f)
+)

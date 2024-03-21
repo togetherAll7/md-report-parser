@@ -1,4 +1,7 @@
-import templates from './templates/index'
+import {
+  createFindingTemplates,
+  FindingTemplatesOptions
+} from './templates/findingTemplates'
 import { REVERSE_FIELDS } from './constants'
 import { PlaceholderObj } from './placeholders'
 
@@ -35,7 +38,12 @@ export const sortData = (data: any, sort: string[], valueCb?: Function) => {
   })
 }
 
-export const renderTemplate = (phData: PlaceholderObj, data: any) => {
+export const renderTemplate = (
+  phData: PlaceholderObj,
+  data: any,
+  options?: FindingTemplatesOptions
+) => {
+  const templates = createFindingTemplates(options)
   const { name, sort, fields } = phData
   const template = templates[name as keyof typeof templates]
   if (!template) {

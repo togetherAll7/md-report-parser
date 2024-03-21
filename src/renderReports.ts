@@ -8,6 +8,7 @@ import {
 import { FINDING_HEADER, TITLE_SEPARATOR } from './constants'
 import { camelCaseToKebab } from './utils'
 import StateBlock from 'markdown-it/lib/rules_block/state_block'
+import { FindingTemplatesOptions } from './templates/findingTemplates'
 
 export const getFindingTitleElements = (metadata: any) => {
   const { id, title } = metadata
@@ -17,9 +18,11 @@ export const getFindingTitleElements = (metadata: any) => {
 
 /* eslint-disable @typescript-eslint/naming-convention */
 export function RenderReports({
-  metadataBlockTypeName
+  metadataBlockTypeName,
+  templatesOptions
 }: {
   metadataBlockTypeName: string
+  templatesOptions?: FindingTemplatesOptions
 }) {
   const metadataRenderer: Renderer.RenderRule = (
     tokens,
@@ -32,7 +35,7 @@ export function RenderReports({
     const metadata = token.meta || {}
     const className = metadata[metadataBlockTypeName]
     return isFindingType(className)
-      ? renderTemplate({ name: FINDING_HEADER }, metadata)
+      ? renderTemplate({ name: FINDING_HEADER }, metadata, templatesOptions)
       : ''
   }
 
