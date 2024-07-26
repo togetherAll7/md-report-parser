@@ -67,7 +67,8 @@ export const FINDING_RESUME_STATUS = 'finding-resume-status'
 
 export const CUSTOMER_NAME = 'customerName'
 export const REPORT_TYPE = 'reportType'
-export const SMART_CONTRACT_AUDIT_KEY = 'smartContractAudit'
+export const SMART_CONTRACT_AUDIT_KEY = 'Smart Contract Audit'
+export const SOURCE_CODE_AUDIT_KEY = 'Source Code Audit'
 
 export const REPORT_HEADER = 'report-header'
 
